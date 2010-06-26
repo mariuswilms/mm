@@ -114,7 +114,10 @@ class Media_Process_Generic {
 			$config = Media_Process::config();
 
 			if ($config[$this->name()] == $config[Mime_Type::guessName($mimeType)]) {
-				$media = Media_Process::factory(array('adapter' => $this->_adapter));
+				$media = Media_Process::factory(array(
+					'source' => $mimeType,
+					'adapter' => $this->_adapter
+				));
 			} else {
 				$handle = fopen('php://temp', 'w+');
 
