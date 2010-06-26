@@ -13,6 +13,7 @@
  */
 
 require_once 'Mime/Type.php';
+require_once 'Media/Process.php';
 
 /**
  * `Media_Process_Generic` is the base class for all media processing types. It provides
