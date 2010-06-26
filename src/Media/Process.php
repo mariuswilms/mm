@@ -60,7 +60,9 @@ class Media_Process {
 		$name = ucfirst($name);
 		$class = "Media_Process_{$name}";
 
-		require_once "Media/Process/{$name}.php";
+		if (!class_exists($class)) { // Allows for injecting arbitrary classes.
+			require_once "Media/Process/{$name}.php";
+		}
 
 		$media = new $class(compact('source', 'adapter'));
 		return $media;

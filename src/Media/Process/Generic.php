@@ -53,7 +53,10 @@ class Media_Process_Generic {
 			}
 			if ($adapter) {
 				$class = "Media_Process_Adapter_{$adapter}";
-				require_once dirname(__FILE__) . "/Adapter/{$adapter}.php";
+
+				if (!class_exists($class)) { // Allows for injecting arbitrary classes.
+					require_once dirname(__FILE__) . "/Adapter/{$adapter}.php";
+				}
 
 				$this->_adapter = new $class($source);
 			}
