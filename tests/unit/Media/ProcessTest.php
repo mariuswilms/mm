@@ -44,13 +44,13 @@ class Media_ProcessTest extends PHPUnit_Framework_TestCase {
 
 	public function testMediaFactorySourceFile() {
 		$result = Media_Process::factory(array('source' => "{$this->_files}/image_jpg.jpg"));
-		$this->assertTrue(is_a($result, 'Media_Process_Image'));
+		$this->assertType('Media_Process_Image', $result);
 
 		$result = Media_Process::factory(array('source' => "{$this->_files}/image_png.png"));
-		$this->assertTrue(is_a($result, 'Media_Process_Image'));
+		$this->assertType('Media_Process_Image', $result);
 
 		$result = Media_Process::factory(array('source' => "{$this->_files}/application_pdf.pdf"));
-		$this->assertTrue(is_a($result, 'Media_Process_Document'));
+		$this->assertType('Media_Process_Document', $result);
 	}
 
 	public function testMediaFactorySourceStream() {
