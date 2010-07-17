@@ -258,6 +258,18 @@ class Media_Process_Image extends Media_Process_Generic {
 	}
 
 	/**
+	 * Changes the color depths (of the channels).
+	 *
+	 * @param integer $value The number of bits in a color sample within a pixel. Usually `8`.
+	 *                       This is _not_ the total number of bits per pixel but the bits per
+	 *                       channel.
+	 * @return boolean
+	 */
+	public function colorDepth($value) {
+		return $this->_adapter->depth($value);
+	}
+
+	/**
 	 * Normalizes dimensions ensuring they don't exceed actual dimensions of the image. This forces
 	 * all operations on the image to never scale up.
 	 *

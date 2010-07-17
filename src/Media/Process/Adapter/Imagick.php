@@ -125,6 +125,10 @@ class Media_Process_Adapter_Imagick extends Media_Process_Adapter {
 		return $this->_object->profileImage($type, null);
 	}
 
+	public function depth($value) {
+		return $this->_object->setImageDepth($value);
+	}
+
 	public function crop($left, $top, $width, $height) {
 		$left   = (integer) $left;
 		$top    = (integer) $top;

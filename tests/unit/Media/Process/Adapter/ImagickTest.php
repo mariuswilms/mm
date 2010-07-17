@@ -184,6 +184,25 @@ class Media_Process_Adapter_ImagickTest extends PHPUnit_Framework_TestCase {
 		$this->assertFalse($result);
 	}
 
+	public function testDepth() {
+		$source = fopen("{$this->_files}/image_png.png", 'rb'); // this one has 16 bit
+		$subject = new Media_Process_Adapter_Imagick($source);
+
+		$reduced = fopen('php://temp', 'w+b');
+
+		$result = $subject->depth(8);
+		$subject->store($reduced);
+
+		$sourceMeta = fstat($source);
+		$reducedMeta = fstat($reduced);
+
+		$this->assertTrue($result);
+		$this->assertLessThan($sourceMeta['size'], $reducedMeta['size']);
+
+		fclose($source);
+		fclose($reduced);
+	}
+
 	public function testCompressPng() {
 		 // Test just first 4 because after that strangely the size goes up again
 		for ($i = 1; $i <= 4; $i++) {
