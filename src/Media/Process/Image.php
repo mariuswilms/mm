@@ -235,7 +235,7 @@ class Media_Process_Image extends Media_Process_Generic {
 	 * @return boolean
 	 * @link http://www.cambridgeincolour.com/tutorials/color-space-conversion.htm
 	 */
-	public function profileColor($file) {
+	public function colorProfile($file) {
 		if (!is_file($file)) {
 			return false;
 		}
