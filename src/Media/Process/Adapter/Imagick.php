@@ -42,7 +42,7 @@ class Media_Process_Adapter_Imagick extends Media_Process_Adapter {
 	public function __construct($handle) {
 		$this->_object = new Imagick();
 
-		// @fixme Workaaround for imagick failing to work with handles before module version 3.0.
+		// @fixme Workaround for imagick failing to work with handles before module version 3.0.
 		// See http://pecl.php.net/bugs/bug.php?id=16932 for more information.
 		// $this->_object->readImageFile($handle);
 		$this->_object->readImageBlob(stream_get_contents($handle, -1, 0));
@@ -63,7 +63,7 @@ class Media_Process_Adapter_Imagick extends Media_Process_Adapter {
 	}
 
 	public function store($handle) {
-		// @fixme Workaaround for imagick failing to work with handles before module version 3.0.
+		// @fixme Workaround for imagick failing to work with handles before module version 3.0.
 		// See http://pecl.php.net/bugs/bug.php?id=16932 for more information.
 		// return $this->_object->writeImageFile($handle);
 		return fwrite($handle, $this->_object->getImageBlob());
