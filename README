@@ -52,6 +52,21 @@
 
   http://amzn.com/w/1YHE04BY8UDI - Your donation is much appreciated.
 
+  Versions & Requirements
+  -----------------------
+  1.0, PHP >=5.2.1 (in progress)
+
+  The library is known to run fine under linux and darwin. Depending on
+  the adapters you are using you may need (this is a selection):
+
+  - fileinfo extension
+  - gd extension
+  - ghostscript
+  - imagemagick with ghostscript support
+  - imagick extension
+  - ffmpeg
+  - sox
+
   Download
   --------
   http://github.com/davidpersson/mm/downloads
@@ -94,20 +109,6 @@
           ));
      }}}
 
-  Versions & Requirements
-  -----------------------
-  1.0, PHP >=5.2.1 (in progress)
-
-  The library is known to run fine under linux and darwin. Depending on
-  the adapters you are using you may need (this is a selection):
-
-  - fileinfo extension
-  - gd extension
-  - ghostscript
-  - imagemagick with ghostscript support
-  - imagick extension
-  - ffmpeg
-  - sox
 
   Bugs
   ----
