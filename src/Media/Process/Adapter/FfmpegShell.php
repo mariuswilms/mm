@@ -28,6 +28,8 @@ class Media_Process_Adapter_FfmpegShell extends Media_Process_Adapter {
 
 	protected $_command;
 
+	protected $_queued = array();
+
 	public function __construct($handle) {
 		$this->_object = $handle;
 		$this->_command = strtoupper(substr(PHP_OS, 0, 3)) == 'WIN' ? 'ffmpeg.exe' : 'ffmpeg';
@@ -37,33 +39,42 @@ class Media_Process_Adapter_FfmpegShell extends Media_Process_Adapter {
 		rewind($handle);
 		rewind($this->_object);
 
+		if ($this->_queued && !$this->_process()) {
+			return false;
+		}
 		return stream_copy_to_stream($this->_object, $handle);
 	}
 
 	public function convert($mimeType) {
-		$sourceType = Mime_Type::guessExtension($this->_object);
 		$targetType = Mime_Type::guessExtension($mimeType);
-
-		$map = array('ogv' => 'ogg', 'oga' => 'ogg');
-
-		if (isset($map[$sourceType])) {
-			$sourceType = $map[$sourceType];
-		}
-		if (isset($map[$targetType])) {
-			$targetType = $map[$targetType];
-		}
-		$command  = "{$this->_command} -f {$sourceType} -i - ";
+		$targetType = $this->_mapType($targetType);
 
 		switch (Mime_Type::guessName($mimeType)) {
 			case 'image':
-				$command .= "-vcodec {$targetType} -vframes 1 -an -f rawvideo -";
+				$command = "-vcodec {$targetType} -vframes 1 -an -f rawvideo -";
 				break;
 			case 'video':
-				$command .= "-f {$targetType} -";
+				$command = "-f {$targetType} -";
 				break;
 			default:
 				return true;
 		}
+
+		$this->_queued['convert'] = $command;
+		return true;
+	}
+
+	public function compress($value) {
+		$this->_compress = $value;
+		return true;
+	}
+
+	protected function _process() {
+		$sourceType = Mime_Type::guessExtension($this->_object);
+		$sourceType = $this->_mapType($sourceType);
+
+		$command  = "{$this->_command} -f {$sourceType} -i - ";
+		$command .= implode(' ', $this->_queued);
 
 		rewind($this->_object);
 		$temporary = fopen('php://temp', 'w+b');
@@ -83,12 +94,17 @@ class Media_Process_Adapter_FfmpegShell extends Media_Process_Adapter {
 		}
 
 		$this->_object = $temporary;
+		$this->_queued = array();
 		return true;
 	}
 
-	public function compress($value) {
-		$this->_compress = $value;
-		return true;
+	protected function _mapType($type) {
+		$map = array('ogv' => 'ogg', 'oga' => 'ogg');
+
+		if (isset($map[$type])) {
+			return $map[$type];
+		}
+		return $type;
 	}
 }
 
