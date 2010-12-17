@@ -103,6 +103,18 @@ class Media_Process_Adapter_Gd extends Media_Process_Adapter {
 		return false;
 	}
 
+	public function passthru($key, $value) {
+		$function = "image{$key}";
+		$args = (array) $value;
+
+		if (!function_exists($function)) {
+			throw new Exception("Cannot passthru to nonexistent GD function `{$function}`");
+		}
+
+		array_unshift($args, $this->_object);
+		return (boolean) call_user_func_array($function, $args);
+	}
+
 	public function compress($value) {
 		switch ($this->_format) {
 			case 'jpeg':

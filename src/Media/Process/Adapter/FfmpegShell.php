@@ -35,6 +35,14 @@ class Media_Process_Adapter_FfmpegShell extends Media_Process_Adapter {
 		$this->_command = strtoupper(substr(PHP_OS, 0, 3)) == 'WIN' ? 'ffmpeg.exe' : 'ffmpeg';
 	}
 
+	public function passthru($key, $value) {
+		if (!$value || !is_scalar($value)) {
+			throw new InvalidArgumentException("Value must be given and of type scalar");
+		}
+		$this->_queued[$key] = "-{$key} {$value}";
+		return true;
+	}
+
 	public function store($handle) {
 		rewind($handle);
 		rewind($this->_object);
