@@ -107,12 +107,11 @@ class Media_Process_Adapter_FfmpegShell extends Media_Process_Adapter {
 	}
 
 	protected function _mapType($type) {
-		$map = array('ogv' => 'ogg', 'oga' => 'ogg');
-
-		if (isset($map[$type])) {
-			return $map[$type];
-		}
-		return $type;
+		$map = array(
+			'ogv' => 'ogg',
+			'oga' => 'ogg'
+		);
+		return isset($map[$type]) ? $map[$type] : $type;
 	}
 }
 
