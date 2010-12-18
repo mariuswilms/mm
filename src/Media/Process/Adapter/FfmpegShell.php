@@ -16,7 +16,7 @@ require_once 'Media/Process/Adapter.php';
 require_once 'Mime/Type.php';
 
 /**
- * This media process adapter interfaces with the `sox` binary through the shell.
+ * This media process adapter interfaces with the `ffmpeg` binary through the shell.
  *
  * @link http://ffmpeg.org
  */
