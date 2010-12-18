@@ -86,6 +86,33 @@ class Media_Process_Adapter_FfmpegShellTest extends PHPUnit_Framework_TestCase {
 		fclose($source);
 		fclose($target);
 	}
+
+	public function testPassthru() {
+		$source = fopen("{$this->_files}/video_theora_comments.ogv", 'rb');
+		$target = fopen('php://temp', 'wb');
+
+		$subject = new Media_Process_Adapter_FfmpegShell($source);
+		$subject->passthru('s', '50x100');
+		$subject->store($target);
+
+		fclose($source);
+
+		$subject = new Media_Process_Adapter_FfmpegShell($target);
+		$this->assertEquals(50, $subject->width());
+		$this->assertEquals(100, $subject->height());
+
+		fclose($target);
+	}
+
+	public function testDimensions() {
+		$source = fopen("{$this->_files}/video_theora_comments.ogv", 'rb');
+		$subject = new Media_Process_Adapter_FfmpegShell($source);
+
+		$this->assertEquals(320, $subject->width());
+		$this->assertEquals(176, $subject->height());
+
+		fclose($source);
+	}
 }
 
 ?>
