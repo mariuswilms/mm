@@ -93,6 +93,14 @@ class Media_Process_GenericTest extends PHPUnit_Framework_TestCase {
 
 		unlink($target);
 	}
+
+	public function testPassthru() {
+		$result = new Media_Process_Generic(array(
+			'source' => "{$this->_files}/image_jpg.jpg",
+			'adapter' => new Media_Process_Adapter_GenericMock(null)
+		));
+		$this->assertEquals($result->passthru('depth', 8), true);
+	}
 }
 
 ?>
