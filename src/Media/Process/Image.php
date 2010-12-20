@@ -43,16 +43,12 @@ class Media_Process_Image extends Media_Process_Generic {
 		$rx = $this->_adapter->width() / $width;
 		$ry = $this->_adapter->height() / $height;
 
-		if ($rx > $ry) {
-			$r = $rx;
-		} else {
-			$r = $ry;
-		}
+		$r = $rx > $ry ? $rx : $ry;
 
 		$width = $this->_adapter->width() / $r;
 		$height = $this->_adapter->height() / $r;
 
-		list($width, $height) = $this->_normalizeDimensions($width, $height, 'maximum'); /* maximum ?? */
+		list($width, $height) = $this->_normalizeDimensions($width, $height, 'maximum');
 		return $this->_adapter->resize($width, $height);
 	}
 
@@ -67,11 +63,7 @@ class Media_Process_Image extends Media_Process_Generic {
 		$rx = $this->_adapter->width() / $width;
 		$ry = $this->_adapter->height() / $height;
 
-		if ($rx < $ry) {
-			$r = $rx;
-		} else {
-			$r = $ry;
-		}
+		$r = $rx < $ry ? $rx : $ry;
 
 		$width = $this->_adapter->width() / $r;
 		$height = $this->_adapter->height() / $r;
@@ -159,11 +151,7 @@ class Media_Process_Image extends Media_Process_Generic {
 		$rx = $this->_adapter->width() / $width;
 		$ry = $this->_adapter->height() / $height;
 
-		if ($rx < $ry) {
-			$r = $rx;
-		} else {
-			$r = $ry;
-		}
+		$r = $rx < $ry ? $rx : $ry;
 
 		$resizeWidth = $this->_adapter->width() / $r;
 		$resizeHeight = $this->_adapter->height() / $r;
