@@ -14,7 +14,9 @@
 
 require_once 'Media/Process.php';
 require_once 'Media/Process/Document.php';
+require_once 'Media/Process/Video.php';
 require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/mocks/Media/Process/Adapter/GenericMock.php';
+require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/mocks/Media/Process/Adapter/GenericNameMock.php';
 
 class Media_Process_ConversionTest extends PHPUnit_Framework_TestCase {
 
@@ -34,6 +36,19 @@ class Media_Process_ConversionTest extends PHPUnit_Framework_TestCase {
 		$media = new Media_Process_Document(array(
 			'source' => "{$this->_files}/application_pdf.pdf",
 			'adapter' => 'GenericMock'
+		));
+		$result = $media->convert('image/jpg');
+		$this->assertType('Media_Process_Image', $result);
+	}
+
+	public function testMediaChangeDifferentAdapter() {
+		Media_Process::config(array(
+			'image' => 'GenericMock',
+			'video' => 'GenericNameMock'
+		));
+		$media = new Media_Process_Video(array(
+			'source' => "{$this->_files}/video_theora_notag.ogv",
+			'adapter' => 'GenericNameMock'
 		));
 		$result = $media->convert('image/jpg');
 		$this->assertType('Media_Process_Image', $result);
