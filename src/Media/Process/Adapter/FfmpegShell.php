@@ -38,8 +38,9 @@ class Media_Process_Adapter_FfmpegShell extends Media_Process_Adapter {
 	}
 
 	public function passthru($key, $value) {
-		if (!$value || !is_scalar($value)) {
-			throw new InvalidArgumentException("Value must be given and of type scalar");
+		if (!is_scalar($value)) {
+			$message = "Value for key `{$key}` must be given and of type scalar";
+			throw new InvalidArgumentException($message);
 		}
 		$this->_queued[$key] = "-{$key} {$value}";
 		return true;
