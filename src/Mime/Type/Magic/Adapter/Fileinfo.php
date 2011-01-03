@@ -43,6 +43,7 @@ class Mime_Type_Magic_Adapter_Fileinfo extends Mime_Type_Magic_Adapter {
 			$source = $meta['uri'];
 		} else {
 			$type = 'buffer';
+			rewind($handle);
 			$source = fread($handle, 1000000);
 		}
 		$result = call_user_func("finfo_{$type}", $this->_resource, $source, FILEINFO_MIME);

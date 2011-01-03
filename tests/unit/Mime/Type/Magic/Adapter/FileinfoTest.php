@@ -58,6 +58,22 @@ class Mime_Type_Magic_Adapter_FileinfoTest extends PHPUnit_Framework_TestCase {
 			fclose($handle);
 		}
 	}
+
+	public function testAnalyzeSeekedAnonymous() {
+		$source = fopen($this->_files . '/image_png.png', 'rb');
+		$handle = fopen('php://temp', 'r+b');
+		stream_copy_to_stream($source, $handle);
+
+		fclose($source);
+		fseek($handle, -1, SEEK_END);
+
+		$expected  = 'image/png; charset=binary';
+
+		$result = $this->subject->analyze($handle);
+		$this->assertEquals($expected, $result);
+
+		fclose($handle);
+	}
 }
 
 ?>
