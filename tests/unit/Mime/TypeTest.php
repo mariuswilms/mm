@@ -116,7 +116,7 @@ class Mime_TypeTest extends PHPUnit_Framework_TestCase {
 
 	public function testGuessTypePreferredTypes() {
 		$result = Mime_Type::guessType('test.ogg');
-		$this->assertEquals('application/ogg', $result);
+		$this->assertEquals('audio/ogg', $result);
 	}
 
 	public function testGuessExtensionFail() {
