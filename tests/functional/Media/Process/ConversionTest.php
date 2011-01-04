@@ -26,6 +26,15 @@ class Media_Process_ConversionTest extends PHPUnit_Framework_TestCase {
 	protected function setUp() {
 		$this->_files = dirname(dirname(dirname(dirname(__FILE__)))) . '/data';
 		$this->_data = dirname(dirname(dirname(dirname(dirname(__FILE__))))) .'/data';
+
+		Mime_Type::config('Magic', array(
+			'adapter' => 'Freedesktop',
+			'file' => $this->_data . '/magic.db'
+		));
+		Mime_Type::config('Glob', array(
+			'adapter' => 'Freedesktop',
+			'file' => $this->_data . '/glob.db'
+		));
 	}
 
 	public function testMediaChangeButSameAdapter() {
@@ -46,12 +55,18 @@ class Media_Process_ConversionTest extends PHPUnit_Framework_TestCase {
 			'image' => 'GenericMock',
 			'video' => 'GenericNameMock'
 		));
-		$media = new Media_Process_Video(array(
-			'source' => "{$this->_files}/video_theora_notag.ogv",
-			'adapter' => 'GenericNameMock'
-		));
+		$source = fopen("{$this->_files}/video_theora_notag.ogv", 'rb');
+		$storeFrom = fopen("{$this->_files}/image_jpg.jpg", 'rb');
+
+		$adapter = new Media_Process_Adapter_GenericNameMock($source);
+		$adapter->storeCopyFromStream = $storeFrom;
+
+		$media = new Media_Process_Video(compact('adapter'));
 		$result = $media->convert('image/jpg');
 		$this->assertType('Media_Process_Image', $result);
+
+		fclose($source);
+		fclose($storeFrom);
 	}
 }
 
