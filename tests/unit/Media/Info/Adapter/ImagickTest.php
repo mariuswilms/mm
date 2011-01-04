@@ -14,7 +14,7 @@
 
 require_once 'Media/Info/Adapter/Imagick.php';
 
-class Media_Infos_Adapter_ImagickTest extends PHPUnit_Framework_TestCase {
+class Media_Info_Adapter_ImagickTest extends PHPUnit_Framework_TestCase {
 
 	protected $_files;
 	protected $_data;
