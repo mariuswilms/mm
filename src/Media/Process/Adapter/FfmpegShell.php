@@ -55,8 +55,10 @@ class Media_Process_Adapter_FfmpegShell extends Media_Process_Adapter {
 	}
 
 	public function store($handle) {
-		if ($this->_options && !$this->_process()) {
-			return false;
+		if ($this->_target != $this->_source || $this->_options) {
+			if (!$this->_process()) {
+				return false;
+			}
 		}
 		rewind($handle);
 		rewind($this->_object);
@@ -70,7 +72,7 @@ class Media_Process_Adapter_FfmpegShell extends Media_Process_Adapter {
 				$this->_options = array(
 					'vcodec' => '-vcodec ' . $this->_type($mimeType),
 					'vframes' => '-vframes 1',
-					'seek' => '-ss 10',
+					'seek' => '-ss 1',
 					'noAudio' => '-an',
 				) + $this->_options;
 
