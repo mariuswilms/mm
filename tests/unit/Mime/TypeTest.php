@@ -89,6 +89,35 @@ class Mime_TypeTest extends PHPUnit_Framework_TestCase {
 		}
 	}
 
+	public function testGuessTypeFilename() {
+		$files = array(
+			'test.gif' => 'image/gif',
+			'test.pdf' => 'application/pdf',
+			'test.ps' => 'application/postscript',
+			'test.tar' => 'application/x-tar',
+			'test.wav' => 'audio/x-wav',
+			'test.html' => 'text/html',
+			'test.php' => 'application/x-php',
+			'test.png' => 'image/png',
+			'test.flv' => 'video/x-flv',
+			'test.aiff' => 'audio/x-aiff',
+			'test.swf' => 'application/x-shockwave-flash',
+			'test.mp4' => 'video/mp4',
+			'test.m4v' => 'video/mp4',
+			'test.m4a' => 'audio/mp4',
+			'test.ogg' => 'audio/ogg',
+			'test.oga' => 'audio/ogg',
+			'test.ogv' => 'video/ogg'
+		);
+		foreach ($files as $file => $mimeType) {
+			$this->assertEquals(
+				$mimeType,
+				Mime_Type::guessType($file),
+				"Filename `{$file}`."
+			);
+		}
+	}
+
 	public function testGuessTypeParanoid() {
 		$this->assertEquals(
 			'image/png',
