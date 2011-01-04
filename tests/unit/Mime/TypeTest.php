@@ -78,7 +78,8 @@ class Mime_TypeTest extends PHPUnit_Framework_TestCase {
 			'audio_apple_snippet.aiff' => 'audio/x-aiff',
 			'flash_snippet.swf' => 'application/x-shockwave-flash',
 			'video_snippet.mp4' => 'video/mp4',
-			'audio_mpeg_snippet.m4a' => 'audio/mp4'
+			'audio_mpeg_snippet.m4a' => 'audio/mp4',
+			'video_quicktime_snippet.mov' => 'video/quicktime'
 		);
 		foreach ($files as $file => $mimeType) {
 			$this->assertEquals(
@@ -165,6 +166,7 @@ class Mime_TypeTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals('oga', Mime_Type::guessExtension('audio/ogg'));
 		$this->assertEquals('ogv', Mime_Type::guessExtension('video/ogg'));
 		$this->assertEquals('mp4', Mime_Type::guessExtension('video/mp4'));
+		$this->assertEquals('mov', Mime_Type::guessExtension('video/quicktime'));
 	}
 
 	public function testGuessExtensionResource() {
