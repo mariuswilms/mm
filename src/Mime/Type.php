@@ -65,7 +65,7 @@ class Mime_Type {
 	 * @see guessType()
 	 */
 	public static $preferredTypes = array(
-		'audio/ogg', 'video/ogg'
+		'audio/ogg'
 	);
 
 	/**
