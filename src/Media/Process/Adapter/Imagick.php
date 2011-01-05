@@ -151,7 +151,7 @@ class Media_Process_Adapter_Imagick extends Media_Process_Adapter {
 		}
 		$constant = 'Imagick::INTERLACE_' . strtoupper($this->_object->getFormat());
 
-		if (!is_defined($constant)) {
+		if (!defined($constant)) {
 			return false;
 		}
 		return $this->_object->setImageInterlaceScheme(constant($constant));
