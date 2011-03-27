@@ -216,7 +216,7 @@ class Media_Process_Adapter_FfmpegShell extends Media_Process_Adapter {
 
 	protected function _requiresFile($type) {
 		$types = array(
-			'mp4', 'ogg'
+			'mp4', 'ogg', 'mov'
 		);
 		return in_array($type, $types);
 	}
