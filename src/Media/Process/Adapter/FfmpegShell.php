@@ -81,8 +81,6 @@ class Media_Process_Adapter_FfmpegShell extends Media_Process_Adapter {
 			case 'video':
 				$this->_target = $this->_type($mimeType);
 				break;
-			default:
-				return true;
 		}
 		return true;
 	}
