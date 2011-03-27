@@ -123,11 +123,29 @@ class Media_Process_Adapter_FfmpegShell extends Media_Process_Adapter {
 		if ($this->_cachedInfo) {
 			return $this->_cachedInfo;
 		}
-		$command = "{$this->_command} -i -";
+		$command = $this->_command;
 
-		rewind($this->_object);
+		$temporaryFile = null;
+		$sourceHandle = $this->_object;
+
+		rewind($sourceHandle);
+
+		if ($this->_sourceRequiresFile()) {
+			$temporaryFile = realpath(sys_get_temp_dir()) . '/' . uniqid('mm_');
+			$temporaryHandle = fopen($temporaryFile, 'w+b');
+
+			stream_copy_to_stream($sourceHandle, $temporaryHandle);
+			fclose($temporaryHandle);
+
+			$command .= " -i {$temporaryFile}";
+			$sourceDescr = array('pipe', 'r');
+		} else {
+			$command .= " -i -";
+			$sourceDescr = $sourceHandle;
+		}
+
 		$descr = array(
-			0 => $this->_object,
+			0 => $sourceDescr,
 			1 => array('pipe', 'w'),
 			2 => array('pipe', 'w')
 		);
@@ -145,6 +163,10 @@ class Media_Process_Adapter_FfmpegShell extends Media_Process_Adapter {
 		fclose($pipes[2]);
 		proc_close($process);
 
+		if ($temporaryFile) {
+			unlink($temporaryFile);
+		}
+
 		/* Intentionally not checking for return value. */
 		return $this->_cachedInfo = $result;
 	}
@@ -156,7 +178,7 @@ class Media_Process_Adapter_FfmpegShell extends Media_Process_Adapter {
 		$temporaryFile = null;
 		$targetHandle = fopen('php://temp', 'w+b');
 
-		if ($this->_requiresFile($this->_target)) {
+		if ($this->_targetRequiresFile()) {
 			/* Some formats require the target to be seekable.
 			   We workaround that by creating a file and deleting it later. */
 
@@ -214,11 +236,18 @@ class Media_Process_Adapter_FfmpegShell extends Media_Process_Adapter {
 		return isset($map[$type]) ? $map[$type] : $type;
 	}
 
-	protected function _requiresFile($type) {
+	protected function _sourceRequiresFile() {
+		$types = array(
+			'mp4', 'mov'
+		);
+		return in_array($this->_source, $types);
+	}
+
+	protected function _targetRequiresFile() {
 		$types = array(
 			'mp4', 'ogg', 'mov'
 		);
-		return in_array($type, $types);
+		return in_array($this->_target, $types);
 	}
 }
 
