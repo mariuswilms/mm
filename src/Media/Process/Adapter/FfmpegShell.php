@@ -123,26 +123,27 @@ class Media_Process_Adapter_FfmpegShell extends Media_Process_Adapter {
 		if ($this->_cachedInfo) {
 			return $this->_cachedInfo;
 		}
-		$command = $this->_command;
+		$source = "-f {$this->_source} -i";
 
-		$temporaryFile = null;
+		$tempFile = null;
 		$sourceHandle = $this->_object;
 
 		rewind($sourceHandle);
 
 		if ($this->_sourceRequiresFile()) {
-			$temporaryFile = realpath(sys_get_temp_dir()) . '/' . uniqid('mm_');
-			$temporaryHandle = fopen($temporaryFile, 'w+b');
+			$tempFile = $this->_tempFile();
+			$tempHandle = fopen($tempFile, 'w+b');
 
-			stream_copy_to_stream($sourceHandle, $temporaryHandle);
-			fclose($temporaryHandle);
+			stream_copy_to_stream($sourceHandle, $tempHandle);
+			fclose($tempHandle);
 
-			$command .= " -i {$temporaryFile}";
+			$source .= " {$tempFile}";
 			$sourceDescr = array('pipe', 'r');
 		} else {
-			$command .= " -i -";
+			$source .= ' -';
 			$sourceDescr = $sourceHandle;
 		}
+		$command  = "{$this->_command} {$source}";
 
 		$descr = array(
 			0 => $sourceDescr,
@@ -163,8 +164,8 @@ class Media_Process_Adapter_FfmpegShell extends Media_Process_Adapter {
 		fclose($pipes[2]);
 		proc_close($process);
 
-		if ($temporaryFile) {
-			unlink($temporaryFile);
+		if ($tempFile) {
+			unlink($tempFile);
 		}
 
 		/* Intentionally not checking for return value. */
@@ -172,19 +173,41 @@ class Media_Process_Adapter_FfmpegShell extends Media_Process_Adapter {
 	}
 
 	protected function _process() {
-		$source = "-f {$this->_source} -i -";
+		$source = "-f {$this->_source} -i";
 		$target = "-f {$this->_target}";
 
-		$temporaryFile = null;
+		$tempSourceFile = null;
+		$tempTargetFile = null;
+
+		rewind($this->_object);
+
+		$sourceHandle = $this->_object;
 		$targetHandle = fopen('php://temp', 'w+b');
 
+		if ($this->_sourceRequiresFile()) {
+			/* In some situation (erroneous encoded source files) dimension
+			   information cannot be retrieved. As we cannot hint the source
+			   dimensions we use this workaround. */
+
+			$tempSourceFile = $this->_tempFile();
+			$tempSourceHandle = fopen($tempSourceFile, 'w+b');
+
+			stream_copy_to_stream($sourceHandle, $tempSourceHandle);
+			fclose($tempSourceHandle);
+
+			$source .= " {$tempSourceFile}";
+			$sourceDescr = array('pipe', 'r');
+		} else {
+			$source .= ' -';
+			$sourceDescr = $sourceHandle;
+		}
 		if ($this->_targetRequiresFile()) {
 			/* Some formats require the target to be seekable.
 			   We workaround that by creating a file and deleting it later. */
 
-			$temporaryFile = realpath(sys_get_temp_dir()) . '/' . uniqid('mm_');
+			$tempTargetFile = $this->_tempFile();
 
-			$target .= " {$temporaryFile}";
+			$target .= " {$tempTargetFile}";
 			$targetDescr = array('pipe', 'w');
 		} else {
 			$target .= " -";
@@ -194,9 +217,8 @@ class Media_Process_Adapter_FfmpegShell extends Media_Process_Adapter {
 		$options = $this->_options ? implode(' ', $this->_options) . ' ' : null;
 		$command  = "{$this->_command} {$source} {$options}{$target}";
 
-		rewind($this->_object);
 		$descr = array(
-			0 => $this->_object,
+			0 => $sourceDescr,
 			1 => $targetDescr,
 			2 => array('pipe', 'a')
 		);
@@ -204,14 +226,18 @@ class Media_Process_Adapter_FfmpegShell extends Media_Process_Adapter {
 		fclose($pipes[2]);
 		$return = proc_close($process);
 
-		if ($temporaryFile) {
-			/* This is the continuation of the above workaround. */
-			$temporaryHandle = fopen($temporaryFile, 'r+b');
+		/* Clean/finish above workarounds. */
 
-			stream_copy_to_stream($temporaryHandle, $targetHandle);
+		if ($tempSourceFile) {
+			unlink($tempSourcefile);
+		}
+		if ($tempTargetFile) {
+			$tempTargetHandle = fopen($tempTargetFile, 'r+b');
 
-			fclose($temporaryHandle);
-			unlink($temporaryFile);
+			stream_copy_to_stream($tempTargetHandle, $targetHandle);
+
+			fclose($tempTargetHandle);
+			unlink($tempTargetFile);
 		}
 
 		if ($return != 0) {
@@ -248,6 +274,10 @@ class Media_Process_Adapter_FfmpegShell extends Media_Process_Adapter {
 			'mp4', 'ogg', 'mov'
 		);
 		return in_array($this->_target, $types);
+	}
+
+	protected function _tempFile() {
+		return realpath(sys_get_temp_dir()) . '/' . uniqid('mm_');
 	}
 }
 
