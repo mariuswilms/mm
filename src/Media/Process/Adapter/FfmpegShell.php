@@ -73,7 +73,7 @@ class Media_Process_Adapter_FfmpegShell extends Media_Process_Adapter {
 				$this->_options = array(
 					'vcodec' => '-vcodec ' . $this->_type($mimeType),
 					'vframes' => '-vframes 1',
-					'seek' => '-ss 1',
+					'seek' => '-ss ' . intval($this->duration() / 3),
 					'noAudio' => '-an',
 				) + $this->_options;
 
