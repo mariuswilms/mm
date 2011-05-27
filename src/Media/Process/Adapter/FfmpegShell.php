@@ -87,12 +87,7 @@ class Media_Process_Adapter_FfmpegShell extends Media_Process_Adapter {
 	}
 
 	public function resize($width, $height) {
-		$width  = (integer) $width;
-		$height = (integer) $height;
-
-		$this->_options['resize'] = "-s {$width}x{$height}";
-		$this->_width = $width;
-		$this->_height = $height;
+		$this->_options['resize'] = array((integer) $width, (integer) $height);
 		return true;
 	}
 
@@ -233,6 +228,16 @@ class Media_Process_Adapter_FfmpegShell extends Media_Process_Adapter {
 			$targetDescr = $targetHandle;
 		}
 
+		if (isset($this->_options['resize'])) {
+			list($width, $height) = $this->_options['resize'];
+
+			if ($this->_targetRequiresEvenSizes()) {
+				$width = $width % 2 ? $width + 1 : $width;
+				$height = $height % 2 ? $height + 1 : $height;
+			}
+			$this->_options['resize'] = "-s {$width}x{$height}";
+		}
+
 		$options = $this->_options ? implode(' ', $this->_options) . ' ' : null;
 		$command  = "{$this->_command} {$source} {$options}{$target}";
 
@@ -291,6 +296,13 @@ class Media_Process_Adapter_FfmpegShell extends Media_Process_Adapter {
 	protected function _targetRequiresFile() {
 		$types = array(
 			'mp4', 'ogg', 'mov'
+		);
+		return in_array($this->_target, $types);
+	}
+
+	protected function _targetRequiresEvenSizes() {
+		$types = array(
+			'mp4'
 		);
 		return in_array($this->_target, $types);
 	}
