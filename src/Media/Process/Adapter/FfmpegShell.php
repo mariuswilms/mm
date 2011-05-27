@@ -30,6 +30,7 @@ class Media_Process_Adapter_FfmpegShell extends Media_Process_Adapter {
 
 	protected $_width;
 	protected $_height;
+	protected $_duration;
 
 	protected $_source;
 	protected $_target;
@@ -117,6 +118,24 @@ class Media_Process_Adapter_FfmpegShell extends Media_Process_Adapter {
 			throw new Exception('Could not parse height.');
 		}
 		return $matches[1];
+	}
+
+	public function duration() {
+		if ($this->_duration) {
+			return $this->_duration;
+		}
+		preg_match('/Duration\:\s([0-9]{2})\:([0-9]{2})\:([0-9]{2})/', $this->_info(), $matches);
+
+		if (!isset($matches[1], $matches[2], $matches[3])) {
+			throw new Exception('Could not parse duration.');
+		}
+
+		$duration  = $matches[1] * 60 * 60; /* hours */
+		$duration += $matches[2] * 60;      /* minutes */
+		$duration += $matches[3];           /* seconds */
+		/* We do not care about ms. */
+
+		return $duration;
 	}
 
 	protected function _info() {
