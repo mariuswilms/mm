@@ -100,7 +100,7 @@ class Media_Process_Adapter_FfmpegShell extends Media_Process_Adapter {
 		if ($this->_width) {
 			return $this->_width;
 		}
-		preg_match('/Video\:.*,\s([0-9]+)x/', $i = $this->_info(), $matches);
+		preg_match('/Video\:.*,\s([0-9]+)x/', $this->_info(), $matches);
 
 		if (!isset($matches[1])) {
 			throw new Exception('Could not parse width.');
