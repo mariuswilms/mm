@@ -195,7 +195,7 @@ class Media_Process_Image extends Media_Process_Generic {
 	 * Be careful when removing color profiles (icc) and copyright information (iptc/xmp).
 	 *
 	 * @param string $type One of either `'8bim'`, `'icc'`, `'iptc'`, `'xmp'`, `'app1'`, `'app12'`, `'exif'`.
-	 *                     Repet argument to strip multiple types.
+	 *                     Repeat argument to strip multiple types.
 	 * @return boolean
 	 */
 	public function strip($type) {
