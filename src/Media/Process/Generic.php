@@ -86,27 +86,33 @@ class Media_Process_Generic {
 	}
 
 	/**
-	 * Stores the media to a file.
+	 * Stores the media to a file or resource.
 	 *
-	 * @param string $file Absolute path to a file
-	 * @param boolean $overwrite Controls overwriting of an existent file, defaults to `false`
-	 * @return string|boolean
+	 * @param string|resource $source Eitehr an absolute path to a file or a writable ressource.
+	 * @param boolean $overwrite Controls overwriting of an existent file, defaults to `false`.
+	 * @return string|resource|boolean
 	 */
-	public function store($file, array $options = array()) {
+	public function store($source, array $options = array()) {
 		$options += array('overwrite' => false);
 
-		if (file_exists($file)) {
-			if ($options['overwrite']) {
-				unlink($file);
-			} else {
-				return false;
-			}
-		}
-		$handle = fopen($file, 'wb');
-		$result = $this->_adapter->store($handle);
-		fclose($handle);
+		if (is_resource($source)) {
+			$handle = $source;
 
-		return $result ? $file : false;
+			rewind($handle);
+			$result = $this->_adapter->store($handle);
+		} else {
+			if (file_exists($source)) {
+				if ($options['overwrite']) {
+					unlink($source);
+				} else {
+					return false;
+				}
+			}
+			$handle = fopen($source, 'wb');
+			$result = $this->_adapter->store($handle);
+			fclose($handle);
+		}
+		return $result ? $source : false;
 	}
 
 	/**
