@@ -74,7 +74,9 @@ class Media_Process_Adapter_FfmpegShell extends Media_Process_Adapter {
 	}
 
 	public function store($handle) {
-		if ($this->_targetType != $this->_objectType || $this->_options) {
+		$original = get_class_vars(__CLASS__);
+
+		if ($this->_targetType != $this->_objectType || $original['_options'] != $this->_options) {
 			if (!$this->_process()) {
 				return false;
 			}
