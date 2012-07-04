@@ -29,7 +29,7 @@ class Media_Info_Adapter_NewWaveTest extends PHPUnit_Framework_TestCase {
 		$subject = new Media_Info_Adapter_NewWave($source);
 
 		$result = $subject->all();
-		$this->assertType(PHPUnit_Framework_Constraint_IsType::TYPE_ARRAY, $result);
+		$this->assertInternalType('array', $result);
 
 		$this->assertArrayHasKey('samples', $result);
 	}

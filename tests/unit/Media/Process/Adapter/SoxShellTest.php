@@ -62,7 +62,7 @@ class Media_Process_Adapter_SoxShellTest extends PHPUnit_Framework_TestCase {
 		$subject->convert('audio/x-wav');
 		$result = $subject->store($target);
 
-		$this->assertType(PHPUnit_Framework_Constraint_IsType::TYPE_INT, $result);
+		$this->assertInternalType('integer', $result);
 		$this->assertEquals('audio/x-wav', Mime_Type::guessType($target));
 
 		fclose($source);

@@ -52,7 +52,7 @@ class Media_InfoTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue(is_a($result, 'Media_Info_Document'));
 
 		$result = Media_Info::factory(array('source' => "{$this->_files}/audio_ogg_snippet.ogg"));
-		$this->assertType('Media_Info_Audio', $result);
+		$this->assertInstanceOf('Media_Info_Audio', $result);
 	}
 
 	public function testMediaFactorySourceFailStream() {

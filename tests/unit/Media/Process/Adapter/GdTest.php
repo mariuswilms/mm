@@ -54,7 +54,7 @@ class Media_Process_Adapter_GdTest extends PHPUnit_Framework_TestCase {
 
 		$subject = new Media_Process_Adapter_Gd($source);
 		$result = $subject->store($target);
-		$this->assertType(PHPUnit_Framework_Constraint_IsType::TYPE_INT, $result);
+		$this->assertInternalType('integer', $result);
 
 		fclose($source);
 		fclose($target);
@@ -68,7 +68,7 @@ class Media_Process_Adapter_GdTest extends PHPUnit_Framework_TestCase {
 		$subject->convert('image/jpeg');
 		$result = $subject->store($target);
 
-		$this->assertType(PHPUnit_Framework_Constraint_IsType::TYPE_INT, $result);
+		$this->assertInternalType('integer', $result);
 		$this->assertEquals('image/jpeg', Mime_Type::guessType($target));
 
 		fclose($source);

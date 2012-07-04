@@ -47,7 +47,7 @@ class Media_Process_ConversionTest extends PHPUnit_Framework_TestCase {
 			'adapter' => 'GenericMock'
 		));
 		$result = $media->convert('image/jpg');
-		$this->assertType('Media_Process_Image', $result);
+		$this->assertInstanceOf('Media_Process_Image', $result);
 	}
 
 	public function testMediaChangeDifferentAdapter() {
@@ -63,7 +63,7 @@ class Media_Process_ConversionTest extends PHPUnit_Framework_TestCase {
 
 		$media = new Media_Process_Video(compact('adapter'));
 		$result = $media->convert('image/jpg');
-		$this->assertType('Media_Process_Image', $result);
+		$this->assertInstanceOf('Media_Process_Image', $result);
 
 		fclose($source);
 		fclose($storeFrom);

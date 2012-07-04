@@ -30,24 +30,24 @@ class Media_Process_GenericTest extends PHPUnit_Framework_TestCase {
 			'source' => "{$this->_files}/image_jpg.jpg",
 			'adapter' => new Media_Process_Adapter_GenericMock(null)
 		));
-		$this->assertType(PHPUnit_Framework_Constraint_IsType::TYPE_OBJECT, $result);
+		$this->assertInternalType('object', $result);
 
 		$result = new Media_Process_Generic(array(
 			'source' => fopen("{$this->_files}/image_jpg.jpg", 'rb'),
 			'adapter' => new Media_Process_Adapter_GenericMock(null)
 		));
-		$this->assertType(PHPUnit_Framework_Constraint_IsType::TYPE_OBJECT, $result);
+		$this->assertInternalType('object', $result);
 
 		$result = new Media_Process_Generic(array(
 			'source' => "{$this->_files}/image_jpg.jpg",
 			'adapter' => new Media_Process_Adapter_GenericMock('test')
 		));
-		$this->assertType(PHPUnit_Framework_Constraint_IsType::TYPE_OBJECT, $result);
+		$this->assertInternalType('object', $result);
 
 		$result = new Media_Process_Generic(array(
 			'adapter' => new Media_Process_Adapter_GenericMock('test')
 		));
-		$this->assertType(PHPUnit_Framework_Constraint_IsType::TYPE_OBJECT, $result);
+		$this->assertInternalType('object', $result);
 	}
 
 	public function testConstructFailWithNoArgs() {

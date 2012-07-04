@@ -33,7 +33,7 @@ class Media_Info_Adapter_ImagickTest extends PHPUnit_Framework_TestCase {
 		$subject = new Media_Info_Adapter_Imagick($source);
 
 		$result = $subject->all();
-		$this->assertType(PHPUnit_Framework_Constraint_IsType::TYPE_ARRAY, $result);
+		$this->assertInternalType('array', $result);
 
 		$this->assertArrayHasKey('width', $result);
 		$this->assertArrayHasKey('height', $result);
@@ -45,7 +45,7 @@ class Media_Info_Adapter_ImagickTest extends PHPUnit_Framework_TestCase {
 		$subject = new Media_Info_Adapter_Imagick($source);
 
 		$result = $subject->all();
-		$this->assertType(PHPUnit_Framework_Constraint_IsType::TYPE_ARRAY, $result);
+		$this->assertInternalType('array', $result);
 
 		$this->assertArrayHasKey('width', $result);
 		$this->assertArrayHasKey('height', $result);
@@ -60,7 +60,7 @@ class Media_Info_Adapter_ImagickTest extends PHPUnit_Framework_TestCase {
 		$subject = new Media_Info_Adapter_Imagick($source);
 
 		$result = $subject->all();
-		$this->assertType(PHPUnit_Framework_Constraint_IsType::TYPE_ARRAY, $result);
+		$this->assertInternalType('array', $result);
 
 		$this->assertArrayHasKey('width', $result);
 		$this->assertArrayHasKey('height', $result);
