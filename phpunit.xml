@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
  mm: the PHP media library
  
@@ -10,7 +11,6 @@
  @license    http://www.opensource.org/licenses/mit-license.php The MIT License
  @link       http://github.com/davidpersson/mm
 -->
-<?xml version="1.0" encoding="UTF-8"?>
 <phpunit 
 	backupGlobals="false"
 	backupStaticAttributes="false"
