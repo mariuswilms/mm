@@ -20,3 +20,4 @@ php:
 before_install:
   - sudo apt-get update
   - sudo apt-get install ghostscript imagemagick ffmpeg sox
+  - pecl install imagick
