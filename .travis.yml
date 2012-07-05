@@ -20,3 +20,4 @@ php:
 before_install:
   - sudo apt-get -qq update
   - sudo apt-get -qq install ghostscript imagemagick ffmpeg sox php5-imagick
+  - echo "extension=imagick.so" >> `php --ini | grep "Loaded Configuration" | sed -e "s|.*:\s*||"`
