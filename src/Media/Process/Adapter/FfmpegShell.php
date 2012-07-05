@@ -62,7 +62,7 @@ class Media_Process_Adapter_FfmpegShell extends Media_Process_Adapter {
 		return true;
 	}
 
-	public function passthru($key, $value = null) {
+	public function passthru($key, $value) {
 		if ($value === null) {
 			$this->_options[$key] = "-{$key}";
 		} elseif (is_array($value)) {
