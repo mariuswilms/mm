@@ -19,7 +19,11 @@ php:
 
 before_install:
   - sudo apt-get -qq update
-  - sudo apt-get -qq install ghostscript imagemagick ffmpeg sox php5-imagick
+  - sudo apt-get -qq install ghostscript
+  - sudo apt-get -qq install imagemagick libmagickwand-dev libmagickcore3 libmagickwand3
+  - sudo apt-get -qq install ffmpeg
+  - sudo apt-get -qq install sox
+  - printf "\n" | sudo pecl install imagick
   - echo "extension=imagick.so" >> `php --ini | grep "Loaded Configuration" | sed -e "s|.*:\s*||"`
   - uname -a
   - convert --version
