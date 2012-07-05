@@ -18,10 +18,11 @@ php:
   - 5.4
 
 before_install:
-  - sudo apt-get install ghostscript
-  - sudo apt-get install imagemagick libmagickwand-dev libmagickcore3 libmagickwand3
-  - sudo apt-get install ffmpeg
-  - sudo apt-get install sox
+  - sudo apt-get -qq update
+  - sudo apt-get -qq install ghostscript
+  - sudo apt-get -qq install imagemagick libmagickwand-dev libmagickcore3 libmagickwand3
+  - sudo apt-get -qq install ffmpeg
+  - sudo apt-get -qq install sox
   - printf "\n" | sudo pecl install imagick
   - echo "extension=imagick.so" >> `php --ini | grep "Loaded Configuration" | sed -e "s|.*:\s*||"`
 
