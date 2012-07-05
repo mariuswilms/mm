@@ -46,7 +46,7 @@ abstract class Media_Process_Adapter {
 	 * Allows for direct manipulation.
 	 *
 	 * @param string|integer $key
-	 * @param mixed $value
+	 * @param mixed $value Value `null` should be passed if `$key` is a boolean switch.
 	 * @return boolean `true` on success, `false` if something went wrong.
 	 */
 	abstract public function passthru($key, $value);

@@ -69,7 +69,7 @@ class Media_Process_Generic {
 	 * command is incomplete or doesn't make sense.
 	 *
 	 * @param string|integer $key
-	 * @param mixed $value Optional.
+	 * @param mixed $value Optional when `$key` is a boolean switch.
 	 * @return boolean `true` on success, `false` if something went wrong.
 	 */
 	public function passthru($key, $value = null) {
