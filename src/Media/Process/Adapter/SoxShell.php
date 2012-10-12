@@ -95,7 +95,6 @@ class Media_Process_Adapter_SoxShell extends Media_Process_Adapter {
 
 		if ($return != 0) {
 			rewind($error);
-			//var_dump(stream_get_contents($temporary, -1, 0));
 			// throw new RuntimeException("Command `{$command}` returned `{$return}`.");
 			return false;
 		}
