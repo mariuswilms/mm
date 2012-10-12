@@ -186,6 +186,7 @@ class Mime_TypeTest extends PHPUnit_Framework_TestCase {
 		$map = array(
 			'video/webm' => 'video',
 			'video/x-msvideo' => 'video',
+			'video/mp4' => 'video',
 			'application/ogg' => 'audio',
 			'application/octet-stream' => 'generic',
 			'text/unknown' => 'generic',
