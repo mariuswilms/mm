@@ -31,7 +31,11 @@ class Media_Process_Adapter_FfmpegShell extends Media_Process_Adapter {
 	protected $_height;
 
 	protected $_command;
-	protected $_options = array('overwrite' => '-y');
+
+	protected $_options = array(
+		'overwrite' => '-y',
+		'vsync' => '-vsync 2'
+	);
 
 	protected $_targetType;
 
