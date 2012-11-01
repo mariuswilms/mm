@@ -66,41 +66,42 @@ the adapters you are using you may need (this is a selection):
 
 Installation
 ------------
-1. Extract the downloaded archive.
-2. Move or copy the extracted directory davidpersson-mm-[hash]
-   to /path/to/your/libraries.
-3. Put the src directory of it in your include path.
- ```
-	  ini_set('include_path',ini_get('include_path') . PATH_SEPARATOR . '/path/to/mm/src');
- ```
-4. Classes must be configured prior to using them.
- ```
-	  require 'Mime/Type.php';
-	  require 'Media/Process.php';
-	  require 'Media/Info.php';
+1. Clone the repository or extract a downloaded archive, then move
+   or copy the resulting directory to /path/to/your/libraries.
 
-	  Mime_Type::config('Magic', array(
-		'adapter' => 'Fileinfo'
-	  ));
-	  Mime_Type::config('Glob', array(
-		'adapter' => 'Freedesktop',
-		'file' => '/path/to/mm/data/glob.db'
-	  ));
+2. Put the src directory of it in your include path.
+   ```
+   ini_set('include_path', ini_get('include_path') . PATH_SEPARATOR . '/path/to/mm/src');
+   ```
 
-	  Media_Process::config(array(
-		// 'audio' => 'SoxShell',
-		// 'document' => 'Imagick',
-		'image' => 'Gd',
-		// 'video' => 'FfmpegShell'
-	  ));
+3. To bootstrap, classes must be configured prior using them.
+   ```
+   require 'Mime/Type.php';
+   require 'Media/Process.php';
+   require 'Media/Info.php';
 
-	  Media_Info::config(array(
-		// 'audio' => array('SoxShell'),
-		// 'document' => array('Imagick'),
-		'image' => array('ImageBasic'),
-		// 'video' => array('FfmpegShell')
-	  ));
- ```
+   Mime_Type::config('Magic', array(
+       'adapter' => 'Fileinfo'
+   ));
+   Mime_Type::config('Glob', array(
+       'adapter' => 'Freedesktop',
+       'file' => '/path/to/mm/data/glob.db'
+   ));
+
+   Media_Process::config(array(
+       // 'audio' => 'SoxShell',
+       // 'document' => 'Imagick',
+       'image' => 'Gd',
+       // 'video' => 'FfmpegShell'
+   ));
+
+   Media_Info::config(array(
+       // 'audio' => array('SoxShell'),
+       // 'document' => array('Imagick'),
+       'image' => array('ImageBasic'),
+       // 'video' => array('FfmpegShell')
+   ));
+   ```
 
 Running the Tests
 -----------------
