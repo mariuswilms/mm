@@ -89,6 +89,11 @@ class Media_Process_Adapter_Imagick extends Media_Process_Adapter {
 		return (boolean) call_user_func_array([$this->_object, $method], $args);
 	}
 
+	public function trim($fuzz) {
+		return $this->_object->trimImage($fuzz)
+			&& $this->_object->setImagePage(0, 0, 0, 0);
+	}
+
 	// @link http://studio.imagemagick.org/pipermail/magick-users/2002-August/004435.html
 	public function compress($value) {
 		switch ($this->_object->getFormat()) {
@@ -189,6 +194,11 @@ class Media_Process_Adapter_Imagick extends Media_Process_Adapter {
 
 	public function height() {
 		return $this->_object->getImageHeight();
+	}
+
+	public function quantumRange() {
+		$result = $this->_object->getQuantumRange();
+		return $result['quantumRangeLong'];
 	}
 }
 

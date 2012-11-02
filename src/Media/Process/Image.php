@@ -164,6 +164,12 @@ class Media_Process_Image extends Media_Process_Generic {
 		return $this->_adapter->crop($left, $top, $width, $height);
 	}
 
+	public function trim($percent = 30) {
+		$fuzz = $this->_adapter->quantumRange() * $percent / 100;
+		return $this->_adapter->trim($fuzz);
+	}
+
+
 	/**
 	 * Selects level of compression (and in for some format the filters) than
 	 * compresses the media according to provided value.

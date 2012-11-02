@@ -120,6 +120,10 @@ class Media_Process_Adapter_Gd extends Media_Process_Adapter {
 		throw new Exception("The adapter has no passthru support.");
 	}
 
+	public function trim($fuzz) {
+		throw new Exception("The adapter doesn't support the `trim` action.");
+	}
+
 	public function compress($value) {
 		switch ($this->_format) {
 			case 'jpeg':
@@ -298,6 +302,10 @@ class Media_Process_Adapter_Gd extends Media_Process_Adapter {
 
 	public function height() {
 		return imageSY($this->_object);
+	}
+
+	public function quantumRange() {
+		throw new Exception("The adapter doesn't support the `quantumRange` action.");
 	}
 
 	protected function _isResource($image) {
