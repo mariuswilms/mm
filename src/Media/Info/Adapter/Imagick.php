@@ -61,6 +61,36 @@ class Media_Info_Adapter_Imagick extends Media_Info_Adapter {
 		}
 		return $args ? call_user_func_array([$object, $method], $args) : $object->{$method}();
 	}
+
+	/**
+	 * Retrieve colors unique to the object.
+	 *
+	 * This method operates on a clone of the object as we're going to
+	 * manipulate it first and we don't want the underlying object to change,
+	 * treating it as read-only.
+	 *
+	 * @param integer $spread Maximum number of colors to retrieve.
+	 * @return array Retrieved colors, each color is represnted by an array
+	 *               itself. The elements in that array are R, G, B values
+	 *               and indexed numerically in that order i.e. `array(100, 57, 33)`.
+	 */
+	public function colors($spread = 20) {
+		$colors = array();
+
+		$object = clone $this->_object;
+		$object->quantizeImage($spread, Imagick::COLORSPACE_RGB, 0, false, false);
+		$object->uniqueImageColors();
+
+		$rows = $object->getPixelIterator();
+		$rows->resetIterator();
+
+		while ($row = $rows->getNextIteratorRow()) {
+			foreach ($row as $pixel) {
+				$colors[] = array_values($pixel->getColor());
+			}
+		}
+		return $colors;
+	}
 }
 
 ?>

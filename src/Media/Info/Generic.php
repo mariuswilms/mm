@@ -136,6 +136,7 @@ class Media_Info_Generic {
 	 *   - `'megapixel'`
 	 *   - `'ratio'`
 	 *   - `'knowRatio'`
+	 *   - `'colors'`
 	 *
 	 * Common fields, supported by some text and document adapters:
 	 *   - `'characters'`
