@@ -49,10 +49,17 @@ class Media_Info_Adapter_Imagick extends Media_Info_Adapter {
 		return $results;
 	}
 
-	public function get($name) {
-		if (isset($this->_map[$name])) {
-			return $this->_object->{$this->_map[$name]}();
+	public function get($name, $args = array()) {
+		if (method_exists($this, $name)) {
+			$object = $this;
+			$method = $name;
+		} elseif (isset($this->_map[$name])) {
+			$object = $this->_object;
+			$method = $this->_map[$name];
+		} else {
+			return;
 		}
+		return $args ? call_user_func_array(array($object, $method), $args) : $object->{$method}();
 	}
 }
 
