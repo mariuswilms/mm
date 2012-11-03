@@ -78,7 +78,7 @@ class Media_Info_Generic {
 	 */
 	public function __call($method, $args) {
 		foreach ($this->_adapters as $adapter) {
-			if ($result = $adapter->get($method)) {
+			if ($result = $adapter->get($method, $args)) {
 				return $result;
 			}
 		}
@@ -135,14 +135,15 @@ class Media_Info_Generic {
 	 *   - `'words'`
 	 *
 	 * @param string $name Retrieve data just for the given name.
+	 * @param array $args Arguments passed to adapter or media method.
 	 * @return mixed A scalar value.
 	 */
-	public function get($name) {
+	public function get($name, $args = array()) {
 		if (method_exists($this, $name)) {
-			return $this->{$name}();
+			return $args ? call_user_func_array(array($this, $name), $args) : $this->{$name}();
 		}
 		foreach ($this->_adapters as $adapter) {
-			if ($result = $adapter->get($name)) {
+			if ($result = $adapter->get($name, $args)) {
 				return $result;
 			}
 		}
