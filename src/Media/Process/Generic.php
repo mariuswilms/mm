@@ -122,9 +122,7 @@ class Media_Process_Generic {
 	 * @return boolean|object false on error or a Media object on success
 	 */
 	public function convert($mimeType) {
-		if (!$this->_adapter->convert($mimeType)) {
-			return false;
-		}
+		$this->_adapter->convert($mimeType);
 
 		if ($this->name() != Mime_Type::guessName($mimeType)) {
 			// Crosses media (i.e. document -> image).
@@ -139,12 +137,8 @@ class Media_Process_Generic {
 			} else {
 				// ...using different adapters.
 				$handle = fopen('php://temp', 'w+');
+				$this->_adapter->store($handle);
 
-				if (!$this->_adapter->store($handle)) {
-					$message  = "Failed to store media into temporary when crossing media ";
-					$message .= "and switching adapters for MIME type `{$mimeType}` conversion.";
-					throw new Exception($message);
-				}
 				$media = Media_Process::factory(array('source' => $handle));
 				fclose($handle);
 			}

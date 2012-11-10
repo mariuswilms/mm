@@ -86,7 +86,10 @@ class Media_Process_Adapter_FfmpegShell extends Media_Process_Adapter {
 		rewind($handle);
 		rewind($this->_object);
 
-		return stream_copy_to_stream($this->_object, $handle);
+		if (stream_copy_to_stream($this->_object, $handle)) {
+			return true;
+		}
+		throw new Exception("Failed to store object into handle.");
 	}
 
 	public function convert($mimeType) {

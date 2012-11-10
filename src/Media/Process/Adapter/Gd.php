@@ -96,17 +96,24 @@ class Media_Process_Adapter_Gd extends Media_Process_Adapter {
 		$blob = ob_get_clean();
 
 		rewind($handle);
-		return fwrite($handle, $blob);
+
+		if (!strlen($blob)) {
+			throw new Exception('Got empty object blob from extraction.');
+		}
+		if (!fwrite($handle, $blob)) {
+			throw new Exception('Failed to write object blob into handle.');
+		}
+		return true;
 	}
 
 	public function convert($mimeType) {
 		if (Mime_Type::guessName($mimeType) != 'image') {
 			return true;
 		}
-		if (isset($this->_formatMap[$mimeType])) {
-			return $this->_format = $this->_formatMap[$mimeType];
+		if (!isset($this->_formatMap[$mimeType])) {
+			throw new OutOfBoundsException("Conversion to MIME type `{$mimeType}` not supported.");
 		}
-		return false;
+		return $this->_format = $this->_formatMap[$mimeType];
 	}
 
 	public function passthru($key, $value) {
@@ -162,11 +169,11 @@ class Media_Process_Adapter_Gd extends Media_Process_Adapter {
 	}
 
 	public function interlace($value) {
-		if (in_array($this->_format, array('jpeg', 'png', 'gif'))) {
-			imageInterlace($this->_object, $value ? 1 : 0);
-			return true;
+		if (!in_array($this->_format, array('jpeg', 'png', 'gif'))) {
+			throw new Exception("Format `{$this->_format}` not supported for interlacing.");
 		}
-		return false;
+		imageInterlace($this->_object, $value ? 1 : 0);
+		return true;
 	}
 
 	public function crop($left, $top, $width, $height) {
@@ -201,7 +208,7 @@ class Media_Process_Adapter_Gd extends Media_Process_Adapter {
 			$this->_object = $image;
 			return true;
 		}
-		return false;
+		throw new Exception("Failed to crop object.");
 	}
 
 	public function resize($width, $height) {
@@ -234,7 +241,7 @@ class Media_Process_Adapter_Gd extends Media_Process_Adapter {
 			$this->_object = $image;
 			return true;
 		}
-		return false;
+		throw new Exception("Failed to resize object.");
 	}
 
 	public function cropAndResize($cropLeft, $cropTop, $cropWidth, $cropHeight, $resizeWidth, $resizeHeight) {
@@ -271,7 +278,7 @@ class Media_Process_Adapter_Gd extends Media_Process_Adapter {
 			$this->_object = $image;
 			return true;
 		}
-		return false;
+		throw new Exception("Failed to crop and resize object.");
 	}
 
 	public function width() {
@@ -296,14 +303,13 @@ class Media_Process_Adapter_Gd extends Media_Process_Adapter {
 			$color = imageColorAllocate($target, $rgba['red'], $rgba['green'], $rgba['blue']);
 			imageColorTransparent($target, $color);
 			imageFill($target, 0, 0, $color);
-		} else {
-			if ($this->_format == 'png') {
-				imageAlphaBlending($target, false);
-				imageSaveAlpha($target, true);
-			} elseif ($this->_format != 'gif') {
-				$white = imageColorAllocate($target, 255, 255, 255);
-				imageFill($target, 0, 0 , $white);
-			}
+		}
+		if ($this->_format == 'png') {
+			imageAlphaBlending($target, false);
+			imageSaveAlpha($target, true);
+		} elseif ($this->_format != 'gif') {
+			$white = imageColorAllocate($target, 255, 255, 255);
+			imageFill($target, 0, 0 , $white);
 		}
 	}
 }

@@ -39,7 +39,10 @@ class Media_Process_Adapter_SoxShell extends Media_Process_Adapter {
 		rewind($handle);
 		rewind($this->_object);
 
-		return stream_copy_to_stream($this->_object, $handle);
+		if (stream_copy_to_stream($this->_object, $handle)) {
+			return true;
+		}
+		throw new Exception("Failed to store object into handle.");
 	}
 
 	public function convert($mimeType) {
@@ -95,8 +98,11 @@ class Media_Process_Adapter_SoxShell extends Media_Process_Adapter {
 
 		if ($return != 0) {
 			rewind($error);
-			// throw new RuntimeException("Command `{$command}` returned `{$return}`.");
-			return false;
+			$output = stream_get_contents($error);
+			fclose($error);
+
+			$mesage = "Command `{$command}` returned `{$return}`; output was:\n{$output}";
+			throw new RuntimeException($message);
 		}
 		fclose($error);
 
