@@ -90,7 +90,7 @@ class Media_Process_Generic {
 	 *
 	 * @param string|resource $source Eitehr an absolute path to a file or a writable ressource.
 	 * @param boolean $overwrite Controls overwriting of an existent file, defaults to `false`.
-	 * @return string|resource|boolean
+	 * @return resource Returns the (unrewinded) source used.
 	 */
 	public function store($source, array $options = array()) {
 		$options += array('overwrite' => false);
@@ -99,20 +99,19 @@ class Media_Process_Generic {
 			$handle = $source;
 
 			rewind($handle);
-			$result = $this->_adapter->store($handle);
+			$this->_adapter->store($handle);
 		} else {
 			if (file_exists($source)) {
-				if ($options['overwrite']) {
-					unlink($source);
-				} else {
-					return false;
+				if (!$options['overwrite']) {
+					throw new Exception("Source `{$source}` exists but not allowed to overwrite.");
 				}
+				unlink($source);
 			}
 			$handle = fopen($source, 'wb');
-			$result = $this->_adapter->store($handle);
+			$this->_adapter->store($handle);
 			fclose($handle);
 		}
-		return $result ? $source : false;
+		return $source;
 	}
 
 	/**
