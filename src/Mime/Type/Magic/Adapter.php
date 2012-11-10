@@ -93,7 +93,7 @@ abstract class Mime_Type_Magic_Adapter {
 				$this->_items[$priority][$keys[0]]['and'][$keys[1]]['and'][$keys[2]]['and'][] = $item;
 				return true;
 			default:
-				return false;
+				throw new Exception("Reached unsupported indentation level `{$indent}`.");
 		}
 	}
 

@@ -85,17 +85,17 @@ class Media_Info_Adapter_NewWave extends Media_Info_Adapter {
 		}
 		fclose($handle);
 
-		if ($data) {
-			return $data;
+		if (!$data) {
+			throw new Exception('No sample data.');
 		}
-		return false;
+		return $data;
 	}
 
 	protected function _read($handle, $bytes, $format) {
 		$result = fread($handle, $bytes);
 
 		if (!$result) {
-			return false;
+			throw new Exception('Failed to read from handle.');
 		}
 		$result = unpack($format, $result);
 		return current($result);

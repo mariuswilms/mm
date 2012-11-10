@@ -90,7 +90,7 @@ class Mime_Type {
 	 */
 	public static function config($type, array $config = array()) {
 		if ($type != 'Magic' && $type != 'Glob') {
-			return false;
+			throw new OutOfBoundsExeption("Invalid type `{$type}`.");
 		}
 
 		$class = "Mime_Type_{$type}_Adapter_{$config['adapter']}";
