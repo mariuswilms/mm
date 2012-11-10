@@ -81,8 +81,11 @@ class Media_Process_GenericTest extends PHPUnit_Framework_TestCase {
 			'source' => fopen('php://temp', 'rb'),
 			'adapter' => new Media_Process_Adapter_GenericMock(null)
 		));
-		$result = $media->store($target);
-		$this->assertFalse($result);
+
+		try {
+			$media->store($target);
+			$this->fail('Expected exception not raised.');
+		} catch (Exception $expected) {}
 
 		$result = $media->store($target, array('overwrite' => true));
 		$this->assertFileExists($result);

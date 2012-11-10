@@ -68,7 +68,7 @@ class Media_Process_Adapter_ImagickTest extends PHPUnit_Framework_TestCase {
 
 		$subject = new Media_Process_Adapter_Imagick($source);
 		$result = $subject->store($target);
-		$this->assertInternalType('integer', $result);
+		$this->assertTrue($result);
 
 		fclose($source);
 		fclose($target);
@@ -82,7 +82,7 @@ class Media_Process_Adapter_ImagickTest extends PHPUnit_Framework_TestCase {
 		$subject->convert('image/jpeg');
 		$result = $subject->store($target);
 
-		$this->assertInternalType('integer', $result);
+		$this->assertTrue($result);
 		$this->assertEquals('image/jpeg', Mime_Type::guessType($target));
 
 		fclose($source);
@@ -101,7 +101,7 @@ class Media_Process_Adapter_ImagickTest extends PHPUnit_Framework_TestCase {
 		$subject->convert('image/jpeg');
 		$result = $subject->store($target);
 
-		$this->assertInternalType('integer', $result);
+		$this->assertTrue($result);
 		$this->assertEquals('image/jpeg', Mime_Type::guessType($target));
 
 		fclose($source);
@@ -120,7 +120,7 @@ class Media_Process_Adapter_ImagickTest extends PHPUnit_Framework_TestCase {
 		$subject->convert('image/jpeg');
 		$result = $subject->store($target);
 
-		$this->assertInternalType('integer', $result);
+		$this->assertTrue($result);
 		$this->assertEquals('image/jpeg', Mime_Type::guessType($target));
 
 		fclose($source);
@@ -135,7 +135,7 @@ class Media_Process_Adapter_ImagickTest extends PHPUnit_Framework_TestCase {
 		$subject->passthru('setFormat', 'jpeg');
 		$result = $subject->store($target);
 
-		$this->assertInternalType('integer', $result);
+		$this->assertTrue($result);
 		$this->assertEquals('image/jpeg', Mime_Type::guessType($target));
 
 		fclose($source);
@@ -200,8 +200,10 @@ class Media_Process_Adapter_ImagickTest extends PHPUnit_Framework_TestCase {
 		$result = $subject->strip('icc');
 		$this->assertTrue($result);
 
-		$result = $subject->profile('icc');
-		$this->assertFalse($result);
+		try {
+			$subject->profile('icc');
+			$this->fail('Expected exception not raised.');
+		} catch (Exception $expected) {}
 	}
 
 	public function testDepth() {

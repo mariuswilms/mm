@@ -65,7 +65,7 @@ class Media_Process_Adapter_FfmpegShellTest extends PHPUnit_Framework_TestCase {
 		$subject->convert('image/png');
 		$result = $subject->store($target);
 
-		$this->assertInternalType('integer', $result);
+		$this->assertTrue($result);
 		$this->assertEquals('image/png', Mime_Type::guessType($target));
 
 		fclose($source);
@@ -80,7 +80,7 @@ class Media_Process_Adapter_FfmpegShellTest extends PHPUnit_Framework_TestCase {
 		$subject->convert('video/mpeg');
 		$result = $subject->store($target);
 
-		$this->assertInternalType('integer', $result);
+		$this->assertTrue($result);
 		$this->assertEquals('video/mpeg', Mime_Type::guessType($target));
 
 		fclose($source);
