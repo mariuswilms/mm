@@ -126,20 +126,23 @@ class Media_Process_Generic {
 			return false;
 		}
 
-		if ($this->name() != Mime_Type::guessName($mimeType)) { // i.e. document -> image
+		if ($this->name() != Mime_Type::guessName($mimeType)) {
+			// Crosses media (i.e. document -> image).
 			$config = Media_Process::config();
 
 			if ($config[$this->name()] == $config[Mime_Type::guessName($mimeType)]) {
+				// Dfferent media but using the same adapter.
 				$media = Media_Process::factory(array(
 					'source' => $mimeType,
 					'adapter' => $this->_adapter
 				));
 			} else {
+				// Dfferent media using different adapters.
 				$handle = fopen('php://temp', 'w+');
 
 				if (!$this->_adapter->store($handle)) {
-					$message  = "Failed to store into temporary resource ";
-					$message .= "when converting to MIME type `{$mimeType}`.";
+					$message  = "Failed to store media into temporary when crossing media ";
+					$message .= "and switching adapters for MIME type `{$mimeType}` conversion.";
 					throw new Exception($message);
 				}
 				$media = Media_Process::factory(array('source' => $handle));
@@ -147,6 +150,8 @@ class Media_Process_Generic {
 			}
 			return $media;
 		}
+
+		// Stays entirely in same media (i.e. image -> image).
 		return $this;
 	}
 }
