@@ -42,10 +42,7 @@ class Media_Process_Adapter_Imagick extends Media_Process_Adapter {
 	public function __construct($handle) {
 		$this->_object = new Imagick();
 
-		// @fixme Workaround for imagick failing to work with handles before module version 3.0.
-		// See http://pecl.php.net/bugs/bug.php?id=16932 for more information.
-		// $this->_object->readImageFile($handle);
-		$this->_object->readImageBlob(stream_get_contents($handle, -1, 0));
+		$this->_object->readImageFile($handle);
 
 		// Reset iterator to get just the first image from i.e. multipage PDFs.
 		if ($this->_object->getNumberImages() > 1) {
@@ -68,10 +65,7 @@ class Media_Process_Adapter_Imagick extends Media_Process_Adapter {
 	}
 
 	public function store($handle) {
-		// @fixme Workaround for imagick failing to work with handles before module version 3.0.
-		// See http://pecl.php.net/bugs/bug.php?id=16932 for more information.
-		// return $this->_object->writeImageFile($handle);
-		return fwrite($handle, $this->_object->getImageBlob());
+		return $this->_object->writeImageFile($handle);
 	}
 
 	public function convert($mimeType) {

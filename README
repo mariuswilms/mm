@@ -60,7 +60,7 @@ the adapters you are using you may need (this is a selection):
 - ext/gd
 - ghostscript
 - ImageMagick
-- ext/imagick
+- ext/imagick >= 3.0.0
 - FFmpeg
 - SoX
 
