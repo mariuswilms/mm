@@ -126,6 +126,8 @@ class Media_Process_Adapter_Gd extends Media_Process_Adapter {
 				$this->_compression = (integer) (100 - ($value * 10));
 				break;
 			case 'png':
+				$this->_compression = (integer) $value;
+
 				$filter = ($value * 10) % 10;
 				$map = array(
 					0 => PNG_FILTER_NONE,
