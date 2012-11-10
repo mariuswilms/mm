@@ -126,30 +126,25 @@ class Media_Process_Adapter_Gd extends Media_Process_Adapter {
 				$this->_compression = (integer) (100 - ($value * 10));
 				break;
 			case 'png':
-				if (version_compare(PHP_VERSION, '5.1.2', '>=')) {
-					$this->_compression = (integer) $value;
-				}
-				if (version_compare(PHP_VERSION, '5.1.3', '>=')) {
-					$filter = ($value * 10) % 10;
-					$map = array(
-						0 => PNG_FILTER_NONE,
-						1 => PNG_FILTER_SUB,
-						2 => PNG_FILTER_UP,
-						3 => PNG_FILTER_AVG,
-						4 => PNG_FILTER_PAETH,
-					);
+				$filter = ($value * 10) % 10;
+				$map = array(
+					0 => PNG_FILTER_NONE,
+					1 => PNG_FILTER_SUB,
+					2 => PNG_FILTER_UP,
+					3 => PNG_FILTER_AVG,
+					4 => PNG_FILTER_PAETH,
+				);
 
-					if (array_key_exists($filter, $map)) {
-						$this->_pngFilter = $map[$filter];
-					} elseif ($filter == 5) {
-						if (intval($value) <= 5 && imageIsTrueColor($this->_object)) {
-							$this->_pngFilter = PNG_ALL_FILTERS;
-						} else {
-							$this->_pngFilter = PNG_NO_FILTER;
-						}
-					} else {
+				if (array_key_exists($filter, $map)) {
+					$this->_pngFilter = $map[$filter];
+				} elseif ($filter == 5) {
+					if (intval($value) <= 5 && imageIsTrueColor($this->_object)) {
 						$this->_pngFilter = PNG_ALL_FILTERS;
+					} else {
+						$this->_pngFilter = PNG_NO_FILTER;
 					}
+				} else {
+					$this->_pngFilter = PNG_ALL_FILTERS;
 				}
 				break;
 		}
