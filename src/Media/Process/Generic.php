@@ -131,13 +131,13 @@ class Media_Process_Generic {
 			$config = Media_Process::config();
 
 			if ($config[$this->name()] == $config[Mime_Type::guessName($mimeType)]) {
-				// Dfferent media but using the same adapter.
+				// ...but using the same adapter.
 				$media = Media_Process::factory(array(
 					'source' => $mimeType,
 					'adapter' => $this->_adapter
 				));
 			} else {
-				// Dfferent media using different adapters.
+				// ...using different adapters.
 				$handle = fopen('php://temp', 'w+');
 
 				if (!$this->_adapter->store($handle)) {

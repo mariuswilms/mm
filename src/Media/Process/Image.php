@@ -185,7 +185,7 @@ class Media_Process_Image extends Media_Process_Generic {
 	 */
 	public function compress($value = 1.5) {
 		if ($value < 0 || $value >= 10) {
-			throw new InvalidArgumentException("Compression value is not within range 0..10.");
+			throw new InvalidArgumentException('Compression value is not within range 0..10.');
 		}
 		return $this->_adapter->compress(floatval($value));
 	}
@@ -202,7 +202,7 @@ class Media_Process_Image extends Media_Process_Generic {
 		foreach (func_get_args() as $type) {
 			$this->_adapter->strip($type);
 		}
-		return true;;
+		return true;
 	}
 
 	/**
