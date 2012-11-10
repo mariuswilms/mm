@@ -62,7 +62,7 @@ the adapters you are using you may need (this is a selection):
 - ghostscript
 - ImageMagick
 - ext/imagick >= 3.0.0
-- FFmpeg
+- FFmpeg >= 0.10.0, < 0.11.0
 - SoX
 
 Installation
