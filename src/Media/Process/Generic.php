@@ -138,7 +138,9 @@ class Media_Process_Generic {
 				$handle = fopen('php://temp', 'w+');
 
 				if (!$this->_adapter->store($handle)) {
-					// err
+					$message  = "Failed to store into temporary resource ";
+					$message .= "when converting to MIME type `{$mimeType}`.";
+					throw new Exception($message);
 				}
 				$media = Media_Process::factory(array('source' => $handle));
 				fclose($handle);
