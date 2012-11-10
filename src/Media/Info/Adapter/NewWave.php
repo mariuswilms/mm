@@ -95,7 +95,7 @@ class Media_Info_Adapter_NewWave extends Media_Info_Adapter {
 		$result = fread($handle, $bytes);
 
 		if (!$result) {
-			throw new Exception('Failed to read from handle.');
+			return false;
 		}
 		$result = unpack($format, $result);
 		return current($result);
