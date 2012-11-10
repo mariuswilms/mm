@@ -106,11 +106,10 @@ abstract class Mime_Type_Glob_Adapter {
 	}
 
 	/**
-	 * Tests a file's contents against glob items.
+	 * Tests a file's basename and extension against glob items.
 	 *
 	 * This method does not implement `fnmatch()`-style glob matching but uses
-	 * a very simplisitc way in order to optimize speed and portabilty as `fnmatch()`
-	 * was not available on Windows before PHP 5.3.
+	 * a very simplistic way in order to optimize speed.
 	 *
 	 * @param string $name The basename of a file
 	 * @param array $items
