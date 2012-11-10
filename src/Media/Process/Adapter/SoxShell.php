@@ -80,14 +80,23 @@ class Media_Process_Adapter_SoxShell extends Media_Process_Adapter {
 
 		$descr = array(
 			0 => $this->_object,
-			1 => array('pipe', 'a'),
-			2 => array('pipe', 'a')
+			1 => array('pipe', 'w'),
+			2 => array('pipe', 'w')
 		);
 		$process = proc_open($command, $descr, $pipes);
 
+		$output = stream_get_contents($pipes[1]);
+		$error  = stream_get_contents($pipes[2]);
 		fclose($pipes[1]);
 		fclose($pipes[2]);
 		$return = proc_close($process);
+
+		if ($return != 0) {
+			$message  = "Command `{$command}` returned `{$return}`:";
+			$message .= "\nOutput was:\n" . ($output ?: 'n/a');
+			$message .= "\nError output was:\n" . ($error ?: 'n/a');
+			throw new RuntimeException($message);
+		}
 
 		// Workaround for header based formats which require the output stream to be seekable.
 		$target = fopen($targetFile, 'rb');
@@ -95,16 +104,6 @@ class Media_Process_Adapter_SoxShell extends Media_Process_Adapter {
 		stream_copy_to_stream($target, $temporary);
 		fclose($target);
 		unlink($targetFile);
-
-		if ($return != 0) {
-			rewind($error);
-			$output = stream_get_contents($error);
-			fclose($error);
-
-			$mesage = "Command `{$command}` returned `{$return}`; output was:\n{$output}";
-			throw new RuntimeException($message);
-		}
-		fclose($error);
 
 		$this->_object = $temporary;
 		return true;

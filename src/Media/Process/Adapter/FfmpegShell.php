@@ -205,10 +205,24 @@ class Media_Process_Adapter_FfmpegShell extends Media_Process_Adapter {
 		$options = $this->_options ? implode(' ', $this->_options) . ' ' : null;
 		$command  = "{$this->_command} {$object} {$options}{$target}";
 
-		exec($command, $output, $return);
+		$descr = array(
+			0 => array('pipe', 'r'),
+			1 => array('pipe', 'w'),
+			2 => array('pipe', 'w')
+		);
+		$process = proc_open($command, $descr, $pipes);
+
+		$output = stream_get_contents($pipes[1]);
+		$error  = stream_get_contents($pipes[2]);
+		fclose($pipes[0]);
+		fclose($pipes[1]);
+		fclose($pipes[2]);
+		$return = proc_close($process);
 
 		if ($return != 0) {
-			$message = "Command `{$command}` returned `{$return}`; output was:\n{$output}";
+			$message  = "Command `{$command}` returned `{$return}`:";
+			$message .= "\nOutput was:\n" . ($output ?: 'n/a');
+			$message .= "\nError output was:\n" . ($error ?: 'n/a');
 			throw new RuntimeException($message);
 		}
 
