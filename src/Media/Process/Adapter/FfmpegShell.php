@@ -81,9 +81,7 @@ class Media_Process_Adapter_FfmpegShell extends Media_Process_Adapter {
 		$original = get_class_vars(__CLASS__);
 
 		if ($this->_targetType != $this->_objectType || $original['_options'] != $this->_options) {
-			if (!$this->_process()) {
-				return false;
-			}
+			$this->_process();
 		}
 		rewind($handle);
 		rewind($this->_object);
@@ -207,8 +205,8 @@ class Media_Process_Adapter_FfmpegShell extends Media_Process_Adapter {
 		exec($command, $output, $return);
 
 		if ($return != 0) {
-			throw new RuntimeException("Command `{$command}` returned `{$return}`.");
-			return false;
+			$message = "Command `{$command}` returned `{$return}`; output was:\n{$output}";
+			throw new RuntimeException($message);
 		}
 
 		$target = fopen($targetTemp, 'r');

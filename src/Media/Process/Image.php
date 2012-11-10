@@ -200,9 +200,7 @@ class Media_Process_Image extends Media_Process_Generic {
 	 */
 	public function strip($type) {
 		foreach (func_get_args() as $type) {
-			if (!$this->_adapter->strip($type)) {
-				return false;
-			}
+			$this->_adapter->strip($type);
 		}
 		return true;;
 	}
@@ -225,7 +223,7 @@ class Media_Process_Image extends Media_Process_Generic {
 	 */
 	public function colorProfile($file) {
 		if (!is_file($file)) {
-			return false;
+			throw new InvalidArgumentException("Given file `{$file}` does not exist.");
 		}
 
 		$target  = file_get_contents($file);
@@ -235,9 +233,7 @@ class Media_Process_Image extends Media_Process_Generic {
 			$file = dirname(dirname(dirname(dirname(__FILE__)))) . '/data/sRGB_IEC61966-2-1_black_scaled.icc';
 			$current = file_get_contents($file);
 
-			if (!$this->_adapter->profile('icc', $current)) {
-				return false;
-			}
+			$this->_adapter->profile('icc', $current);
 		}
 		if ($current == $target) {
 			return true;
