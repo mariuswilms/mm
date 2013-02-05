@@ -48,7 +48,7 @@ of the MIT License. For the full license text see the LICENSE file.
 
 Versions & Requirements
 -----------------------
-Version 1.1.0, PHP >=5.3.0 (in progress)
+Version 1.1.0, PHP >=5.3.0
 Version 1.0.0, PHP >=5.2.1
 
 The library is known to run fine under linux and darwin. Depending on
