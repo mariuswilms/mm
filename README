@@ -67,7 +67,7 @@ the adapters you are using you may need (this is a selection):
 Installation
 ------------
 1. Clone the repository or extract a downloaded archive, then move
-   or copy the resulting directory to /path/to/your/libraries.
+   or copy the resulting directory into /path/to/your/libraries/.
 
 2. Put the src directory of it in your include path.
    ```
