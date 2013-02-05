@@ -12,6 +12,10 @@
  * @link       http://github.com/davidpersson/mm
  */
 
+/*
+ * Setup caching, check if a cache class is made available i.e. through a
+ * framework.
+ */
 if (class_exists('Cache')) {
 	$class = 'Cache';
 } elseif (class_exists('\lithium\storage\Cache')) {
