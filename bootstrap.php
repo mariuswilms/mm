@@ -1,4 +1,16 @@
 <?php
+/**
+ * mm: the PHP media library
+ *
+ * Copyright (c) 2007-2012 David Persson
+ *
+ * Distributed under the terms of the MIT License.
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright  2007-2012 David Persson <nperson@gmx.de>
+ * @license    http://www.opensource.org/licenses/mit-license.php The MIT License
+ * @link       http://github.com/davidpersson/mm
+ */
 
 if (class_exists('Cache')) {
 	$class = 'Cache';
@@ -24,7 +36,7 @@ if (strpos(ini_get('include_path'), $mm) === false) {
 	ini_set('include_path', "{$mm}/src" . PATH_SEPARATOR . ini_get('include_path'));
 }
 
-/**
+/*
  * Configure the MIME type detection. The detection class is two headed which means it
  * uses both a glob (for matching against file extensions) and a magic adapter (for
  * detecting the type from the content of files). Available `Glob` adapters are `Apache`,
@@ -59,7 +71,7 @@ if ($cached = $cacheRead('mime_type_glob')) {
 	$cacheWrite('mime_type_glob', Mime_Type::$glob->to('array'));
 }
 
-/**
+/*
  * Configure the adpters to be used by the media process class. Adjust this
  * mapping of media names to adapters according to your environment. For example:
  * most PHP installations have GD enabled thus should choose the `Gd` adapter for
@@ -75,7 +87,7 @@ Media_Process::config(array(
 	// 'video' => 'FfmpegShell'
 ));
 
-/**
+/*
  * Configure the adpters to be used by the media info class. Adjust this
  * mapping of media names to adapters according to your environment. In contrast
  * to `Media_Process` which operates only with one adapter per media type
