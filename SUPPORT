@@ -33,23 +33,19 @@ In order to sponsor a project write a mail to nperson@gmx.de with the subject
 you'd like to sponsor. I'll then respond with further details.
 
 * Face Detection (PHP), € 400
-  
 Face detection in pure PHP, will be added to `Media_Info_Image`. In turn
 `Media_Process_Image` methods which currently take a gravity will be modified
 to allow receiving coordinates from the face detection.
 
 * Letterbox Trimming, € 100
-  
 `Media_Info_Image::trim()` will be added and allow for trimming letterboxes in
 i.e. video thumbnails, even if those containing noise.
 
 * GMagick Adapter, € 300
-  
 The brand-new GMagick adapter will allow you swap out the Imagick adapter while
 and for those who prefer more performant image processing.
 				
 * Faststart for MPEG4 videos, € 50
-
 Videos that have been faststarted will immediately start playing and not wait
 until the file is downloaded. This feature adds support for giving MPEG4 videos
 this post-processing treatment improving the overall experience on HTML5 video.
@@ -57,8 +53,7 @@ this post-processing treatment improving the overall experience on HTML5 video.
 Media_Process::factory("file.mp4")->faststart();
 // ...
 					
-* Crush Images, € 100
-
+* Crush Images, € 100 
 This feature will provide means to crush most images by using either pngcrush
 or jpegtran.
 // ...
@@ -66,7 +61,6 @@ Media_Process::factory("file.png")->crush();
 // ...
 
 * Document to Text Conversion, € 200
-
 Allows any document (PDF) to converted to plain text by leveraging tools to
 extract text.
 // ...
