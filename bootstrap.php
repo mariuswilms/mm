@@ -16,13 +16,30 @@
  * Setup caching, check if a cache class is made available i.e. through a
  * framework.
  */
-if (class_exists('Cache')) {
-	$class = 'Cache';
-} elseif (class_exists('\lithium\storage\Cache')) {
-	$class = 'Cache';
+$cacheRead = function($key) { return false; };
+$cacheWrite = function($key, $value) { return false; };
+
+$lithium = class_exists('\lithium\storage\Cache');
+
+$version = is_callable('Configure::version') ? Configure::version() : null;
+$cakephp20 = $version && version_compare($version, '2.0', '>=');
+$cakephp13 = $version && version_compare($version, '1.3', '>=') && !$cakephp20;
+
+if ($cakephp13 || $cakephp20) {
+	$cacheRead = function($key) {
+		return Cache::read($key);
+	};
+	$cacheWrite = function($key, $value) {
+		return Cache::write($key, $value);
+	};
+} elseif ($lithium) {
+	$cacheRead = function($key) {
+		return \lithium\storage\Cache::read('default', $key);
+	};
+	$cacheWrite = function($key, $value) {
+		return \lithium\storage\Cache::write('default', $key, $value);
+	};
 }
-$cacheRead = function($key) use ($class) { return $class::read($key); };
-$cacheWrite = function($key, $value) use ($class){ return $class::write($key, $value); };
 
 /*
  * Test for features on this system.
