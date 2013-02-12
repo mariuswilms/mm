@@ -90,10 +90,9 @@ for information on the status of the latest builds:
 http://travis-ci.org/#!/davidpersson/mm
 
 Tests for this library are PHPUnit based. To run the tests you'll need
-to have PHPUnit installed[1]. Following commands will run all the tests.
+to have PHPUnit installed[1]. Following command will run all the tests.
 
-$ cd /path/to/mm/src
-$ phpunit ../tests
+$ phpunit
 
 [1] http://www.phpunit.de/manual/current/en/installation.html
 
