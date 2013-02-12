@@ -31,11 +31,11 @@ class Media_ProcessTest extends PHPUnit_Framework_TestCase {
 			'document' => new Media_Process_Adapter_GenericMock(null),
 			'video' => new Media_Process_Adapter_GenericMock(null)
 		));
-		Mime_Type::config('Magic', array(
+		Mime_Type::config('magic', array(
 			'adapter' => 'Freedesktop',
 			'file' => "{$this->_data}/magic.db"
 		));
-		Mime_Type::config('Glob', array(
+		Mime_Type::config('glob', array(
 			'adapter' => 'Freedesktop',
 			'file' => "{$this->_data}/glob.db"
 		));

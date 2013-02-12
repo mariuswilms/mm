@@ -84,12 +84,21 @@ class Mime_Type {
 	/**
 	 * Set and change configuration during runtime.
 	 *
-	 * @param string $type Either "Magic" or "Glob"
+	 * @param string $type Either `'magic'` or `'glob'`.
 	 * @param array $config Config specifying engine and db
 	 *              e.g. `array('adapter' => 'Fileinfo', 'file' => '/etc/magic')`.
 	 */
 	public static function config($type, array $config = array()) {
-		if ($type != 'Magic' && $type != 'Glob') {
+		if ($type == 'Magic' || $type == 'Glob') {
+			$message  = 'Previously types could be specified with a leading capital';
+			$message .= 'letter (i.e. `Magic` instead of `magic`). Support for';
+			$message .= 'this has been deprecated and the all lowercase version should';
+			$message .= 'be used. However for now capitalized types continue to work';
+			trigger_error($message, E_USER_DEPRECATED);
+
+			$type[0] = strtolower($type[0]);
+		}
+		if ($type != 'magic' && $type != 'glob') {
 			throw new OutOfBoundsExeption("Invalid type `{$type}`.");
 		}
 
@@ -98,7 +107,6 @@ class Mime_Type {
 
 		require_once $file;
 
-		$type[0] = strtolower($type[0]);
 		self::${$type} = new $class($config);
 	}
 

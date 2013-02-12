@@ -60,32 +60,32 @@ if (strpos(ini_get('include_path'), $mm) === false) {
 /*
  * Configure the MIME type detection. The detection class is two headed which means it
  * uses both a glob (for matching against file extensions) and a magic adapter (for
- * detecting the type from the content of files). Available `Glob` adapters are `Apache`,
- * `Freedesktop`, `Memory` and `Php`. These adapters are also available as a `Magic`
+ * detecting the type from the content of files). Available `glob` adapters are `Apache`,
+ * `Freedesktop`, `Memory` and `Php`. These adapters are also available as a `magic`
  * variant with the addtion of a `Fileinfo` magic adapter. Not all adapters require
  * a file to be passed along with the configuration.
  */
 require_once 'Mime/Type.php';
 
 if ($hasFileinfo) {
-	Mime_Type::config('Magic', array(
+	Mime_Type::config('magic', array(
 		'adapter' => 'Fileinfo'
 	));
 } else {
-	Mime_Type::config('Magic', array(
+	Mime_Type::config('magic', array(
 		'adapter' => 'Freedesktop',
 		'file' => "{$mm}/data/magic.db"
 	));
 }
 if ($cached = $cacheRead('mime_type_glob')) {
-	Mime_Type::config('Glob', array(
+	Mime_Type::config('glob', array(
 		'adapter' => 'Memory'
 	));
 	foreach ($cached as $item) {
 		Mime_Type::$glob->register($item);
 	}
 } else {
-	Mime_Type::config('Glob', array(
+	Mime_Type::config('glob', array(
 		'adapter' => 'Freedesktop',
 		'file' => "{$mm}/data/glob.db"
 	));
