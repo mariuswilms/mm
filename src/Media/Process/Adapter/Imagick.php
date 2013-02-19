@@ -40,8 +40,8 @@ class Media_Process_Adapter_Imagick extends Media_Process_Adapter {
 	);
 
 	public function __construct($handle) {
+		rewind($handle);
 		$this->_object = new Imagick();
-
 		$this->_object->readImageFile($handle);
 
 		// Reset iterator to get just the first image from i.e. multipage PDFs.
