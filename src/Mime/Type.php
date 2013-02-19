@@ -95,15 +95,12 @@ class Mime_Type {
 			$message .= 'this has been deprecated and the all lowercase version should';
 			$message .= 'be used. However for now capitalized types continue to work';
 			trigger_error($message, E_USER_DEPRECATED);
-
-			$type[0] = strtolower($type[0]);
 		}
 		if ($type != 'magic' && $type != 'glob') {
 			throw new OutOfBoundsExeption("Invalid type `{$type}`.");
 		}
-
-		$class = "Mime_Type_{$type}_Adapter_{$config['adapter']}";
-		$file = "Mime/Type/{$type}/Adapter/{$config['adapter']}.php";
+		$class = 'Mime_Type_' . ucfirst($type) . '_Adapter_' . $config['adapter'];
+		$file = str_replace('_', '/', $class) . '.php';
 
 		require_once $file;
 
