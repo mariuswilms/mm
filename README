@@ -2,10 +2,7 @@
 xx xx  xx xx
 x x x  x x x
 x   x  x   x
-The PHP media library
-
-
----- The PHP media library.
+-- The PHP media library.
 
 Synopsis
 --------
@@ -77,7 +74,7 @@ the documented bootstrap file as blueprint for your own setup code.
 <?php
 // ...
 
-require '/path/to/mm/bootstrap.php';
+require '/path/to/library/bootstrap.php';
 
 // ...
 ?>
