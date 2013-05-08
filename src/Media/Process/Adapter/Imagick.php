@@ -113,8 +113,7 @@ class Media_Process_Adapter_Imagick extends Media_Process_Adapter {
 			$profiles = $this->_object->getImageProfiles('*', false);
 
 			if (!in_array($type, $profiles)) {
-				$message = "Cannot retrieve profile; no such of type `{$type}` present.";
-				throw new OutOfBoundsException($message);
+				return false;
 			}
 			return $this->_object->getImageProfile($type);
 		}
