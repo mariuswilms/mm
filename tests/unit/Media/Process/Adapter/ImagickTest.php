@@ -254,7 +254,7 @@ class Media_Process_Adapter_ImagickTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testCompressJpeg() {
-		for ($i = 1; $i < 10; $i++) {
+		for ($i = 2; $i < 10; $i++) {
 			$source = fopen("{$this->_files}/image_jpg.jpg", 'rb');
 
 			$uncompressed = fopen('php://temp', 'w+b');
@@ -262,7 +262,7 @@ class Media_Process_Adapter_ImagickTest extends PHPUnit_Framework_TestCase {
 
 			$subject = new Media_Process_Adapter_Imagick($source);
 
-			$result = $subject->compress(0);
+			$result = $subject->compress(1);
 			$this->assertTrue($result);
 			$result = $subject->store($uncompressed);
 			$this->assertTrue($result);
