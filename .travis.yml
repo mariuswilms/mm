@@ -23,7 +23,7 @@ before_install:
   - sudo apt-get -qq install ffmpeg
   - sudo apt-get -qq install sox
   # - sudo apt-get -qq install libmagickwand-dev libmagickcore3 libmagickwand3
-  # - printf "\n" | sudo pecl install imagick
+  - printf "\n" | sudo pecl install imagick
   # - echo "extension=imagick.so" >> `php --ini | grep "Loaded Configuration" | sed -e "s|.*:\s*||"`
 
 before_script:
@@ -32,3 +32,4 @@ before_script:
   - gs --version
   - ffmpeg -version
   - sox --version
+  - php -m
