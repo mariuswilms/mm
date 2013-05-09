@@ -164,6 +164,7 @@ class Mime_TypeTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals('bin', Mime_Type::guessExtension('application/octet-stream'));
 		$this->assertEquals('wav', Mime_Type::guessExtension('audio/x-wav'));
 		$this->assertEquals('oga', Mime_Type::guessExtension('audio/ogg'));
+		$this->assertEquals('m4a', Mime_Type::guessExtension('audio/mp4'));
 		$this->assertEquals('ogv', Mime_Type::guessExtension('video/ogg'));
 		$this->assertEquals('mp4', Mime_Type::guessExtension('video/mp4'));
 		$this->assertEquals('mov', Mime_Type::guessExtension('video/quicktime'));

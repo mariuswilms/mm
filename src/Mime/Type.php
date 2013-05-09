@@ -76,7 +76,7 @@ class Mime_Type {
 	 */
 	public static $preferredExtensions = array(
 		'bz2', 'css', 'doc', 'html', 'jpg',
-		'mov', 'mpeg', 'mp3', 'mp4', 'oga', 'ogv',
+		'mov', 'mpeg', 'mp3', 'mp4', 'm4a', 'oga', 'ogv',
 		'php', 'ps',  'rm', 'ra', 'rv', 'swf',
 		'tar', 'tiff', 'txt', 'xhtml', 'xml'
 	);

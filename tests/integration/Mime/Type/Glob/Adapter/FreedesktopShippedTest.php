@@ -100,6 +100,7 @@ class Mime_Type_Glob_Adapter_FreedesktopShippedTest extends PHPUnit_Framework_Te
 			'application/xhtml+xml' => array('xhtml'),
 			'application/xml' => array('xslt', 'xbl', 'xml', 'xsl'),
 			'audio/x-wav' => array('wav'),
+			'audio/mp4' => array('m4a', 'aac'),
 			'video/ogg' => array('ogv'),
 			'video/x-theora+ogg' => array('ogg')
 		);
