@@ -22,6 +22,7 @@ before_install:
   - sudo apt-get -qq install imagemagick
   - sudo apt-get -qq install ffmpeg
   - sudo apt-get -qq install sox
+  - pear config-set preferred_state beta
   - printf "\n" | pecl install imagick
 
 before_script:
