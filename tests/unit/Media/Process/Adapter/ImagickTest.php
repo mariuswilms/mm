@@ -261,11 +261,16 @@ class Media_Process_Adapter_ImagickTest extends PHPUnit_Framework_TestCase {
 			$compressed = fopen('php://temp', 'w+b');
 
 			$subject = new Media_Process_Adapter_Imagick($source);
-			$subject->compress(0);
-			$subject->store($uncompressed);
 
-			$subject->compress($i);
-			$subject->store($compressed);
+			$result = $subject->compress(0);
+			$this->assertTrue($result);
+			$result = $subject->store($uncompressed);
+			$this->assertTrue($result);
+
+			$result = $subject->compress($i);
+			$this->assertTrue($result, "Compr. `{$i}`.");
+			$result = $subject->store($compressed);
+			$this->assertTrue($result, "Compr. `{$i}`.");
 
 			$uncompressedMeta = fstat($uncompressed);
 			$compressedMeta = fstat($compressed);
