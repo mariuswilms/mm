@@ -28,11 +28,34 @@ class Media_Process_Adapter_SoxShell extends Media_Process_Adapter {
 
 	protected $_object;
 
+	protected $_objectTemp;
+
+	protected $_objectType;
+
 	protected $_command;
 
 	public function __construct($handle) {
-		$this->_object = $handle;
 		$this->_command = strtoupper(substr(PHP_OS, 0, 3)) == 'WIN' ? 'sox.exe' : 'sox';
+		$this->_load($handle);
+	}
+
+	public function __destruct() {
+		if ($this->_objectTemp) {
+			unlink($this->_objectTemp);
+		}
+	}
+
+	protected function _load($handle) {
+		rewind($handle);
+
+		$this->_object = $handle;
+		$this->_objectTemp = $this->_tempFile();
+
+		file_put_contents($this->_objectTemp, $handle);
+
+		$this->_objectType = $this->_type(Mime_Type::guessType($handle));
+
+		return true;
 	}
 
 	public function store($handle) {
@@ -49,17 +72,9 @@ class Media_Process_Adapter_SoxShell extends Media_Process_Adapter {
 		if (Mime_Type::guessName($mimeType) != 'audio') {
 			return true; // others care about inter media type conversions
 		}
-		$sourceType = Mime_Type::guessExtension($this->_object);
-		$targetType = Mime_Type::guessExtension($mimeType);
+		$sourceType = $this->_objectType;
+		$targetType = $this->_type($mimeType);
 
-		$map = array('ogv' => 'ogg', 'oga' => 'ogg');
-
-		if (isset($map[$sourceType])) {
-			$sourceType = $map[$sourceType];
-		}
-		if (isset($map[$targetType])) {
-			$targetType = $map[$targetType];
-		}
 		$modify = null;
 
 		if ($this->_sampleRate) {
@@ -71,15 +86,16 @@ class Media_Process_Adapter_SoxShell extends Media_Process_Adapter {
 
 		rewind($this->_object);
 		$error = fopen('php://temp', 'wrb+');
-		$targetFile = tempnam(sys_get_temp_dir(), 'mm_');
+		$sourceTemp = $this->_objectTemp;
+		$targetTemp = $this->_tempFile();
 
 		// Since SoX 14.3.0 multi threading is enabled which
 		// paradoxically can cause huge slowdowns.
 		$command  = "{$this->_command} -q --single-threaded";
-		$command .= " -t {$sourceType} -{$modify} -t {$targetType} {$targetFile}";
+		$command .= " -t {$sourceType} {$sourceTemp}{$modify} -t {$targetType} {$targetTemp}";
 
 		$descr = array(
-			0 => $this->_object,
+			0 => array('pipe', 'r'),
 			1 => array('pipe', 'w'),
 			2 => array('pipe', 'w')
 		);
@@ -87,6 +103,7 @@ class Media_Process_Adapter_SoxShell extends Media_Process_Adapter {
 
 		$output = stream_get_contents($pipes[1]);
 		$error  = stream_get_contents($pipes[2]);
+		fclose($pipes[0]);
 		fclose($pipes[1]);
 		fclose($pipes[2]);
 		$return = proc_close($process);
@@ -99,13 +116,16 @@ class Media_Process_Adapter_SoxShell extends Media_Process_Adapter {
 		}
 
 		// Workaround for header based formats which require the output stream to be seekable.
-		$target = fopen($targetFile, 'rb');
-		$temporary = fopen('php://temp', 'wb+');
-		stream_copy_to_stream($target, $temporary);
-		fclose($target);
-		unlink($targetFile);
+		$target = fopen($targetTemp, 'rb');
+		$buffer = fopen('php://temp', 'wb+');
+		stream_copy_to_stream($target, $buffer);
 
-		$this->_object = $temporary;
+		fclose($target);
+		unlink($targetTemp);
+
+		unlink($this->_objectTemp);
+
+		$this->_load($buffer);
 		return true;
 	}
 
@@ -121,6 +141,20 @@ class Media_Process_Adapter_SoxShell extends Media_Process_Adapter {
 	public function sampleRate($value) {
 		$this->_sampleRate = $value;
 		return true;
+	}
+
+	protected function _type($object) {
+		$type = Mime_Type::guessExtension($object);
+
+		$map = array(
+			'ogv' => 'ogg',
+			'oga' => 'ogg'
+		);
+		return isset($map[$type]) ? $map[$type] : $type;
+	}
+
+	protected function _tempFile() {
+		return realpath(sys_get_temp_dir()) . '/' . uniqid('mm_');
 	}
 }
 
