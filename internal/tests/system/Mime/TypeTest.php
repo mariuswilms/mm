@@ -23,10 +23,10 @@ class Mime_TypeInternalTest extends PHPUnit_Framework_TestCase {
 		$this->_files = dirname(dirname(dirname(__FILE__))) . '/data';
 		$this->_data = dirname(dirname(dirname(dirname(dirname(__FILE__))))) .'/data';
 
-		Mime_Type::config('Magic', array(
+		Mime_Type::config('magic', array(
 			'adapter' => 'Fileinfo'
 		));
-		Mime_Type::config('Glob', array(
+		Mime_Type::config('glob', array(
 			'adapter' => 'Freedesktop',
 			'file' => $this->_data . '/glob.db'
 		));
