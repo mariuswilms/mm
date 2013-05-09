@@ -23,11 +23,15 @@ require_once 'Mime/Type.php';
 class Media_Process_Adapter_FfmpegShell extends Media_Process_Adapter {
 
 	protected $_object;
+
 	protected $_objectTemp;
+
 	protected $_objectInfo;
+
 	protected $_objectType;
 
 	protected $_width;
+
 	protected $_height;
 
 	protected $_command;
