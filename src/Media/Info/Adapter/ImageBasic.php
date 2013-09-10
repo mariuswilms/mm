@@ -30,10 +30,10 @@ class Media_Info_Adapter_ImageBasic extends Media_Info_Adapter {
 	public function all() {
 		$data = getimagesize($this->_object);
 
-		$result = array(
+		$result = [
 			'width' => $data[0],
 			'height' => $data[1]
-		);
+		];
 		if (isset($data['channels'])) {
 			$result['channels'] = $data['channels'];
 		}

@@ -23,14 +23,14 @@ class Mime_TypeTest extends PHPUnit_Framework_TestCase {
 		$this->_files = dirname(dirname(dirname(__FILE__))) . '/data';
 		$this->_data = dirname(dirname(dirname(dirname(__FILE__)))) .'/data';
 
-		Mime_Type::config('magic', array(
+		Mime_Type::config('magic', [
 			'adapter' => 'Freedesktop',
 			'file' => $this->_data . '/magic.db'
-		));
-		Mime_Type::config('glob', array(
+		]);
+		Mime_Type::config('glob', [
 			'adapter' => 'Freedesktop',
 			'file' => $this->_data . '/glob.db'
-		));
+		]);
 	}
 
 	protected function tearDown() {
@@ -65,7 +65,7 @@ class Mime_TypeTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testGuessTypeFile() {
-		$files = array(
+		$files = [
 			'image_gif.gif' => 'image/gif',
 			'application_pdf.pdf' => 'application/pdf',
 			'postscript_snippet.ps' => 'application/postscript',
@@ -80,7 +80,7 @@ class Mime_TypeTest extends PHPUnit_Framework_TestCase {
 			'video_snippet.mp4' => 'video/mp4',
 			'audio_mpeg_snippet.m4a' => 'audio/mp4',
 			'video_quicktime_snippet.mov' => 'video/quicktime'
-		);
+		];
 		foreach ($files as $file => $mimeType) {
 			$this->assertEquals(
 				$mimeType,
@@ -91,7 +91,7 @@ class Mime_TypeTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testGuessTypeFilename() {
-		$files = array(
+		$files = [
 			'test.gif' => 'image/gif',
 			'test.pdf' => 'application/pdf',
 			'test.ps' => 'application/postscript',
@@ -109,7 +109,7 @@ class Mime_TypeTest extends PHPUnit_Framework_TestCase {
 			'test.ogg' => 'audio/ogg',
 			'test.oga' => 'audio/ogg',
 			'test.ogv' => 'video/ogg'
-		);
+		];
 		foreach ($files as $file => $mimeType) {
 			$this->assertEquals(
 				$mimeType,
@@ -122,19 +122,19 @@ class Mime_TypeTest extends PHPUnit_Framework_TestCase {
 	public function testGuessTypeParanoid() {
 		$this->assertEquals(
 			'image/png',
-			Mime_Type::guessType("{$this->_files}/image_png.jpg", array('paranoid' => true))
+			Mime_Type::guessType("{$this->_files}/image_png.jpg", ['paranoid' => true])
 		);
 		$this->assertEquals(
 			'image/jpeg',
-			Mime_Type::guessType("{$this->_files}/image_png.jpg", array('paranoid' => false))
+			Mime_Type::guessType("{$this->_files}/image_png.jpg", ['paranoid' => false])
 		);
 	}
 
 	public function testGuessTypeFallback() {
-		$files = array(
+		$files = [
 			'generic_binary' => 'application/octet-stream',
 			'generic_text' => 'text/plain'
-		);
+		];
 		foreach ($files as $file => $mimeType) {
 			$this->assertEquals(
 				$mimeType,
@@ -184,7 +184,7 @@ class Mime_TypeTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testGuessNameMimeType() {
-		$map = array(
+		$map = [
 			'video/webm' => 'video',
 			'video/x-msvideo' => 'video',
 			'video/mp4' => 'video',
@@ -194,32 +194,32 @@ class Mime_TypeTest extends PHPUnit_Framework_TestCase {
 			'image/jpeg' => 'image',
 			'image/tiff' => 'image',
 			'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => 'document'
-		);
+		];
 		foreach ($map as $mimeType => $name) {
 			$this->assertEquals($name, Mime_Type::guessName($mimeType), "MIME type `{$mimeType}`.");
 		}
 	}
 
 	public function testGuessNameFilename() {
-		$map = array(
+		$map = [
 			'test' => 'generic',
 			'test.jpg' => 'image',
 			'test.tif' => 'image',
 			'test.pdf' => 'document',
 			'path/to/test.pdf' => 'document'
-		);
+		];
 		foreach ($map as $mimeType => $name) {
 			$this->assertEquals($name, Mime_Type::guessName($mimeType), "MIME type `{$mimeType}`.");
 		}
 	}
 
 	public function testGuessNameFile() {
-		$map = array(
+		$map = [
 			'video_flash_snippet.flv' => 'video',
 			'audio_ogg_snippet.ogg' => 'audio',
 			'xml_snippet.xml' => 'generic',
 			'image_png.png' => 'image',
-		);
+		];
 		foreach ($map as $file => $name) {
 			$this->assertEquals(
 				$name,

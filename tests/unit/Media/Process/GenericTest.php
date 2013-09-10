@@ -26,50 +26,50 @@ class Media_Process_GenericTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testConstruct() {
-		$result = new Media_Process_Generic(array(
+		$result = new Media_Process_Generic([
 			'source' => "{$this->_files}/image_jpg.jpg",
 			'adapter' => new Media_Process_Adapter_GenericMock(null)
-		));
+		]);
 		$this->assertInternalType('object', $result);
 
-		$result = new Media_Process_Generic(array(
+		$result = new Media_Process_Generic([
 			'source' => fopen("{$this->_files}/image_jpg.jpg", 'rb'),
 			'adapter' => new Media_Process_Adapter_GenericMock(null)
-		));
+		]);
 		$this->assertInternalType('object', $result);
 
-		$result = new Media_Process_Generic(array(
+		$result = new Media_Process_Generic([
 			'source' => "{$this->_files}/image_jpg.jpg",
 			'adapter' => new Media_Process_Adapter_GenericMock('test')
-		));
+		]);
 		$this->assertInternalType('object', $result);
 
-		$result = new Media_Process_Generic(array(
+		$result = new Media_Process_Generic([
 			'adapter' => new Media_Process_Adapter_GenericMock('test')
-		));
+		]);
 		$this->assertInternalType('object', $result);
 	}
 
 	public function testConstructFailWithNoArgs() {
 		$this->setExpectedException('InvalidArgumentException');
-		new Media_Process_Generic(array());
+		new Media_Process_Generic([]);
 	}
 
 	public function testConstructFailWithSourceButNoAdapter() {
 		$this->setExpectedException('InvalidArgumentException');
-		new Media_Process_Generic(array('source' => "{$this->_files}/image_jpg.jpg"));
+		new Media_Process_Generic(['source' => "{$this->_files}/image_jpg.jpg"]);
 	}
 
 	public function testConstructFailWithStringAdapterButNoSource() {
 		$this->setExpectedException('InvalidArgumentException');
-		new Media_Process_Generic(array('adapter' => 'Dummy'));
+		new Media_Process_Generic(['adapter' => 'Dummy']);
 	}
 
 	public function testName() {
-		$result = new Media_Process_Generic(array(
+		$result = new Media_Process_Generic([
 			'source' => "{$this->_files}/image_jpg.jpg",
 			'adapter' => new Media_Process_Adapter_GenericMock(null)
-		));
+		]);
 		$this->assertEquals($result->name(), 'generic');
 	}
 
@@ -77,17 +77,17 @@ class Media_Process_GenericTest extends PHPUnit_Framework_TestCase {
 		$target = tempnam(sys_get_temp_dir(), 'mm_');
 		touch($target);
 
-		$media = new Media_Process_Generic(array(
+		$media = new Media_Process_Generic([
 			'source' => fopen('php://temp', 'rb'),
 			'adapter' => new Media_Process_Adapter_GenericMock(null)
-		));
+		]);
 
 		try {
 			$media->store($target);
 			$this->fail('Expected exception not raised.');
 		} catch (Exception $expected) {}
 
-		$result = $media->store($target, array('overwrite' => true));
+		$result = $media->store($target, ['overwrite' => true]);
 		$this->assertFileExists($result);
 
 		unlink($target);
@@ -98,10 +98,10 @@ class Media_Process_GenericTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testPassthru() {
-		$result = new Media_Process_Generic(array(
+		$result = new Media_Process_Generic([
 			'source' => "{$this->_files}/image_jpg.jpg",
 			'adapter' => new Media_Process_Adapter_GenericMock(null)
-		));
+		]);
 		$this->assertEquals($result->passthru('depth', 8), true);
 	}
 }

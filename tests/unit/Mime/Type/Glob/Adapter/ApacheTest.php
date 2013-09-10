@@ -39,26 +39,26 @@ class Mime_Type_Glob_Adapter_ApacheTest extends PHPUnit_Framework_TestCase {
 		$this->subject = new Mime_Type_Glob_Adapter_Apache(compact('file'));
 
 		$result = $this->subject->analyze('');
-		$this->assertEquals(array(), $result);
+		$this->assertEquals([], $result);
 	}
 
 	public function testAnalyze() {
 		$file = $this->_files . '/glob_apache_snippet.db';
 		$this->subject = new Mime_Type_Glob_Adapter_Apache(compact('file'));
 
-		$files = array(
-			'file.css' => array('text/css'),
-			'file.gif' => array('image/gif'),
-			'file.class' => array('application/java-vm'),
-			'file.js' => array('application/x-javascript'),
-			'file.pdf' => array('application/pdf'),
-			'file.txt' => array('text/plain'),
-			'file.doc' => array('application/msword'),
-			'file.odt' => array('application/vnd.oasis.opendocument.text'),
-			'file.tar' => array('application/x-tar'),
-			'file.xhtml' => array('application/xhtml+xml'),
-			'file.xml' => array('application/xml')
-		);
+		$files = [
+			'file.css' => ['text/css'],
+			'file.gif' => ['image/gif'],
+			'file.class' => ['application/java-vm'],
+			'file.js' => ['application/x-javascript'],
+			'file.pdf' => ['application/pdf'],
+			'file.txt' => ['text/plain'],
+			'file.doc' => ['application/msword'],
+			'file.odt' => ['application/vnd.oasis.opendocument.text'],
+			'file.tar' => ['application/x-tar'],
+			'file.xhtml' => ['application/xhtml+xml'],
+			'file.xml' => ['application/xml']
+		];
 		foreach ($files as $file => $mimeTypes) {
 			$this->assertEquals($mimeTypes, $this->subject->analyze($file), "File `{$file}`.");
 		}

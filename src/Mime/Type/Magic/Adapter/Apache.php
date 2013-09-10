@@ -28,7 +28,7 @@ class Mime_Type_Magic_Adapter_Apache extends Mime_Type_Magic_Adapter {
 		$this->_read($config['file']);
 	}
 
-	public function analyze($handle, $options = array()) {
+	public function analyze($handle, $options = []) {
 		return $this->_test($handle, current($this->_items)); // no support for priority
 	}
 
@@ -63,14 +63,14 @@ class Mime_Type_Magic_Adapter_Apache extends Mime_Type_Magic_Adapter {
 				continue;
 			}
 
-			$item = array(
+			$item = [
 				'offset'       => intval($matches[2]),
 				'value'        => $this->_formatValue($matches[4], $matches[3], true),
 				'mask'         => null,
 				'range_length' => 0,
 				'mime_type'    => empty($matches[5]) ? null : $matches[5],
 				'encoding'     => empty($matches[6]) ? null : $matches[6]
-			);
+			];
 			$item['value_length'] = strlen($item['value']);
 			$this->_register($item, strlen($matches[1]), 80);
 		}

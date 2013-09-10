@@ -27,34 +27,34 @@ class Media_Process_ConversionTest extends PHPUnit_Framework_TestCase {
 		$this->_files = dirname(dirname(dirname(dirname(__FILE__)))) . '/data';
 		$this->_data = dirname(dirname(dirname(dirname(dirname(__FILE__))))) .'/data';
 
-		Mime_Type::config('magic', array(
+		Mime_Type::config('magic', [
 			'adapter' => 'Freedesktop',
 			'file' => $this->_data . '/magic.db'
-		));
-		Mime_Type::config('glob', array(
+		]);
+		Mime_Type::config('glob', [
 			'adapter' => 'Freedesktop',
 			'file' => $this->_data . '/glob.db'
-		));
+		]);
 	}
 
 	public function testMediaChangeButSameAdapter() {
-		Media_Process::config(array(
+		Media_Process::config([
 			'image' => 'GenericMock',
 			'document' => 'GenericMock'
-		));
-		$media = new Media_Process_Document(array(
+		]);
+		$media = new Media_Process_Document([
 			'source' => "{$this->_files}/application_pdf.pdf",
 			'adapter' => 'GenericMock'
-		));
+		]);
 		$result = $media->convert('image/jpg');
 		$this->assertInstanceOf('Media_Process_Image', $result);
 	}
 
 	public function testMediaChangeDifferentAdapter() {
-		Media_Process::config(array(
+		Media_Process::config([
 			'image' => 'GenericMock',
 			'video' => 'GenericNameMock'
-		));
+		]);
 		$source = fopen("{$this->_files}/video_theora_notag.ogv", 'rb');
 		$storeFrom = fopen("{$this->_files}/image_jpg.jpg", 'rb');
 

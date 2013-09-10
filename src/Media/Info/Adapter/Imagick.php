@@ -25,10 +25,10 @@ class Media_Info_Adapter_Imagick extends Media_Info_Adapter {
 
 	protected $_object;
 
-	protected $_map = array(
+	protected $_map = [
 		'width' => 'getImageWidth',
 		'height' => 'getImageHeight'
-	);
+	];
 
 	public function __construct($file) {
 		$this->_object = new Imagick($file);
@@ -41,7 +41,7 @@ class Media_Info_Adapter_Imagick extends Media_Info_Adapter {
 	}
 
 	public function all() {
-		$results = array();
+		$results = [];
 
 		foreach (array_keys($this->_map) as $name) {
 			$results[$name] = $this->get($name);
@@ -49,7 +49,7 @@ class Media_Info_Adapter_Imagick extends Media_Info_Adapter {
 		return $results;
 	}
 
-	public function get($name, $args = array()) {
+	public function get($name, $args = []) {
 		if (method_exists($this, $name)) {
 			$object = $this;
 			$method = $name;
@@ -59,7 +59,7 @@ class Media_Info_Adapter_Imagick extends Media_Info_Adapter {
 		} else {
 			return;
 		}
-		return $args ? call_user_func_array(array($object, $method), $args) : $object->{$method}();
+		return $args ? call_user_func_array([$object, $method], $args) : $object->{$method}();
 	}
 }
 

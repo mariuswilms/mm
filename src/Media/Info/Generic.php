@@ -20,19 +20,19 @@ require_once 'Mime/Type.php';
  */
 class Media_Info_Generic {
 
-	protected $_adapters = array();
+	protected $_adapters = [];
 
 	/**
 	 * Constructor
 	 *
 	 * @param array $config Configuration values (at least `source` and one adapter must be provided):
 	 *              - `source`:  An absolute path to a file.
-	 *              - `adapters`: Names (i.e. `array('BasicGd', 'GetId3')`) or instances of
+	 *              - `adapters`: Names (i.e. `['BasicGd', 'GetId3']`) or instances of
 	 *                            adapters to use when constructing the instance.
 	 * @return void
 	 */
-	public function __construct(array $config = array()) {
-		$default = array('source' => null, 'adapters' => array());
+	public function __construct(array $config = []) {
+		$default = ['source' => null, 'adapters' => []];
 		extract($config + $default);
 
 		if (!$source) {
@@ -103,7 +103,7 @@ class Media_Info_Generic {
 	 */
 	public function all() {
 		$methods = array_diff(get_class_methods($this), get_class_methods('Media_Info_Generic'));
-		$results = array();
+		$results = [];
 
 		foreach ($methods as $method) {
 			$results[$method] = $this->{$method}();
@@ -149,9 +149,9 @@ class Media_Info_Generic {
 	 * @param array $args Arguments passed to adapter or media method.
 	 * @return mixed A scalar value.
 	 */
-	public function get($name, $args = array()) {
+	public function get($name, $args = []) {
 		if (method_exists($this, $name)) {
-			return $args ? call_user_func_array(array($this, $name), $args) : $this->{$name}();
+			return $args ? call_user_func_array([$this, $name], $args) : $this->{$name}();
 		}
 		foreach ($this->_adapters as $adapter) {
 			if ($result = $adapter->get($name, $args)) {
@@ -174,7 +174,7 @@ class Media_Info_Generic {
 			return null;
 		}
 
-		$knownRatios = array(
+		$knownRatios = [
 			'1:1.294' => 1/1.294,
 			'1:1.545' => 1/1.1545,
 			'4:3'     => 4/3,
@@ -188,7 +188,7 @@ class Media_Info_Generic {
 			'1:√2'    => 1 / (pow(2, 1/2)), /* dina4 hoch */
 			'Φ:1'     => (1 + pow(5, 1/2)) / 2, /* goldener schnitt */
 			'1:Φ'     => 1 / ((1 + pow(5, 1/2)) / 2), /* goldener schnitt */
-		);
+		];
 
 		foreach ($knownRatios as $knownRatioName => &$knownRatio) {
 			$knownRatio = abs(($width / $height) - $knownRatio);

@@ -94,7 +94,7 @@ class Media_Process_Video extends Media_Process_Generic {
 				$height = $ratio * $this->_adapter->height();
 			}
 		}
-		return array($width, $height);
+		return [$width, $height];
 	}
 }
 

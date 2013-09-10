@@ -18,7 +18,7 @@
  */
 abstract class Mime_Type_Magic_Adapter {
 
-	protected $_items = array();
+	protected $_items = [];
 
 	/* All adapters must implement the following 3 methods. */
 
@@ -59,7 +59,7 @@ abstract class Mime_Type_Magic_Adapter {
 	 * @return boolean True if item has successfully been registered, false if not
 	 */
 	protected function _register($item, $indent = 0, $priority = 50) {
-		static $keys = array();
+		static $keys = [];
 
 		if (!is_array($item)
 		|| !isset($item['offset'], $item['value'], $item['range_length'], $item['value_length'])) {
@@ -104,7 +104,7 @@ abstract class Mime_Type_Magic_Adapter {
 	 * @return array
 	 */
 	protected function _to($type) {
-		$results = array();
+		$results = [];
 
 		foreach ($this->_items as $priority => $items) {
 			foreach ($items as $item) {
@@ -205,10 +205,10 @@ abstract class Mime_Type_Magic_Adapter {
 					return pack('d', $value);
 				case 'string':
 					if ($unEscape) {
-						$value = strtr($value, array(
+						$value = strtr($value, [
 							'\ ' => ' ', '\<' => '<', '\>' => '>',
 							'\\\r' => '\r', '\\\n' => '\n'
-						));
+						]);
 					}
 					return preg_replace('/\\\\([0-9]{1,3})/e', 'chr($1);', $value);
 				case 'beshort':

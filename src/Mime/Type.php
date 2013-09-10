@@ -43,7 +43,7 @@ class Mime_Type {
 	 * @see guessName()
 	 * @var array
 	 */
-	public static $name = array(
+	public static $name = [
 		'application/ogg'       => 'audio',
 		'application/pdf'       => 'document',
 		'application/msword'    => 'document',
@@ -58,37 +58,37 @@ class Mime_Type {
 		'audio/'                => 'audio',
 		'video/'                => 'video',
 		'/'                     => 'generic'
-	);
+	];
 
 	/**
 	 * Preferred types to use if yielding multiple results.
 	 *
 	 * @see guessType()
 	 */
-	public static $preferredTypes = array(
+	public static $preferredTypes = [
 		'audio/ogg'
-	);
+	];
 
 	/**
 	 * Preferred extensions to use if yielding multiple results.
 	 *
 	 * @see guessExtension()
 	 */
-	public static $preferredExtensions = array(
+	public static $preferredExtensions = [
 		'bz2', 'css', 'doc', 'html', 'jpg',
 		'mov', 'mpeg', 'mp3', 'mp4', 'm4a', 'oga', 'ogv',
 		'php', 'ps',  'rm', 'ra', 'rv', 'swf',
 		'tar', 'tiff', 'txt', 'xhtml', 'xml'
-	);
+	];
 
 	/**
 	 * Set and change configuration during runtime.
 	 *
 	 * @param string $type Either `'magic'` or `'glob'`.
 	 * @param array $config Config specifying engine and db
-	 *              e.g. `array('adapter' => 'Fileinfo', 'file' => '/etc/magic')`.
+	 *              e.g. `['adapter' => 'Fileinfo', 'file' => '/etc/magic']`.
 	 */
-	public static function config($type, array $config = array()) {
+	public static function config($type, array $config = []) {
 		if ($type == 'Magic' || $type == 'Glob') {
 			$message  = 'Previously types could be specified with a leading capital';
 			$message .= 'letter (i.e. `Magic` instead of `magic`). Support for';
@@ -169,15 +169,15 @@ class Mime_Type {
 	 *                - `'experimental'`: Leave experimental indicators intact, defaults to `true`.
 	 * @return string|void String with MIME type on success.
 	 */
-	public static function guessType($file, $options = array()) {
-		$defaults = array(
+	public static function guessType($file, $options = []) {
+		$defaults = [
 			'paranoid' => false,
 			'properties' => false,
 			'experimental' => true
-		);
+		];
 		extract($options + $defaults);
 
-		$magicMatch = $globMatch = array();
+		$magicMatch = $globMatch = [];
 		$openedHere = false;
 
 		if (!$paranoid) {
@@ -209,7 +209,7 @@ class Mime_Type {
 		}
 
 		$magicMatch = self::$magic->analyze($handle);
-		$magicMatch = empty($magicMatch) ? array() : array($magicMatch);
+		$magicMatch = empty($magicMatch) ? [] : [$magicMatch];
 
 		if (empty($magicMatch)) {
 			rewind($handle);
@@ -252,7 +252,7 @@ class Mime_Type {
 		if (is_string($file) && preg_match('/' . self::REGEX . '/', $file)) {
 			$mimeType = self::simplify($file);
 		} else {
-			$mimeType = self::guessType($file, array('experimental' => false));
+			$mimeType = self::guessType($file, ['experimental' => false]);
 		}
 		foreach (self::$name as $pattern => $name) {
 			if (strpos($mimeType, $pattern) !== false) {

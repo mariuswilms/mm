@@ -94,11 +94,11 @@ class Media_Process_Adapter_SoxShell extends Media_Process_Adapter {
 		$command  = "{$this->_command} -q --single-threaded";
 		$command .= " -t {$sourceType} {$sourceTemp}{$modify} -t {$targetType} {$targetTemp}";
 
-		$descr = array(
-			0 => array('pipe', 'r'),
-			1 => array('pipe', 'w'),
-			2 => array('pipe', 'w')
-		);
+		$descr = [
+			0 => ['pipe', 'r'],
+			1 => ['pipe', 'w'],
+			2 => ['pipe', 'w']
+		];
 		$process = proc_open($command, $descr, $pipes);
 
 		$output = stream_get_contents($pipes[1]);
@@ -146,10 +146,10 @@ class Media_Process_Adapter_SoxShell extends Media_Process_Adapter {
 	protected function _type($object) {
 		$type = Mime_Type::guessExtension($object);
 
-		$map = array(
+		$map = [
 			'ogv' => 'ogg',
 			'oga' => 'ogg'
-		);
+		];
 		return isset($map[$type]) ? $map[$type] : $type;
 	}
 

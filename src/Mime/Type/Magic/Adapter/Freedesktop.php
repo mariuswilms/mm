@@ -24,17 +24,17 @@ require_once 'Mime/Type/Magic/Adapter.php';
  */
 class Mime_Type_Magic_Adapter_Freedesktop extends Mime_Type_Magic_Adapter {
 
-	public function __construct(array $config = array()) {
+	public function __construct(array $config = []) {
 		if (!isset($config['file'])) {
 			throw new InvalidArgumentException("Missing `file` configuration value.");
 		}
 		$this->_read($config['file']);
 	}
 
-	public function analyze($handle, $options = array()) {
-		$filtered = array();
+	public function analyze($handle, $options = []) {
+		$filtered = [];
 
-		$options += array('minPriority' => 0, 'maxPriority' => 100);
+		$options += ['minPriority' => 0, 'maxPriority' => 100];
 		extract($options, EXTR_SKIP);
 
 		foreach ($this->_items as $priority => $items) {
@@ -68,9 +68,9 @@ class Mime_Type_Magic_Adapter_Freedesktop extends Mime_Type_Magic_Adapter {
 			$line = '';
 
 			if (!isset($chars)) {
-				$chars = array(0 => fread($handle, 1), 1 => fread($handle, 1));
+				$chars = [0 => fread($handle, 1), 1 => fread($handle, 1)];
 			} else {
-				$chars = array(0 => $chars[1], 1 => null);
+				$chars = [0 => $chars[1], 1 => null];
 			}
 
 			while (
@@ -78,18 +78,18 @@ class Mime_Type_Magic_Adapter_Freedesktop extends Mime_Type_Magic_Adapter {
 				&& (ctype_digit($chars[1]) || $chars[1] === '>' || $chars[1] === '['))
 			) {
 				$line .= $chars[0];
-				$chars = array(0 => $chars[1], 1 => fread($handle, 1));
+				$chars = [0 => $chars[1], 1 => fread($handle, 1)];
 			}
 
 			if (preg_match("/{$sectionRegex}/", $line, $matches)) {
-				$section = array(
+				$section = [
 					'priority'  => $matches[1],
 					'mime_type' => $matches[2]
-				);
+				];
 			} elseif (preg_match('/' . $itemRegex . '/', $line, $matches)) {
 				$indent = empty($matches[1]) ? 0 : intval($matches[1]);
 				$wordSize = empty($matches[6]) ? 1 : intval($matches[6]);
-				$item = array(
+				$item = [
 					'offset'       => intval($matches[2]),
 					'value_length' => current(unpack('n', $matches[3])),
 					'value'        => $this->_formatValue($matches[4], $wordSize),
@@ -97,7 +97,7 @@ class Mime_Type_Magic_Adapter_Freedesktop extends Mime_Type_Magic_Adapter {
 					'mask'         => empty($matches[5]) ? null : $this->_formatValue($matches[5], $wordSize),
 					'range_length' => empty($matches[7]) ? 1 : intval($matches[7]),
 					'mime_type'    => $section['mime_type'],
-				);
+				];
 				$this->_register($item, $indent, $section['priority']);
 			}
 		}

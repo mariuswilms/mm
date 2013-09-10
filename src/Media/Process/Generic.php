@@ -32,8 +32,8 @@ class Media_Process_Generic {
 	 *                           constructing the instance.
 	 * @return void
 	 */
-	public function __construct(array $config = array()) {
-		$default = array('source' => null, 'adapter' => null);
+	public function __construct(array $config = []) {
+		$default = ['source' => null, 'adapter' => null];
 		extract($config + $default);
 
 		if (!$adapter) {
@@ -103,8 +103,8 @@ class Media_Process_Generic {
 	 * @param boolean $overwrite Controls overwriting of an existent file, defaults to `false`.
 	 * @return resource Returns the (unrewinded) source used.
 	 */
-	public function store($source, array $options = array()) {
-		$options += array('overwrite' => false);
+	public function store($source, array $options = []) {
+		$options += ['overwrite' => false];
 
 		if (is_resource($source)) {
 			$handle = $source;
@@ -140,16 +140,16 @@ class Media_Process_Generic {
 
 			if ($config[$this->name()] == $config[Mime_Type::guessName($mimeType)]) {
 				// ...but using the same adapter.
-				$media = Media_Process::factory(array(
+				$media = Media_Process::factory([
 					'source' => $mimeType,
 					'adapter' => $this->_adapter
-				));
+				]);
 			} else {
 				// ...using different adapters.
 				$handle = fopen('php://temp', 'w+');
 				$this->_adapter->store($handle);
 
-				$media = Media_Process::factory(array('source' => $handle));
+				$media = Media_Process::factory(['source' => $handle]);
 				fclose($handle);
 			}
 			return $media;

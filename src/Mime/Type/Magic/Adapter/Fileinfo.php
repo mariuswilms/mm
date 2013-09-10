@@ -23,7 +23,7 @@ class Mime_Type_Magic_Adapter_Fileinfo extends Mime_Type_Magic_Adapter {
 
 	protected $_resource;
 
-	public function __construct(array $config = array()) {
+	public function __construct(array $config = []) {
 		if (isset($config['file'])) {
 			$this->_resource = finfo_open(FILEINFO_NONE, $config['file']);
 		} else {

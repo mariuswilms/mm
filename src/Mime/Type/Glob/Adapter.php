@@ -23,7 +23,7 @@ abstract class Mime_Type_Glob_Adapter {
 	 *
 	 * @var array
 	 */
-	protected $_items = array();
+	protected $_items = [];
 
 	/* All adapters must implement the following 3 methods. */
 
@@ -32,17 +32,17 @@ abstract class Mime_Type_Glob_Adapter {
 	 *
 	 * This ia an example of a valid item:
 	 * {{{
-	 * 	array(
+	 * 	[
 	 * 		'mime_type' => 'image/jpeg',
 	 * 		'pattern' => 'jpg',
-	 * 	)
+	 * 	]
 	 * }}}
 	 * or
 	 * {{{
-	 * 	array(
+	 * 	[
 	 * 		'mime_type' => 'image/jpeg',
-	 * 		'pattern' => array('jpg', 'jpeg'),
-	 * 	)
+	 * 		'pattern' => ['jpg', 'jpeg'],
+	 * 	]
 	 * }}}
 	 *
 	 * @param array $item A valid glob item
@@ -75,15 +75,15 @@ abstract class Mime_Type_Glob_Adapter {
 	 * @param array $item A valid glob item
 	 * @return boolean True if item has successfully been registered, false if not
 	 */
-	protected function _register($item = array()) {
+	protected function _register($item = []) {
 		foreach ((array) $item['pattern'] as $pattern) {
 			if (isset($this->_items[$pattern])) {
 				$this->_items[$pattern] = array_unique(array_merge(
 					$this->_items[$pattern],
-					array($item['mime_type'])
+					[$item['mime_type']]
 				));
 			} else {
-				$this->_items[$pattern] = array($item['mime_type']);
+				$this->_items[$pattern] = [$item['mime_type']];
 			}
 		}
 	}
@@ -95,11 +95,11 @@ abstract class Mime_Type_Glob_Adapter {
 	 * @return array
 	 */
 	protected function _to($type) {
-		$result = array();
+		$result = [];
 
 		foreach ($this->_items as $pattern => $mimeTypes) {
 			foreach($mimeTypes as $mimeType) {
-				$result[] = array('mime_type' => $mimeType, 'pattern' => $pattern);
+				$result[] = ['mime_type' => $mimeType, 'pattern' => $pattern];
 			}
 		}
 		return $result;
@@ -120,7 +120,7 @@ abstract class Mime_Type_Glob_Adapter {
 		$basename = pathinfo($name, PATHINFO_BASENAME);
 		$ext = pathinfo($name, PATHINFO_EXTENSION);
 
-		$results = array();
+		$results = [];
 
 		if (!$caseSensitive) {
 			$basename = strtolower($basename);
@@ -144,7 +144,7 @@ abstract class Mime_Type_Glob_Adapter {
 	 * @return array Matched patterns
 	 */
 	protected function _testReverse($mimeType, $items) {
-		$results = array();
+		$results = [];
 
 		foreach ($items as $pattern => $mimeTypes) {
 			if (in_array($mimeType, $mimeTypes)) {

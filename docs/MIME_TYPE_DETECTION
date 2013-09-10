@@ -71,12 +71,12 @@ This adapter is good for caching and testing.
 `Php`
 Can parse files containing one huge PHP array. Files must look like this:
 ```
-<?php return array(
+<?php return [
     item0,
     item1,
     item2,
     item3
-); ?>
+]; ?>
 ```
 
 Available `Mime_Magic` Adapters
@@ -114,10 +114,10 @@ file. This adapter is good for caching and testing.
 `Php`
 Can parse files containing one huge PHP array. Files must look like this:
 ```
-<?php return array(
+<?php return [
     item0,
     item1,
     item2,
     item3
-); ?>
+]; ?>
 `

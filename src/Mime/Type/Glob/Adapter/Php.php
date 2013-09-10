@@ -19,12 +19,12 @@ require_once 'Mime/Type/Glob/Adapter.php';
  *
  * Files must look like this:
  * {{{
- * <?php return array(
+ * <?php return [
  *     item0,
  *     item1,
  *     item2,
  *     item3,
- * ); ?>
+ * ]; ?>
  * }}}
  */
 class Mime_Type_Glob_Adapter_Php extends Mime_Type_Glob_Adapter {

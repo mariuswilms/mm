@@ -30,7 +30,7 @@ class Mime_Type_Magic_Adapter_FreedesktopShippedTest extends PHPUnit_Framework_T
 		$file = $this->_data . '/magic.db';
 		$this->subject = new Mime_Type_Magic_Adapter_Freedesktop(compact('file'));
 
-		$files = array(
+		$files = [
 			'ms_snippet.avi' => 'video/x-msvideo',
 			'image_gif.gif' => 'image/gif',
 			'application_pdf.pdf' => 'application/pdf',
@@ -87,7 +87,7 @@ class Mime_Type_Magic_Adapter_FreedesktopShippedTest extends PHPUnit_Framework_T
 			'java_snippet.class' => 'application/x-java',
 			'real_video_snippet.rm' => 'application/vnd.rn-realmedia'
 			*/
-		);
+		];
 
 		foreach ($files as $file => $mimeTypes) {
 			$handle = fopen($this->_files . '/' . $file, 'rb');

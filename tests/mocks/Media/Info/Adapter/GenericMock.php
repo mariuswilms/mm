@@ -19,7 +19,7 @@ class Media_Info_Adapter_GenericMock extends Media_Info_Adapter {
 	public function __construct($file) {}
 
 	public function all() {
-		return array();
+		return [];
 	}
 
 	public function get($name) {}

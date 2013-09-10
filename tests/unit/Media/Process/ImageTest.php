@@ -29,16 +29,16 @@ class Media_Process_ImageTest extends PHPUnit_Framework_TestCase {
 	public function testFitInside() {
 		$adapterMock = $this->getMock(
 			'Media_Process_Adapter_Imagick',
-			array(), array(), '', false
+			[], [], '', false
 		);
 		$adapterMock->expects($this->any())->method('width')->will($this->returnValue(70));
 		$adapterMock->expects($this->any())->method('height')->will($this->returnValue(47));
 
 		$adapterMock->expects($this->once())->method('resize')->with($this->equalTo(30, 20));
 
-		$media = new Media_Process_ImageMock(array(
+		$media = new Media_Process_ImageMock([
 			'adapter' => $adapterMock
-		));
+		]);
 
 		$media->fitInside(30, 30);
 	}
@@ -46,16 +46,16 @@ class Media_Process_ImageTest extends PHPUnit_Framework_TestCase {
 	public function testFitOutside() {
 		$adapterMock = $this->getMock(
 			'Media_Process_Adapter_Imagick',
-			array(), array(), '', false
+			[], [], '', false
 		);
 		$adapterMock->expects($this->any())->method('width')->will($this->returnValue(70));
 		$adapterMock->expects($this->any())->method('height')->will($this->returnValue(47));
 
 		$adapterMock->expects($this->once())->method('resize')->with($this->equalTo(30, 20));
 
-		$media = new Media_Process_ImageMock(array(
+		$media = new Media_Process_ImageMock([
 			'adapter' => $adapterMock
-		));
+		]);
 
 		$media->fitOutside(30, 30);
 	}
@@ -63,72 +63,72 @@ class Media_Process_ImageTest extends PHPUnit_Framework_TestCase {
 	public function testNormalizeDimensionsRatio() {
 		$adapterMock = $this->getMock(
 			'Media_Process_Adapter_Imagick',
-			array(), array(), '', false
+			[], [], '', false
 		);
 		$adapterMock->expects($this->any())->method('width')->will($this->returnValue(70));
 		$adapterMock->expects($this->any())->method('height')->will($this->returnValue(47));
 
-		$media = new Media_Process_ImageMock(array(
+		$media = new Media_Process_ImageMock([
 			'adapter' => $adapterMock
-		));
+		]);
 
 		$result = $media->testNormalizeDimensions(0, 0);
-		$expected = array(0, 0);
+		$expected = [0, 0];
 		$this->assertEquals($expected, $result);
 	}
 
 	public function testNormalizeDimensionsMaximum() {
 		$adapterMock = $this->getMock(
 			'Media_Process_Adapter_Imagick',
-			array(), array(), '', false
+			[], [], '', false
 		);
 		$adapterMock->expects($this->any())->method('width')->will($this->returnValue(70));
 		$adapterMock->expects($this->any())->method('height')->will($this->returnValue(47));
 
-		$media = new Media_Process_ImageMock(array(
+		$media = new Media_Process_ImageMock([
 			'adapter' => $adapterMock
-		));
+		]);
 
 		$result = $media->testNormalizeDimensions(0, 0, 'maximum');
-		$expected = array(70, 47);
+		$expected = [70, 47];
 		$this->assertEquals($expected, $result);
 	}
 
 	public function testBoxify() {
 		$adapterMock = $this->getMock(
 			'Media_Process_Adapter_Imagick',
-			array(), array(), '', false
+			[], [], '', false
 		);
 		$adapterMock->expects($this->any())->method('width')->will($this->returnValue(70));
 		$adapterMock->expects($this->any())->method('height')->will($this->returnValue(47));
 
-		$media = new Media_Process_ImageMock(array(
+		$media = new Media_Process_ImageMock([
 			'adapter' => $adapterMock
-		));
+		]);
 
 		$result = $media->testBoxify(20, 20, 'center');
-		$expected = array(25, 13.5);
+		$expected = [25, 13.5];
 		$this->assertEquals($expected, $result);
 
 		$result = $media->testBoxify(20, 20, 'topleft');
-		$expected = array(0, 0);
+		$expected = [0, 0];
 		$this->assertEquals($expected, $result);
 
 		$result = $media->testBoxify(20, 20, 'topright');
-		$expected = array(50, 0);
+		$expected = [50, 0];
 		$this->assertEquals($expected, $result);
 
 		$result = $media->testBoxify(20, 20, 'bottomleft');
-		$expected = array(0, 27);
+		$expected = [0, 27];
 		$this->assertEquals($expected, $result);
 
 		$result = $media->testBoxify(20, 20, 'bottomright');
-		$expected = array(50, 27);
+		$expected = [50, 27];
 		$this->assertEquals($expected, $result);
 
 		$this->setExpectedException('InvalidArgumentException');
 		$result = $media->testBoxify(20, 20, 'XXXXXXX');
-		$expected = array(25, 13.5);
+		$expected = [25, 13.5];
 		$this->assertEquals($expected, $result);
 	}
 }

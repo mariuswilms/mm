@@ -49,7 +49,7 @@ class Mime_Type_Magic_Adapter_ApacheTest extends PHPUnit_Framework_TestCase {
 		$this->subject = new Mime_Type_Magic_Adapter_Apache(compact('file'));
 
 		/* @todo Commented fail but should are present in data */
-		$files = array(
+		$files = [
 			'image_gif.gif' => 'image/gif',
 			'application_pdf.pdf' => 'application/pdf',
 			'postscript_snippet.ps' => 'application/postscript',
@@ -61,7 +61,7 @@ class Mime_Type_Magic_Adapter_ApacheTest extends PHPUnit_Framework_TestCase {
 			// 'ms_word_snippet.doc' => 'application/msword',
 			// 'audio_mpeg_snippet.mp3' => 'audio/mpeg',
 			// 'text_plain_snippet.txt' => 'text/plain'
-		);
+		];
 
 		foreach ($files as $file => $mimeTypes) {
 			$handle = fopen($this->_files . '/' . $file, 'rb');

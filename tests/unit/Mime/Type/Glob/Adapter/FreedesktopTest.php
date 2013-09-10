@@ -39,33 +39,33 @@ class Mime_Type_Glob_Adapter_FreedesktopTest extends PHPUnit_Framework_TestCase 
 		$this->subject = new Mime_Type_Glob_Adapter_Freedesktop(compact('file'));
 
 		$result = $this->subject->analyze('');
-		$this->assertEquals(array(), $result);
+		$this->assertEquals([], $result);
 	}
 
 	public function testAnalyze() {
 		$file = $this->_files . '/glob_freedesktop_snippet.db';
 		$this->subject = new Mime_Type_Glob_Adapter_Freedesktop(compact('file'));
 
-		$files = array(
-			'file.bz2' => array('application/x-bzip'),
-			'file.css' => array('text/css'),
-			'file.gif' => array('image/gif'),
-			'file.gz' => array('application/x-gzip'),
-			'file.class' => array('application/x-java'),
-			'file.js' => array('application/javascript'),
-			'file.pdf' => array('application/pdf'),
-			'file.po' => array('text/x-gettext-translation'),
-			'file.pot' => array(
+		$files = [
+			'file.bz2' => ['application/x-bzip'],
+			'file.css' => ['text/css'],
+			'file.gif' => ['image/gif'],
+			'file.gz' => ['application/x-gzip'],
+			'file.class' => ['application/x-java'],
+			'file.js' => ['application/javascript'],
+			'file.pdf' => ['application/pdf'],
+			'file.po' => ['text/x-gettext-translation'],
+			'file.pot' => [
 				'application/vnd.ms-powerpoint', 'text/x-gettext-translation-template'
-			),
-			'file.mo' => array('application/x-gettext-translation'),
-			'file.txt' => array('text/plain'),
-			'file.doc' => array('application/msword'),
-			'file.odt' => array('application/vnd.oasis.opendocument.text'),
-			'file.tar' => array('application/x-tar'),
-			'file.xhtml' => array('application/xhtml+xml'),
-			'file.xml' => array('application/xml')
-		);
+			],
+			'file.mo' => ['application/x-gettext-translation'],
+			'file.txt' => ['text/plain'],
+			'file.doc' => ['application/msword'],
+			'file.odt' => ['application/vnd.oasis.opendocument.text'],
+			'file.tar' => ['application/x-tar'],
+			'file.xhtml' => ['application/xhtml+xml'],
+			'file.xml' => ['application/xml']
+		];
 		foreach ($files as $file => $mimeTypes) {
 			$this->assertEquals($mimeTypes, $this->subject->analyze($file), "File `{$file}`.");
 		}
@@ -75,25 +75,25 @@ class Mime_Type_Glob_Adapter_FreedesktopTest extends PHPUnit_Framework_TestCase 
 		$file = $this->_files . '/glob_freedesktop_snippet.db';
 		$this->subject = new Mime_Type_Glob_Adapter_Freedesktop(compact('file'));
 
-		$files = array(
-			'application/x-bzip' => array('bz2', 'bz'),
-			'text/css' => array('css'),
-			'image/gif' => array('gif'),
-			'application/x-gzip' => array('gz'),
-			'application/x-java' => array('class'),
-			'application/javascript' => array('js'),
-			'application/pdf' => array('pdf'),
-			'text/x-gettext-translation' => array('po'),
-			'application/vnd.ms-powerpoint' => array('pot'),
-			'text/x-gettext-translation-template' => array('pot'),
-			'application/x-gettext-translation' => array('gmo', 'mo'),
-			'text/plain' => array('txt'),
-			'application/msword' => array('doc'),
-			'application/vnd.oasis.opendocument.text' => array('odt'),
-			'application/x-tar' => array('tar'),
-			'application/xhtml+xml' => array('xhtml'),
-			'application/xml' => array('xbl', 'xml')
-		);
+		$files = [
+			'application/x-bzip' => ['bz2', 'bz'],
+			'text/css' => ['css'],
+			'image/gif' => ['gif'],
+			'application/x-gzip' => ['gz'],
+			'application/x-java' => ['class'],
+			'application/javascript' => ['js'],
+			'application/pdf' => ['pdf'],
+			'text/x-gettext-translation' => ['po'],
+			'application/vnd.ms-powerpoint' => ['pot'],
+			'text/x-gettext-translation-template' => ['pot'],
+			'application/x-gettext-translation' => ['gmo', 'mo'],
+			'text/plain' => ['txt'],
+			'application/msword' => ['doc'],
+			'application/vnd.oasis.opendocument.text' => ['odt'],
+			'application/x-tar' => ['tar'],
+			'application/xhtml+xml' => ['xhtml'],
+			'application/xml' => ['xbl', 'xml']
+		];
 		foreach ($files as $mimeType => $exts) {
 			$result = $this->subject->analyze($mimeType, true);
 			$this->assertEquals($exts, $result, "File `{$mimeType}`.");

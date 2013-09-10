@@ -43,14 +43,14 @@ class Mime_Type_Magic_Adapter_FileinfoTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testAnalyze() {
-		$files = array(
+		$files = [
 			'image_gif.gif' => 'image/gif; charset=binary',
 			'application_pdf.pdf' => 'application/pdf; charset=binary',
 			'text_html_snippet.html' => 'text/html; charset=us-ascii',
 			'image_jpeg_snippet.jpg' => 'image/jpeg; charset=binary',
 			'video_theora_notag.ogv' => 'video/ogg; charset=binary',
 			'audio_vorbis_notag.ogg' => 'audio/ogg; charset=binary'
-		);
+		];
 
 		foreach ($files as $file => $mimeTypes) {
 			$handle = fopen($this->_files . '/' . $file, 'rb');

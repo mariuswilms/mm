@@ -63,10 +63,10 @@ class Mime_Type_Glob_Adapter_Apache extends Mime_Type_Glob_Adapter {
 				continue;
 			}
 			$line = preg_split('/\s+/', $line);
-			$this->_register(array(
+			$this->_register([
 				'mime_type' => array_shift($line),
 				'pattern' => $line
-			));
+			]);
 		}
 		fclose($handle);
 	}

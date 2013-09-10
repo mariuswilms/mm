@@ -25,7 +25,7 @@ class Media_Process_Adapter_Imagick extends Media_Process_Adapter {
 
 	protected $_object;
 
-	protected $_formatMap = array(
+	protected $_formatMap = [
 		'application/pdf' => 'pdf',
 		'image/jpeg' => 'jpeg',
 		'image/gif' => 'gif',
@@ -37,7 +37,7 @@ class Media_Process_Adapter_Imagick extends Media_Process_Adapter {
 		'image/ico' => 'ico',
 		'image/xbm' => 'xbm',
 		'image/psd' => 'psd'
-	);
+	];
 
 	public function __construct($handle) {
 		rewind($handle);
@@ -86,7 +86,7 @@ class Media_Process_Adapter_Imagick extends Media_Process_Adapter {
 			$message = "Cannot passthru to nonexistent method `{$method}` on internal object";
 			throw new Exception($message);
 		}
-		return (boolean) call_user_func_array(array($this->_object, $method), $args);
+		return (boolean) call_user_func_array([$this->_object, $method], $args);
 	}
 
 	// @link http://studio.imagemagick.org/pipermail/magick-users/2002-August/004435.html

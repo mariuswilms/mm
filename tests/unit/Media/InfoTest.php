@@ -25,41 +25,41 @@ class Media_InfoTest extends PHPUnit_Framework_TestCase {
 		$this->_files = dirname(dirname(dirname(__FILE__))) . '/data';
 		$this->_data = dirname(dirname(dirname(dirname(__FILE__)))) .'/data';
 
-		Media_Info::config(array(
+		Media_Info::config([
 			'image' => new Media_Info_Adapter_GenericMock(null),
 			'audio' => new Media_Info_Adapter_GenericMock(null),
 			'document' => new Media_Info_Adapter_GenericMock(null),
 			'video' => new Media_Info_Adapter_GenericMock(null)
-		));
-		Mime_Type::config('magic', array(
+		]);
+		Mime_Type::config('magic', [
 			'adapter' => 'Freedesktop',
 			'file' => "{$this->_data}/magic.db"
-		));
-		Mime_Type::config('glob', array(
+		]);
+		Mime_Type::config('glob', [
 			'adapter' => 'Freedesktop',
 			'file' => "{$this->_data}/glob.db"
-		));
+		]);
 	}
 
 	public function testMediaFactorySourceFile() {
-		$result = Media_Info::factory(array('source' => "{$this->_files}/image_jpg.jpg"));
+		$result = Media_Info::factory(['source' => "{$this->_files}/image_jpg.jpg"]);
 		$this->assertTrue(is_a($result, 'Media_Info_Image'));
 
-		$result = Media_Info::factory(array('source' => "{$this->_files}/image_png.png"));
+		$result = Media_Info::factory(['source' => "{$this->_files}/image_png.png"]);
 		$this->assertTrue(is_a($result, 'Media_Info_Image'));
 
-		$result = Media_Info::factory(array('source' => "{$this->_files}/application_pdf.pdf"));
+		$result = Media_Info::factory(['source' => "{$this->_files}/application_pdf.pdf"]);
 		$this->assertTrue(is_a($result, 'Media_Info_Document'));
 
-		$result = Media_Info::factory(array('source' => "{$this->_files}/audio_ogg_snippet.ogg"));
+		$result = Media_Info::factory(['source' => "{$this->_files}/audio_ogg_snippet.ogg"]);
 		$this->assertInstanceOf('Media_Info_Audio', $result);
 	}
 
 	public function testMediaFactorySourceFailStream() {
 		$this->setExpectedException('InvalidArgumentException');
-		Media_Info::factory(array(
+		Media_Info::factory([
 			'source' => fopen("{$this->_files}/image_jpg.jpg", 'rb')
-		));
+		]);
 	}
 }
 

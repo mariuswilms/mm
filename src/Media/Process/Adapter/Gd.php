@@ -24,14 +24,14 @@ class Media_Process_Adapter_Gd extends Media_Process_Adapter {
 
 	protected $_object;
 
-	protected $_formatMap = array(
+	protected $_formatMap = [
 		'image/jpeg' => 'jpeg',
 		'image/gif' => 'gif',
 		'image/png' => 'png',
 		'image/gd' => 'gd',
 		'image/vnd.wap.wbmp' => 'wbmp',
 		'image/xbm' => 'xbm',
-	);
+	];
 
 	protected $_format;
 
@@ -66,7 +66,7 @@ class Media_Process_Adapter_Gd extends Media_Process_Adapter {
 	}
 
 	public function store($handle) {
-		$args = array($this->_object);
+		$args = [$this->_object];
 
 		switch ($this->_format) {
 			case 'jpeg':
@@ -129,13 +129,13 @@ class Media_Process_Adapter_Gd extends Media_Process_Adapter {
 				$this->_compression = (integer) $value;
 
 				$filter = ($value * 10) % 10;
-				$map = array(
+				$map = [
 					0 => PNG_FILTER_NONE,
 					1 => PNG_FILTER_SUB,
 					2 => PNG_FILTER_UP,
 					3 => PNG_FILTER_AVG,
 					4 => PNG_FILTER_PAETH,
-				);
+				];
 
 				if (array_key_exists($filter, $map)) {
 					$this->_pngFilter = $map[$filter];
@@ -166,7 +166,7 @@ class Media_Process_Adapter_Gd extends Media_Process_Adapter {
 	}
 
 	public function interlace($value) {
-		if (!in_array($this->_format, array('jpeg', 'png', 'gif'))) {
+		if (!in_array($this->_format, ['jpeg', 'png', 'gif'])) {
 			throw new Exception("Format `{$this->_format}` not supported for interlacing.");
 		}
 		imageInterlace($this->_object, $value ? 1 : 0);

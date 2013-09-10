@@ -22,7 +22,7 @@ class Media_Process {
 
 	protected static $_config;
 
-	public static function config(array $config = array()) {
+	public static function config(array $config = []) {
 		if (!$config) {
 			return self::$_config;
 		}
@@ -42,8 +42,8 @@ class Media_Process {
 	 *                               if type could not be mapped an instance of the that class
 	 *                               itself.
 	 */
-	public static function &factory(array $config = array()) {
-		$default = array('source' => null, 'adapter' => null);
+	public static function &factory(array $config = []) {
+		$default = ['source' => null, 'adapter' => null];
 		extract($config + $default);
 
 		if (!$source) {

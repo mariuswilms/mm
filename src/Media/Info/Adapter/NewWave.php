@@ -24,14 +24,14 @@ class Media_Info_Adapter_NewWave extends Media_Info_Adapter {
 
 	protected $_object;
 
-	protected $_methods = array('samples');
+	protected $_methods = ['samples'];
 
 	public function __construct($file) {
 		$this->_object = $file;
 	}
 
 	public function all() {
-		$result = array();
+		$result = [];
 
 		foreach ($this->_methods as $method) {
 			$result[$method] = $this->{"_{$method}"}();
@@ -46,7 +46,7 @@ class Media_Info_Adapter_NewWave extends Media_Info_Adapter {
 	}
 
 	protected function _samples() {
-		$data = array();
+		$data = [];
 		$handle = fopen($this->_object, 'rb');
 
 		$header[] = fread($handle, 4); // 'RIFF'

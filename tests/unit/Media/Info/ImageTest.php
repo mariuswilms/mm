@@ -26,11 +26,11 @@ class Media_Info_ImageTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testQuality() {
-		$adapter = $this->getMock('Media_Info_Adapter_GenericMock', array('get'), array(null));
-		$media = new Media_Info_Image(array(
+		$adapter = $this->getMock('Media_Info_Adapter_GenericMock', ['get'], [null]);
+		$media = new Media_Info_Image([
 			'source' => "{$this->_files}/image_png.png", // not used by adapter
-			'adapters' => array($adapter)
-		));
+			'adapters' => [$adapter]
+		]);
 
 		$adapter->expects($this->at(0))
 			->method('get')->with($this->equalTo('width'))
@@ -61,11 +61,11 @@ class Media_Info_ImageTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testRatio() {
-		$adapter = $this->getMock('Media_Info_Adapter_GenericMock', array('get'), array(null));
-		$media = new Media_Info_Image(array(
+		$adapter = $this->getMock('Media_Info_Adapter_GenericMock', ['get'], [null]);
+		$media = new Media_Info_Image([
 			'source' => "{$this->_files}/image_png.png", // not used by adapter
-			'adapters' => array($adapter)
-		));
+			'adapters' => [$adapter]
+		]);
 
 		$adapter->expects($this->at(0))
 			->method('get')->with($this->equalTo('width'))
@@ -78,11 +78,11 @@ class Media_Info_ImageTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testKnownRatio() {
-		$adapter = $this->getMock('Media_Info_Adapter_GenericMock', array('get'), array(null));
-		$media = new Media_Info_Image(array(
+		$adapter = $this->getMock('Media_Info_Adapter_GenericMock', ['get'], [null]);
+		$media = new Media_Info_Image([
 			'source' => "{$this->_files}/image_png.png", // not used by adapter
-			'adapters' => array($adapter)
-		));
+			'adapters' => [$adapter]
+		]);
 
 		$adapter->expects($this->at(0))
 			->method('get')->with($this->equalTo('width'))

@@ -31,14 +31,14 @@ class Media_Process_Adapter_SoxShellTest extends PHPUnit_Framework_TestCase {
 		$this->_files = dirname(dirname(dirname(dirname(dirname(__FILE__))))) . '/data';
 		$this->_data = dirname(dirname(dirname((dirname(dirname(dirname(__FILE__))))))) .'/data';
 
-		Mime_Type::config('magic', array(
+		Mime_Type::config('magic', [
 			'adapter' => 'Freedesktop',
 			'file' => "{$this->_data}/magic.db"
-		));
-		Mime_Type::config('glob', array(
+		]);
+		Mime_Type::config('glob', [
 			'adapter' => 'Freedesktop',
 			'file' => "{$this->_data}/glob.db"
-		));
+		]);
 	}
 
 	public function testStore() {

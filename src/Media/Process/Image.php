@@ -129,7 +129,7 @@ class Media_Process_Image extends Media_Process_Generic {
 
 		list($zoomWidth, $zoomHeight) = $this->_normalizeDimensions($width * $factor, $height * $factor, 'maximum');
 		list($zoomLeft, $zoomTop) = $this->_boxify($zoomWidth, $zoomHeight, $gravity);
-		list($width, $height) = array($zoomWidth / $factor, $zoomHeight / $factor);
+		list($width, $height) = [$zoomWidth / $factor, $zoomHeight / $factor];
 
 		return $this->_adapter->cropAndResize(
 			$zoomLeft, $zoomTop, $zoomWidth, $zoomHeight,
@@ -304,7 +304,7 @@ class Media_Process_Image extends Media_Process_Generic {
 				$height = $ratio * $this->_adapter->height();
 			}
 		}
-		return array($width, $height);
+		return [$width, $height];
 	}
 
 	/**
@@ -340,7 +340,7 @@ class Media_Process_Image extends Media_Process_Generic {
 			default:
 				throw new InvalidArgumentException("Unsupported gravity `{$gravity}`.");
 		}
-		return array($left, $top);
+		return [$left, $top];
 	}
 }
 

@@ -24,7 +24,7 @@ class Media_Info {
 
 	protected static $_config;
 
-	public static function config(array $config = array()) {
+	public static function config(array $config = []) {
 		if (!$config) {
 			return self::$_config;
 		}
@@ -38,13 +38,13 @@ class Media_Info {
 	 *
 	 * @param array $config Valid values are:
 	 *                      - `'source'`: An absolute path to a file.
-	 *                      - `'adapters'`: Names or instances of media adapters (i.e. `array('Gd')`).
+	 *                      - `'adapters'`: Names or instances of media adapters (i.e. `['Gd']`).
 	 * @return Media_Process_Generic An instance of a subclass of `Media_Process_Generic` or
 	 *                               if type could not be mapped an instance of the that class
 	 *                               itself.
 	 */
-	public static function &factory(array $config = array()) {
-		$default = array('source' => null, 'adapters' => array());
+	public static function &factory(array $config = []) {
+		$default = ['source' => null, 'adapters' => []];
 		extract($config + $default);
 
 		if (!$source) {

@@ -36,10 +36,10 @@ class Media_Process_Adapter_FfmpegShell extends Media_Process_Adapter {
 
 	protected $_command;
 
-	protected $_options = array(
+	protected $_options = [
 		'overwrite' => '-y',
 		'vsync' => '-vsync 2'
-	);
+	];
 
 	protected $_targetType;
 
@@ -99,12 +99,12 @@ class Media_Process_Adapter_FfmpegShell extends Media_Process_Adapter {
 	public function convert($mimeType) {
 		switch (Mime_Type::guessName($mimeType)) {
 			case 'image':
-				$this->_options = array(
+				$this->_options = [
 					'vcodec' => '-vcodec ' . $this->_type($mimeType),
 					'vframes' => '-vframes 1',
 					'seek' => '-ss ' . intval($this->duration() / 4),
 					'noAudio' => '-an',
-				) + $this->_options;
+				] + $this->_options;
 
 				$this->_targetType = 'rawvideo';
 				break;
@@ -116,10 +116,10 @@ class Media_Process_Adapter_FfmpegShell extends Media_Process_Adapter {
 	}
 
 	public function resize($width, $height) {
-		return (boolean) $this->_options['resize'] = array(
+		return (boolean) $this->_options['resize'] = [
 			(integer) $width,
 			(integer) $height
-		);
+		];
 	}
 
 	public function width() {
@@ -164,11 +164,11 @@ class Media_Process_Adapter_FfmpegShell extends Media_Process_Adapter {
 	protected function _info() {
 		$command  = "{$this->_command} -f {$this->_objectType} -i {$this->_objectTemp}";
 
-		$descr = array(
-			0 => array('pipe', 'r'),
-			1 => array('pipe', 'w'),
-			2 => array('pipe', 'w')
-		);
+		$descr = [
+			0 => ['pipe', 'r'],
+			1 => ['pipe', 'w'],
+			2 => ['pipe', 'w']
+		];
 
 		/* There is no other way to get video information from
 		   ffmpeg without exiting with an error condition because
@@ -198,7 +198,7 @@ class Media_Process_Adapter_FfmpegShell extends Media_Process_Adapter {
 			list($width, $height) = $this->_options['resize'];
 
 			/* Fix for codecs require sizes to be even. */
-			$requireEven = array('mp4');
+			$requireEven = ['mp4'];
 
 			if (in_array($this->_targetType, $requireEven)) {
 				$width = $width % 2 ? $width + 1 : $width;
@@ -209,11 +209,11 @@ class Media_Process_Adapter_FfmpegShell extends Media_Process_Adapter {
 		$options = $this->_options ? implode(' ', $this->_options) . ' ' : null;
 		$command  = "{$this->_command} {$object} {$options}{$target}";
 
-		$descr = array(
-			0 => array('pipe', 'r'),
-			1 => array('pipe', 'w'),
-			2 => array('pipe', 'w')
-		);
+		$descr = [
+			0 => ['pipe', 'r'],
+			1 => ['pipe', 'w'],
+			2 => ['pipe', 'w']
+		];
 		$process = proc_open($command, $descr, $pipes);
 
 		$output = stream_get_contents($pipes[1]);
@@ -237,7 +237,7 @@ class Media_Process_Adapter_FfmpegShell extends Media_Process_Adapter {
 		fclose($target);
 		unlink($targetTemp);
 
-		$this->_options = array();
+		$this->_options = [];
 		unlink($this->_objectTemp);
 
 		$this->_load($buffer);
@@ -247,10 +247,10 @@ class Media_Process_Adapter_FfmpegShell extends Media_Process_Adapter {
 	protected function _type($object) {
 		$type = Mime_Type::guessExtension($object);
 
-		$map = array(
+		$map = [
 			'ogv' => 'ogg',
 			'oga' => 'ogg'
-		);
+		];
 		return isset($map[$type]) ? $map[$type] : $type;
 	}
 

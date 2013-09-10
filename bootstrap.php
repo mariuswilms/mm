@@ -68,27 +68,27 @@ if (strpos(ini_get('include_path'), $mm) === false) {
 require_once 'Mime/Type.php';
 
 if ($hasFileinfo) {
-	Mime_Type::config('magic', array(
+	Mime_Type::config('magic', [
 		'adapter' => 'Fileinfo'
-	));
+	]);
 } else {
-	Mime_Type::config('magic', array(
+	Mime_Type::config('magic', [
 		'adapter' => 'Freedesktop',
 		'file' => "{$mm}/data/magic.db"
-	));
+	]);
 }
 if ($cached = $cacheRead('mime_type_glob')) {
-	Mime_Type::config('glob', array(
+	Mime_Type::config('glob', [
 		'adapter' => 'Memory'
-	));
+	]);
 	foreach ($cached as $item) {
 		Mime_Type::$glob->register($item);
 	}
 } else {
-	Mime_Type::config('glob', array(
+	Mime_Type::config('glob', [
 		'adapter' => 'Freedesktop',
 		'file' => "{$mm}/data/glob.db"
-	));
+	]);
 	$cacheWrite('mime_type_glob', Mime_Type::$glob->to('array'));
 }
 
@@ -101,12 +101,12 @@ if ($cached = $cacheRead('mime_type_glob')) {
  */
 require_once 'Media/Process.php';
 
-Media_Process::config(array(
+Media_Process::config([
 	// 'audio' => 'SoxShell',
 	'document' => $hasImagick ? 'Imagick' : null,
 	'image' => $hasImagick ? 'Imagick' : 'Gd',
 	// 'video' => 'FfmpegShell'
-));
+]);
 
 /*
  * Configure the adpters to be used by the media info class. Adjust this
@@ -116,11 +116,11 @@ Media_Process::config(array(
  */
 require_once 'Media/Info.php';
 
-Media_Info::config(array(
-	// 'audio' => array('NewWave'),
-	// 'document' => array('Imagick'),
-	'image' => $hasImagick ? array('ImageBasic', 'Imagick') : array('ImageBasic'),
-	// 'video' => array()
-));
+Media_Info::config([
+	// 'audio' => ['NewWave'],
+	// 'document' => ['Imagick'],
+	'image' => $hasImagick ? ['ImageBasic', 'Imagick'] : ['ImageBasic'],
+	// 'video' => []
+]);
 
 ?>

@@ -30,7 +30,7 @@ class Mime_Type_Glob_Adapter_FreedesktopShippedTest extends PHPUnit_Framework_Te
 	}
 
 	public function testAnalyze() {
-		$files = array(
+		$files = [
 			'file.avi' => 'video/x-msvideo',
 			'file.gif' => 'image/gif',
 			'file.pdf' => 'application/pdf',
@@ -71,7 +71,7 @@ class Mime_Type_Glob_Adapter_FreedesktopShippedTest extends PHPUnit_Framework_Te
 			'file.flac' => 'audio/x-flac',
 			'file.class' => 'application/x-java',
 			'file.rm' => 'application/vnd.rn-realmedia'
-		);
+		];
 		foreach ($files as $file => $mimeTypes) {
 			$result = $this->subject->analyze($file);
 			$common = array_values(array_intersect($result, (array) $mimeTypes));
@@ -81,29 +81,29 @@ class Mime_Type_Glob_Adapter_FreedesktopShippedTest extends PHPUnit_Framework_Te
 	}
 
 	public function testAnalyzeReverse() {
-		$files = array(
-			'application/x-bzip' => array('bz2', 'bz'),
-			'text/css' => array('css', 'CSSL'),
-			'image/gif' => array('gif'),
-			'application/x-gzip' => array('gz'),
-			'application/x-java' => array('class'),
-			'application/javascript' => array('js'),
-			'application/pdf' => array('pdf'),
-			'text/x-gettext-translation' => array('po'),
-			'application/vnd.ms-powerpoint' => array('pot', 'pps', 'ppt', 'ppz'),
-			'text/x-gettext-translation-template' => array('pot'),
-			'application/x-gettext-translation' => array('mo', 'gmo'),
-			'text/plain' => array('asc', 'txt'),
-			'application/msword' => array('doc'),
-			'application/vnd.oasis.opendocument.text' => array('odt'),
-			'application/x-tar' => array('tar', 'gtar'),
-			'application/xhtml+xml' => array('xhtml'),
-			'application/xml' => array('xslt', 'xbl', 'xml', 'xsl'),
-			'audio/x-wav' => array('wav'),
-			'audio/mp4' => array('m4a', 'aac'),
-			'video/ogg' => array('ogv'),
-			'video/x-theora+ogg' => array('ogg')
-		);
+		$files = [
+			'application/x-bzip' => ['bz2', 'bz'],
+			'text/css' => ['css', 'CSSL'],
+			'image/gif' => ['gif'],
+			'application/x-gzip' => ['gz'],
+			'application/x-java' => ['class'],
+			'application/javascript' => ['js'],
+			'application/pdf' => ['pdf'],
+			'text/x-gettext-translation' => ['po'],
+			'application/vnd.ms-powerpoint' => ['pot', 'pps', 'ppt', 'ppz'],
+			'text/x-gettext-translation-template' => ['pot'],
+			'application/x-gettext-translation' => ['mo', 'gmo'],
+			'text/plain' => ['asc', 'txt'],
+			'application/msword' => ['doc'],
+			'application/vnd.oasis.opendocument.text' => ['odt'],
+			'application/x-tar' => ['tar', 'gtar'],
+			'application/xhtml+xml' => ['xhtml'],
+			'application/xml' => ['xslt', 'xbl', 'xml', 'xsl'],
+			'audio/x-wav' => ['wav'],
+			'audio/mp4' => ['m4a', 'aac'],
+			'video/ogg' => ['ogv'],
+			'video/x-theora+ogg' => ['ogg']
+		];
 		foreach ($files as $mimeType => $exts) {
 			$result = $this->subject->analyze($mimeType, true);
 			$this->assertEquals($exts, $result, "File `{$mimeType}`.");

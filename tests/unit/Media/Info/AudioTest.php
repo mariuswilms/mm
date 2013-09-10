@@ -26,11 +26,11 @@ class Media_Info_AudioTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testQuality() {
-		$adapter = $this->getMock('Media_Info_Adapter_GenericMock', array('get'), array(null));
-		$media = new Media_Info_Audio(array(
+		$adapter = $this->getMock('Media_Info_Adapter_GenericMock', ['get'], [null]);
+		$media = new Media_Info_Audio([
 			'source' => "{$this->_files}/audio_ogg_snippet.ogg", // not used by adapter
-			'adapters' => array($adapter)
-		));
+			'adapters' => [$adapter]
+		]);
 
 		$adapter->expects($this->at(0))
 			->method('get')->with($this->equalTo('bitRate'))
