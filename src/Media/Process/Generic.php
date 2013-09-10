@@ -99,7 +99,7 @@ class Media_Process_Generic {
 	/**
 	 * Stores the media to a file or resource.
 	 *
-	 * @param string|resource $source Eitehr an absolute path to a file or a writable ressource.
+	 * @param string|resource $source Either an absolute path to a file or a writable ressource.
 	 * @param boolean $overwrite Controls overwriting of an existent file, defaults to `false`.
 	 * @return resource Returns the (unrewinded) source used.
 	 */
