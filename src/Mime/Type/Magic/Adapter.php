@@ -210,7 +210,11 @@ abstract class Mime_Type_Magic_Adapter {
 							'\\\r' => '\r', '\\\n' => '\n'
 						]);
 					}
-					return preg_replace('/\\\\([0-9]{1,3})/e', 'chr($1);', $value);
+					return preg_replace_callback(
+						'/\\\\([0-9]{1,3})/',
+						function($value) { return chr($value); },
+						$value
+					);
 				case 'beshort':
 					return pack('n', $value);
 				case 'bedate':
