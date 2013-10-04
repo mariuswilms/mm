@@ -77,11 +77,13 @@ class Media_Process_Image extends Media_Process_Generic {
 	 *
 	 * @param integer $width
 	 * @param integer $height
+	 * @param string $gravity Currently supported values are "center", "topleft",
+	 *                      "topright", "bottomleft", "bottomright", defaults to "center"
 	 * @return boolean
 	 */
-	public function crop($width, $height) {
+	public function crop($width, $height, $gravity = 'center') {
 		list($width, $height) = $this->_normalizeDimensions($width, $height, 'maximum');
-		list($left, $top) = $this->_boxify($width, $height);
+		list($left, $top) = $this->_boxify($width, $height, $gravity);
 
 		return $this->_adapter->crop($left, $top, $width, $height);
 	}
