@@ -14,7 +14,7 @@
 
 require_once 'Mime/Type/Magic/Adapter/Fileinfo.php';
 
-class Mime_Type_Magic_Adapter_FileinfoTest extends PHPUnit_Framework_TestCase {
+class Mime_Type_Magic_Adapter_FileinfoSystemTest extends PHPUnit_Framework_TestCase {
 
 	public $subject;
 
@@ -30,32 +30,21 @@ class Mime_Type_Magic_Adapter_FileinfoTest extends PHPUnit_Framework_TestCase {
 		$this->_files = dirname(dirname(dirname(dirname(dirname(dirname(__FILE__)))))) . '/data';
 	}
 
-	public function testToArray() {
-		$this->setExpectedException('BadMethodCallException');
-		$result = $this->subject->to('array');
-	}
+	public function testAnalyze() {
+		$files = [
+			'image_gif.gif' => 'image/gif; charset=binary',
+			'application_pdf.pdf' => 'application/pdf; charset=binary',
+			'text_html_snippet.html' => 'text/html; charset=us-ascii',
+			'image_jpeg_snippet.jpg' => 'image/jpeg; charset=binary',
+			'video_theora_notag.ogv' => 'video/ogg; charset=binary',
+			'audio_vorbis_notag.ogg' => 'audio/ogg; charset=binary'
+		];
 
-	public function testAnalyzeFail() {
-		$handle = fopen('php://memory', 'rb');
-		$result = $this->subject->analyze($handle);
-		fclose($handle);
-		$this->assertNull($result);
-	}
-
-	public function testAnalyzeSeekedAnonymous() {
-		$source = fopen($this->_files . '/image_png.png', 'rb');
-		$handle = fopen('php://temp', 'r+b');
-		stream_copy_to_stream($source, $handle);
-
-		fclose($source);
-		fseek($handle, -1, SEEK_END);
-
-		$expected  = 'image/png; charset=binary';
-
-		$result = $this->subject->analyze($handle);
-		$this->assertEquals($expected, $result);
-
-		fclose($handle);
+		foreach ($files as $file => $mimeTypes) {
+			$handle = fopen($this->_files . '/' . $file, 'rb');
+			$this->assertContains($this->subject->analyze($handle), (array) $mimeTypes, "File `{$file}`.");
+			fclose($handle);
+		}
 	}
 }
 
