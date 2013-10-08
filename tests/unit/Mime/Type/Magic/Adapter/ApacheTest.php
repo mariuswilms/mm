@@ -44,11 +44,11 @@ class Mime_Type_Magic_Adapter_ApacheTest extends PHPUnit_Framework_TestCase {
 		$this->assertNull($result);
 	}
 
-	public function testIntegrationShipped() {
+	public function testWithSnippetDb() {
 		$file = $this->_files . '/magic_apache_snippet.db';
 		$this->subject = new Mime_Type_Magic_Adapter_Apache(compact('file'));
 
-		/* @todo Commented fail but should are present in data */
+		/* @todo Commented fail but are present in data */
 		$files = [
 			'image_gif.gif' => 'image/gif',
 			'application_pdf.pdf' => 'application/pdf',
