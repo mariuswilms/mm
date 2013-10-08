@@ -52,19 +52,25 @@ class Mime_Type_Magic_Adapter_FreedesktopShippedTest extends PHPUnit_Framework_T
 			'ms_word_snippet.doc' => 'application/msword', // audio/MP4A-LATM
 			'xml_snippet.xml' => 'application/xml', // text/xml
 
-			/* Fail! */
-			/*
-			'opendocument_writer_snippet.odt' => 'application/vnd.oasis.opendocument.text', // application/zip
-			'ms_word_snippet.docx' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', // application/zip
+			// fails with detecting application/vnd.oasis.opendocument.graphics
+			// 'opendocument_writer_snippet.odt' => 'application/vnd.oasis.opendocument.text',
+			// fails with detecting application/zip
+			// 'ms_word_snippet.docx' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
 			'audio_mpeg_snippet.mp3' => 'audio/mpeg',
-			'text_plain_snippet.txt' => 'text/plain',
-			'css_snippet.css' => 'text/css',
-			'javascript_snippet.js' => 'application/javascript',
-			'text_xhtml_snippet.xhtml' => 'application/xhtml+xml',  // text/xml
-			'po_snippet.po' => 'text/x-gettext-translation',
-			'text_pot_snippet.pot' => 'text/x-gettext-translation-template',
-			'mo_snippet.mo' => 'application/x-gettext-translation',
-			*/
+			// fails with detecting video/x-ms-asf
+			// 'text_plain_snippet.txt' => 'text/plain',
+			// fails with detecting text/x-csrc
+			// 'css_snippet.css' => 'text/css',
+			// fails with detecting text/x-csrc
+			// 'javascript_snippet.js' => 'application/javascript',
+			// fails with detecting text/html
+			// 'text_xhtml_snippet.xhtml' => 'application/xhtml+xml',
+			// fails with detecting nothing
+			// 'po_snippet.po' => 'text/x-gettext-translation',
+			// fails with detecting nothing
+			// 'text_pot_snippet.pot' => 'text/x-gettext-translation-template',
+			// fails with detecting nothing
+			// 'mo_snippet.mo' => 'application/x-gettext-translation',
 
 			'video_flash_snippet.flv' => 'video/x-flv',
 			'audio_snippet.snd' => 'audio/basic',
@@ -75,18 +81,15 @@ class Mime_Type_Magic_Adapter_FreedesktopShippedTest extends PHPUnit_Framework_T
 			'video_quicktime_snippet.mov' => 'video/quicktime',
 			'video_ms_snippet.wmv' => 'video/x-ms-asf',
 
-			/* Fail! */
-			/*
-			'audio_snippet.aac' => 'audio/x-aac',
-			'audio_ms_snippet.wma' => 'audio/x-ms-asf',
-			'flac_snippet.flac' => 'audio/x-flac', // Fails only with freedesktop db
-			*/
+			// fails with detecting nothing
+			// 'audio_snippet.aac' => 'audio/x-aac',
+			// fails with detecting video/x-ms-asf
+			// 'audio_ms_snippet.wma' => 'audio/x-ms-asf',
+			'flac_snippet.flac' => 'audio/flac',
 
-			/* Fail! No data :( */
-			/*
-			'java_snippet.class' => 'application/x-java',
-			'real_video_snippet.rm' => 'application/vnd.rn-realmedia'
-			*/
+			/* Fail! No data yet :( */
+			// 'java_snippet.class' => 'application/x-java',
+			// 'real_video_snippet.rm' => 'application/vnd.rn-realmedia'
 		];
 
 		foreach ($files as $file => $mimeTypes) {
