@@ -70,7 +70,8 @@ class Mime_Type_Glob_Adapter_FreedesktopShippedTest extends PHPUnit_Framework_Te
 			'file.mov' => 'video/quicktime',
 			'file.flac' => 'audio/flac',
 			'file.class' => 'application/x-java',
-			'file.rm' => 'application/vnd.rn-realmedia'
+			'file.rm' => 'application/vnd.rn-realmedia',
+			'file.webm' => 'video/webm'
 		];
 		foreach ($files as $file => $mimeTypes) {
 			$result = $this->subject->analyze($file);
@@ -103,7 +104,8 @@ class Mime_Type_Glob_Adapter_FreedesktopShippedTest extends PHPUnit_Framework_Te
 			'audio/x-wav' => ['wav'],
 			'audio/mp4' => ['m4a', 'f4a', 'aac'],
 			'video/ogg' => ['ogv'],
-			'video/x-theora+ogg' => ['ogg']
+			'video/x-theora+ogg' => ['ogg'],
+			'video/webm' => ['webm']
 		];
 		foreach ($files as $mimeType => $exts) {
 			$result = $this->subject->analyze($mimeType, true);
