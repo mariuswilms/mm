@@ -23,13 +23,13 @@ class Mime_TypeInternalTest extends PHPUnit_Framework_TestCase {
 		$this->_files = dirname(dirname(dirname(__FILE__))) . '/data';
 		$this->_data = dirname(dirname(dirname(dirname(dirname(__FILE__))))) .'/data';
 
-		Mime_Type::config('magic', array(
+		Mime_Type::config('magic', [
 			'adapter' => 'Fileinfo'
-		));
-		Mime_Type::config('glob', array(
+		]);
+		Mime_Type::config('glob', [
 			'adapter' => 'Freedesktop',
 			'file' => $this->_data . '/glob.db'
-		));
+		]);
 	}
 
 	protected function tearDown() {
@@ -37,9 +37,9 @@ class Mime_TypeInternalTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testGuessTypeFile() {
-		$files = array(
+		$files = [
 			'a.mp4' => 'video/mp4'
-		);
+		];
 		foreach ($files as $file => $mimeType) {
 			$this->assertEquals(
 				$mimeType,
@@ -50,9 +50,9 @@ class Mime_TypeInternalTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testGuessNameFile() {
-		$map = array(
+		$map = [
 			'a.mp4' => 'video'
-		);
+		];
 		foreach ($map as $file => $name) {
 			$this->assertEquals(
 				$name,

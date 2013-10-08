@@ -75,7 +75,7 @@ class Media_Info_Adapter_Imagick extends Media_Info_Adapter {
 	 *               and indexed numerically in that order i.e. `array(100, 57, 33)`.
 	 */
 	public function colors($spread = 20) {
-		$colors = array();
+		$colors = [];
 
 		$object = clone $this->_object;
 		$object->quantizeImage($spread, Imagick::COLORSPACE_RGB, 0, false, false);
