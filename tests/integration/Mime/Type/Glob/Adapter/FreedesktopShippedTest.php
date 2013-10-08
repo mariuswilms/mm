@@ -68,7 +68,7 @@ class Mime_Type_Glob_Adapter_FreedesktopShippedTest extends PHPUnit_Framework_Te
 			'file.mpc' => 'audio/x-musepack',
 			'file.wav' => 'audio/x-wav',
 			'file.mov' => 'video/quicktime',
-			'file.flac' => 'audio/x-flac',
+			'file.flac' => 'audio/flac',
 			'file.class' => 'application/x-java',
 			'file.rm' => 'application/vnd.rn-realmedia'
 		];
@@ -82,8 +82,8 @@ class Mime_Type_Glob_Adapter_FreedesktopShippedTest extends PHPUnit_Framework_Te
 
 	public function testAnalyzeReverse() {
 		$files = [
-			'application/x-bzip' => ['bz2', 'bz'],
-			'text/css' => ['css', 'CSSL'],
+			'application/x-bzip' => ['bz', 'bz2'],
+			'text/css' => ['cssl', 'css'],
 			'image/gif' => ['gif'],
 			'application/x-gzip' => ['gz'],
 			'application/x-java' => ['class'],
@@ -92,15 +92,16 @@ class Mime_Type_Glob_Adapter_FreedesktopShippedTest extends PHPUnit_Framework_Te
 			'text/x-gettext-translation' => ['po'],
 			'application/vnd.ms-powerpoint' => ['pot', 'pps', 'ppt', 'ppz'],
 			'text/x-gettext-translation-template' => ['pot'],
-			'application/x-gettext-translation' => ['mo', 'gmo'],
-			'text/plain' => ['asc', 'txt'],
+			'application/x-gettext-translation' => ['gmo', 'mo'],
+			'text/plain' => ['txt', 'asc'],
 			'application/msword' => ['doc'],
 			'application/vnd.oasis.opendocument.text' => ['odt'],
-			'application/x-tar' => ['tar', 'gtar'],
+			'application/x-tar' => ['tar', 'gem', 'gtar'],
 			'application/xhtml+xml' => ['xhtml'],
-			'application/xml' => ['xslt', 'xbl', 'xml', 'xsl'],
+			'application/xml' => ['xsd', 'rng', 'xbl', 'xml'],
+			'application/xslt+xml' => ['xsl', 'xslt'],
 			'audio/x-wav' => ['wav'],
-			'audio/mp4' => ['m4a', 'aac'],
+			'audio/mp4' => ['m4a', 'f4a', 'aac'],
 			'video/ogg' => ['ogv'],
 			'video/x-theora+ogg' => ['ogg']
 		];
