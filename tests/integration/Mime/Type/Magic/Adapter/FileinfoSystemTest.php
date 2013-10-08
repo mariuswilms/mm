@@ -37,7 +37,8 @@ class Mime_Type_Magic_Adapter_FileinfoSystemTest extends PHPUnit_Framework_TestC
 			'text_html_snippet.html' => 'text/html; charset=us-ascii',
 			'image_jpeg_snippet.jpg' => 'image/jpeg; charset=binary',
 			'video_theora_notag.ogv' => 'video/ogg; charset=binary',
-			'audio_vorbis_notag.ogg' => 'audio/ogg; charset=binary'
+			'audio_vorbis_notag.ogg' => 'audio/ogg; charset=binary',
+			'video_webm_snippet.webm' => 'video/webm; charset=binary'
 		];
 
 		foreach ($files as $file => $mimeTypes) {
