@@ -12,7 +12,9 @@
  * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Mime/Type/Glob/Adapter.php';
+namespace mm\Mime\Type\Glob\Adapter;
+
+use InvalidArgumentException;
 
 /**
  * This adapter supports glob database files compiled into the Freedesktop format.
@@ -23,7 +25,7 @@ require_once 'Mime/Type/Glob/Adapter.php';
  *
  * @link http://standards.freedesktop.org/shared-mime-info-spec/shared-mime-info-spec-0.13.html
  */
-class Mime_Type_Glob_Adapter_Freedesktop extends Mime_Type_Glob_Adapter {
+class Freedesktop extends \mm\Mime\Type\Glob\Adapter {
 
 	public function __construct($config) {
 		$this->_read($config['file']);

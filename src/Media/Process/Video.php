@@ -18,7 +18,7 @@ namespace mm\Media\Process;
  * `Video` allows for manipulating video files.
  * Most methods are simply inherited from the generic media type.
  */
-class Video extends mm\Media\Process\Generic {
+class Video extends \mm\Media\Process\Generic {
 
 	/**
 	 * Alias for fitInside

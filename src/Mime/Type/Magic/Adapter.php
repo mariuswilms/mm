@@ -12,11 +12,16 @@
  * @link       http://github.com/davidpersson/mm
  */
 
+namespace mm\Mime\Type\Magic;
+
+use Exception;
+use InvalidArgumentException;
+
 /**
- * The `Mime_Type_Magic_Adapter class forms the base clase from which all mime type
+ * The `Adapter` class forms the base clase from which all mime type
  * magic adatpers must subclass.
  */
-abstract class Mime_Type_Magic_Adapter {
+abstract class Adapter {
 
 	protected $_items = [];
 

@@ -12,7 +12,7 @@
  * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Mime/Type/Magic/Adapter.php';
+namespace mm\Mime\Type\Magic\Adapter;
 
 /**
  * Can parse files containing one huge PHP array.
@@ -27,7 +27,7 @@ require_once 'Mime/Type/Magic/Adapter.php';
  * ]; ?>
  * }}}
  */
-class Mime_Type_Magic_Adapter_Php extends Mime_Type_Magic_Adapter {
+class Php extends \mm\Mime\Type\Magic\Adapter {
 
 	public function __construct($config) {
 		foreach (require $config['file'] as $item) {

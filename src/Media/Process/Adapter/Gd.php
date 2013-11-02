@@ -23,7 +23,7 @@ use OutOfBoundsException;
  *
  * @link       http://php.net/gd
  */
-class Gd extends mm\Media\Process\Adapter {
+class Gd extends \mm\Media\Process\Adapter {
 
 	protected $_object;
 

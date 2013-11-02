@@ -12,13 +12,13 @@
  * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Mime/Type/Glob/Adapter.php';
+namespace mm\Mime\Type\Glob\Adapter;
 
 /**
  * This is a very simplistic adapter and can be used for building up your own
  * glob database in memory.
  */
-class Mime_Type_Glob_Adapter_Memory extends Mime_Type_Glob_Adapter {
+class Memory extends \mm\Mime\Type\Glob\Adapter {
 
 	public function register($item) {
 		return $this->_register($item);

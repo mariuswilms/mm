@@ -21,7 +21,7 @@ use InvalidArgumentException;
  * resizing, cropping and other methods. It abstracts _most common_ image manipulations.
  * Images can only scaled down but never scaled up.
  */
-class Image extends mm\Media\Process\Generic {
+class Image extends \mm\Media\Process\Generic {
 
 	/**
 	 * Alias for fitInside.

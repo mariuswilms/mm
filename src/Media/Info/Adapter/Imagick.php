@@ -21,7 +21,7 @@ namespace mm\Media\Info\Adapter;
  * @link http://php.net/imagick
  * @link http://www.imagemagick.org
  */
-class Imagick extends mm\Media\Info\Adapter {
+class Imagick extends \mm\Media\Info\Adapter {
 
 	protected $_object;
 

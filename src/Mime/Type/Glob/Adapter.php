@@ -12,11 +12,13 @@
  * @link       http://github.com/davidpersson/mm
  */
 
+namespace mm\Mime\Type\Glob;
+
 /**
- * The `Mime_Type_Glob_Adapter` class forms the base clase from which all mime type glob adatpers
- * must subclass.
+ * The `Adapter` class forms the base clase from which all mime type glob
+ * adapters must subclass.
  */
-abstract class Mime_Type_Glob_Adapter {
+abstract class Adapter {
 
 	/**
 	 * Items indexed by priority

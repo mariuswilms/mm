@@ -18,6 +18,6 @@ namespace mm\Media\Process;
  * `Document` allows for manipulating document files like PDFs.
  * Most methods are simply inherited from the generic media type.
  */
-class Document extends mm\Media\Process\Generic {}
+class Document extends \mm\Media\Process\Generic {}
 
 ?>

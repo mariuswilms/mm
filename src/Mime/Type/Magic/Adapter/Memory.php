@@ -12,13 +12,13 @@
  * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Mime/Type/Magic/Adapter.php';
+namespace mm\Mime\Type\Magic\Adapter;
 
 /**
  * This is a very simplistic adapter and can be used for building up your own
  * magic database in memory.
  */
-class Mime_Type_Magic_Adapter_Memory extends Mime_Type_Magic_Adapter {
+class Memory extends \mm\Mime\Type\Magic\Adapter {
 
 	public function __construct($config) {
 		foreach ($config['items'] as $item) {

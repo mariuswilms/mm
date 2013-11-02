@@ -25,7 +25,7 @@ use OutOfBoundsException;
  * @link http://php.net/imagick
  * @link http://www.imagemagick.org
  */
-class Imagick extends mm\Media\Process\Adapter {
+class Imagick extends \mm\Media\Process\Adapter {
 
 	protected $_object;
 

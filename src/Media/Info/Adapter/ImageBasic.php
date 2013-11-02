@@ -19,7 +19,7 @@ namespace mm\Media\Info\Adapter;
  * act directly on a given stream or file. It aims to deliver
  * some few but most common values (i.e. width and height).
  */
-class ImageBasic extends mm\Media\Info\Adapter {
+class ImageBasic extends \mm\Media\Info\Adapter {
 
 	protected $_object;
 

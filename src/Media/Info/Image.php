@@ -17,7 +17,7 @@ namespace mm\Media\Info;
 /**
  * `Image`
  */
-class Image extends mm\Media\Info\Generic {
+class Image extends \mm\Media\Info\Generic {
 
 	/**
 	 * Determines the ratio.

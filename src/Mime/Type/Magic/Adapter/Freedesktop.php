@@ -12,7 +12,9 @@
  * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Mime/Type/Magic/Adapter.php';
+namespace mm\Mime\Type\Magic\Adapter;
+
+use InvalidArgumentException;
 
 /**
  * This adapter supports magic database files compiled into the Freedesktop format.
@@ -22,7 +24,7 @@ require_once 'Mime/Type/Magic/Adapter.php';
  *
  * @link http://standards.freedesktop.org/shared-mime-info-spec/shared-mime-info-spec-0.13.html
  */
-class Mime_Type_Magic_Adapter_Freedesktop extends Mime_Type_Magic_Adapter {
+class Freedesktop extends \mm\Mime\Type\Magic\Adapter {
 
 	public function __construct(array $config = []) {
 		if (!isset($config['file'])) {

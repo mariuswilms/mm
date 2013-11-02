@@ -17,7 +17,7 @@ namespace mm\Media\Process;
 /**
  * `Audio` provides methods to manipulate audio files and streams.
  */
-class Audio extends mm\Media\Process\Generic {
+class Audio extends \mm\Media\Process\Generic {
 
 	public function channels($value) {
 		return $this->_adapter->channels((integer) $value);

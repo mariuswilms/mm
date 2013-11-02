@@ -23,7 +23,7 @@ use RuntimeException;
  *
  * @link http://ffmpeg.org
  */
-class FfmpegShell extends mm\Media\Process\Adapter {
+class FfmpegShell extends \mm\Media\Process\Adapter {
 
 	protected $_object;
 

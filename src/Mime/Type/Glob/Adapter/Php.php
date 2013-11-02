@@ -12,7 +12,7 @@
  * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Mime/Type/Glob/Adapter.php';
+namespace mm\Mime\Type\Glob\Adapter;
 
 /**
  * Can parse files containing one huge PHP array.
@@ -27,7 +27,7 @@ require_once 'Mime/Type/Glob/Adapter.php';
  * ]; ?>
  * }}}
  */
-class Mime_Type_Glob_Adapter_Php extends Mime_Type_Glob_Adapter {
+class Php extends \mm\Mime\Type\Glob\Adapter {
 
 	public function __construct($config) {
 		foreach (require $config['file'] as $item) {

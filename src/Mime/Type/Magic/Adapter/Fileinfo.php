@@ -12,14 +12,16 @@
  * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Mime/Type/Magic/Adapter.php';
+namespace mm\Mime\Type\Magic\Adapter;
+
+use BadMethodCallException;
 
 /**
  * This adapter wraps the functions of the fileinfo extension.
  *
  * @link http://php.net/fileinfo
  */
-class Mime_Type_Magic_Adapter_Fileinfo extends Mime_Type_Magic_Adapter {
+class Fileinfo extends \mm\Mime\Type\Magic\Adapter {
 
 	protected $_resource;
 

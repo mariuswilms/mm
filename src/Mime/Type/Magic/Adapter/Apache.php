@@ -12,7 +12,9 @@
  * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Mime/Type/Magic/Adapter.php';
+namespace mm\Mime\Type\Magic\Adapter;
+
+use InvalidArgumentException;
 
 /**
  * This adapter supports files like the ones that come with the
@@ -22,7 +24,7 @@ require_once 'Mime/Type/Magic/Adapter.php';
  *
  * @link http://httpd.apache.org/docs/2.2/en/mod/mod_mime_magic.html
  */
-class Mime_Type_Magic_Adapter_Apache extends Mime_Type_Magic_Adapter {
+class Apache extends \mm\Mime\Type\Magic\Adapter {
 
 	public function __construct($config) {
 		$this->_read($config['file']);

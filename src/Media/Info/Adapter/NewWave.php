@@ -22,7 +22,7 @@ use Exception;
  * methods can be very resource intensive and return tons of data
  * (especially `samples()`).
  */
-class NewWave extends mm\Media\Info\Adapter {
+class NewWave extends \mm\Media\Info\Adapter {
 
 	protected $_object;
 

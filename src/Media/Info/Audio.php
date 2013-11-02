@@ -20,7 +20,7 @@ namespace mm\Media\Info;
  *
  * @see mm\Media\Info\Video
  */
-class Audio extends mm\Media\Info\Generic {
+class Audio extends \mm\Media\Info\Generic {
 
 	/**
 	 * Determines the quality of the media by

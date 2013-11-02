@@ -23,7 +23,7 @@ use RuntimeException;
  *
  * @link http://sox.sourceforge.net
  */
-class SoxShell extends mm\Media\Process\Adapter {
+class SoxShell extends \mm\Media\Process\Adapter {
 
 	protected $_sampleRate;
 
