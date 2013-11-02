@@ -12,12 +12,17 @@
  * @link       http://github.com/davidpersson/mm
  */
 
+namespace mm\Mime;
+
+use OutOfBoundsException;
+
 /**
- * The `Mime_Type` class allows for detecting MIME types of files and streams
- * by analyzing it's contents and/or extension. The class makes use of two adapters
- * (`magic` and `glob`) which must be configured before using any of the methods.
+ * The `Type` class allows for detecting MIME types of files and streams
+ * by analyzing it's contents and/or extension. The class makes use of two
+ * adapters (`magic` and `glob`) which must be configured before using any
+ * of the methods.
  */
-class Mime_Type {
+class Type {
 
 	const REGEX = '^[\-\w\.\+]+\/[\-\w\.\+]+$';
 
@@ -25,7 +30,7 @@ class Mime_Type {
 	 * Magic.
 	 *
 	 * @see config()
-	 * @var Mime_Type_Magic_Adapter
+	 * @var mm\Mime\Type\Magic\Adapter
 	 */
 	public static $magic;
 
@@ -33,7 +38,7 @@ class Mime_Type {
 	 * Glob.
 	 *
 	 * @see config()
-	 * @var Mime_Type_Glob_Adapter
+	 * @var mm\Mime\Type\Glob\Adapter
 	 */
 	public static $glob;
 
@@ -100,10 +105,7 @@ class Mime_Type {
 		if ($type != 'magic' && $type != 'glob') {
 			throw new OutOfBoundsExeption("Invalid type `{$type}`.");
 		}
-		$class = 'Mime_Type_' . ucfirst($type) . '_Adapter_' . $config['adapter'];
-		$file = str_replace('_', '/', $class) . '.php';
-
-		require_once $file;
+		$class = 'mm\Mime\Type\\' . ucfirst($type) . '\Adapter\\' . $config['adapter'];
 
 		self::${$type} = new $class($config);
 	}
