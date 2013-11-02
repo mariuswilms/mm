@@ -103,7 +103,7 @@ class Type {
 			trigger_error($message, E_USER_DEPRECATED);
 		}
 		if ($type != 'magic' && $type != 'glob') {
-			throw new OutOfBoundsExeption("Invalid type `{$type}`.");
+			throw new OutOfBoundsException("Invalid type `{$type}`.");
 		}
 		$class = 'mm\Mime\Type\\' . ucfirst($type) . '\Adapter\\' . $config['adapter'];
 
