@@ -12,16 +12,16 @@
  * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Media/Info/Generic.php';
+namespace mm\Media\Info;
 
 /**
- * `Media_Info_Document` handles document files like PDFs.
- * Most methods are simply inherited from the generic media type wile some overlap with
- * those defined in `Media_Info_Image`.
+ * `Document` handles document files like PDFs. Most methods are simply
+ * inherited from the generic media type wile some overlap with those defined
+ * in `mm\Media\Info\Image`.
  *
- * @see Media_Info_Image
+ * @see mm\Media\Info\Image
  */
-class Media_Info_Document extends Media_Info_Generic {
+class Document extends mm\Media\Info\Generic {
 
 	/**
 	 * Determines the ratio.

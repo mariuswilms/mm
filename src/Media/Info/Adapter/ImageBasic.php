@@ -12,14 +12,14 @@
  * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Media/Info/Adapter.php';
+namespace mm\Media\Info\Adapter;
 
 /**
  * This adapter makes us of image related PHP functions which
  * act directly on a given stream or file. It aims to deliver
  * some few but most common values (i.e. width and height).
  */
-class Media_Info_Adapter_ImageBasic extends Media_Info_Adapter {
+class ImageBasic extends mm\Media\Info\Adapter {
 
 	protected $_object;
 

@@ -12,16 +12,20 @@
  * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Media/Process/Adapter.php';
+namespace mm\Media\Process\Adapter;
+
+use mm\Mime\Type;
+use Exception;
+use OutOfBoundsException;
 
 /**
  * This media process adapter allows for interfacing with ImageMagick through
  * the `imagick` pecl extension (which must be loaded in order to use this adapter).
  *
- * @link       http://php.net/imagick
- * @link       http://www.imagemagick.org
+ * @link http://php.net/imagick
+ * @link http://www.imagemagick.org
  */
-class Media_Process_Adapter_Imagick extends Media_Process_Adapter {
+class Imagick extends mm\Media\Process\Adapter {
 
 	protected $_object;
 
@@ -49,7 +53,7 @@ class Media_Process_Adapter_Imagick extends Media_Process_Adapter {
 			$this->_object->setFirstIterator();
 		}
 
-		$mimeType = Mime_Type::guessType($handle);
+		$mimeType = Type::guessType($handle);
 
 		if (!isset($this->_formatMap[$mimeType])) {
 			throw new OutOfBoundsException("MIME type `{$mimeType}` cannot be mapped to a format.");
@@ -69,7 +73,7 @@ class Media_Process_Adapter_Imagick extends Media_Process_Adapter {
 	}
 
 	public function convert($mimeType) {
-		if (Mime_Type::guessName($mimeType) != 'image') {
+		if (Type::guessName($mimeType) != 'image') {
 			return true;
 		}
 		if (!isset($this->_formatMap[$mimeType])) {

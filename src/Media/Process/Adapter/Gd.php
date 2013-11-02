@@ -12,15 +12,18 @@
  * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Media/Process/Adapter.php';
-require_once 'Mime/Type.php';
+namespace mm\Media\Process\Adapter;
+
+use mm\Mime\Type;
+use Exception;
+use OutOfBoundsException;
 
 /**
  * This media process adapter allows for interfacing with the native `gd` pecl extension.
  *
  * @link       http://php.net/gd
  */
-class Media_Process_Adapter_Gd extends Media_Process_Adapter {
+class Gd extends mm\Media\Process\Adapter {
 
 	protected $_object;
 
@@ -40,7 +43,7 @@ class Media_Process_Adapter_Gd extends Media_Process_Adapter {
 	protected $_pngFilter;
 
 	public function __construct($handle) {
-		$mimeType = Mime_Type::guessType($handle);
+		$mimeType = Type::guessType($handle);
 
 		if (!isset($this->_formatMap[$mimeType])) {
 			throw new OutOfBoundsException("Could not map MIME-type `{$mimeType}` to format.");
@@ -107,7 +110,7 @@ class Media_Process_Adapter_Gd extends Media_Process_Adapter {
 	}
 
 	public function convert($mimeType) {
-		if (Mime_Type::guessName($mimeType) != 'image') {
+		if (Type::guessName($mimeType) != 'image') {
 			return true;
 		}
 		if (!isset($this->_formatMap[$mimeType])) {

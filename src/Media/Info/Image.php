@@ -12,12 +12,12 @@
  * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Media/Info/Generic.php';
+namespace mm\Media\Info;
 
 /**
- * `Media_Info_Image`
+ * `Image`
  */
-class Media_Info_Image extends Media_Info_Generic {
+class Image extends mm\Media\Info\Generic {
 
 	/**
 	 * Determines the ratio.

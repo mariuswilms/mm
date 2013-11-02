@@ -12,14 +12,16 @@
  * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Media/Process/Generic.php';
+namespace mm\Media\Process;
+
+use InvalidArgumentException;
 
 /**
- * The `Media_Process_Image` class provides methods for manipulating images through
+ * The `Image` class provides methods for manipulating images through
  * resizing, cropping and other methods. It abstracts _most common_ image manipulations.
  * Images can only scaled down but never scaled up.
  */
-class Media_Process_Image extends Media_Process_Generic {
+class Image extends mm\Media\Process\Generic {
 
 	/**
 	 * Alias for fitInside.

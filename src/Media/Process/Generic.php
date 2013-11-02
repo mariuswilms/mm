@@ -12,14 +12,18 @@
  * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Mime/Type.php';
-require_once 'Media/Process.php';
+namespace mm\Media\Process;
+
+use mm\Mime\Type;
+use mm\Media\Process;
+use Exception;
+use InvalidException;
 
 /**
- * `Media_Process_Generic` is the base class for all media processing types. It provides
+ * `Generic` is the base class for all media processing types. It provides
  * methods used by all type classes.
  */
-class Media_Process_Generic {
+class Generic {
 
 	protected $_adapter;
 
@@ -50,12 +54,7 @@ class Media_Process_Generic {
 				$source = fopen($source, 'r');
 			}
 			if ($adapter) {
-				$class = "Media_Process_Adapter_{$adapter}";
-
-				if (!class_exists($class)) { // Allows for injecting arbitrary classes.
-					require_once dirname(__FILE__) . "/Adapter/{$adapter}.php";
-				}
-
+				$class = "mm\Media\Process\\Adapter\{$adapter}";
 				$this->_adapter = new $class($source);
 			}
 		}
@@ -93,7 +92,7 @@ class Media_Process_Generic {
 	 * @return string I.e. `'generic'` or `'image'`.
 	 */
 	public function name() {
-		return strtolower(str_replace('Media_Process_', null, get_class($this)));
+		return strtolower(str_replace('mm\Media\Process\\', null, get_class($this)));
 	}
 
 	/**
@@ -134,13 +133,13 @@ class Media_Process_Generic {
 	public function convert($mimeType) {
 		$this->_adapter->convert($mimeType);
 
-		if ($this->name() != Mime_Type::guessName($mimeType)) {
+		if ($this->name() != Type::guessName($mimeType)) {
 			// Crosses media (i.e. document -> image).
-			$config = Media_Process::config();
+			$config = Process::config();
 
-			if ($config[$this->name()] == $config[Mime_Type::guessName($mimeType)]) {
+			if ($config[$this->name()] == $config[Type::guessName($mimeType)]) {
 				// ...but using the same adapter.
-				$media = Media_Process::factory([
+				$media = Process::factory([
 					'source' => $mimeType,
 					'adapter' => $this->_adapter
 				]);
@@ -149,7 +148,7 @@ class Media_Process_Generic {
 				$handle = fopen('php://temp', 'w+');
 				$this->_adapter->store($handle);
 
-				$media = Media_Process::factory(['source' => $handle]);
+				$media = Process::factory(['source' => $handle]);
 				fclose($handle);
 			}
 			return $media;

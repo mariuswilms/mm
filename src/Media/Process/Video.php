@@ -12,13 +12,13 @@
  * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Media/Process/Generic.php';
+namespace mm\Media\Process;
 
 /**
- * `Media_Process_Video` allows for manipulating video files.
+ * `Video` allows for manipulating video files.
  * Most methods are simply inherited from the generic media type.
  */
-class Media_Process_Video extends Media_Process_Generic {
+class Video extends mm\Media\Process\Generic {
 
 	/**
 	 * Alias for fitInside

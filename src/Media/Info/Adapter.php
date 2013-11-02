@@ -12,10 +12,12 @@
  * @link       http://github.com/davidpersson/mm
  */
 
+namespace mm\Media\Info;
+
 /**
  * This class must be subclass by all media info adapters.
  */
-abstract class Media_Info_Adapter {
+abstract class Adapter {
 
 	/**
 	 * Prepare the adapter and load the source.

@@ -12,15 +12,19 @@
  * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Mime/Type.php';
+namespace mm\Media;
+
+use mm\Mime\Type;
+use Exception;
+use BadMethodCallException;
 
 /**
- * `Media_Info` is the media information manager class and provides
- * a configurable factory method. In contrast to `Media_Process` the `Media_Info` type
- * classes operate with multiple adapters. This is possible due to the fact that the source'
+ * `Info` is the media information manager class and provides a configurable
+ * factory method. In contrast to `Process` the `Info` type classes operate
+ * with multiple adapters. This is possible due to the fact that the source'
  * state is not changed by the adapters (they're read only).
  */
-class Media_Info {
+class Info {
 
 	protected static $_config;
 
@@ -39,7 +43,7 @@ class Media_Info {
 	 * @param array $config Valid values are:
 	 *                      - `'source'`: An absolute path to a file.
 	 *                      - `'adapters'`: Names or instances of media adapters (i.e. `['Gd']`).
-	 * @return Media_Process_Generic An instance of a subclass of `Media_Process_Generic` or
+	 * @return mm\Media\Info\Generic An instance of a subclass of `mm\Media\Process\Generic` or
 	 *                               if type could not be mapped an instance of the that class
 	 *                               itself.
 	 */
@@ -50,7 +54,8 @@ class Media_Info {
 		if (!$source) {
 			throw new BadMethodCallException("No source given.");
 		}
-		$name = Mime_Type::guessName($source);
+		$name = Type::guessName($source);
+		$class = "mm\Media\Info\\" . ucfirst($name);
 
 		if (!$adapters) {
 			if (!isset(self::$_config[$name])) {
@@ -58,14 +63,7 @@ class Media_Info {
 			}
 			$adapters = self::$_config[$name];
 		}
-
-		$name = ucfirst($name);
-		$class = "Media_Info_{$name}";
-
-		require_once "Media/Info/{$name}.php";
-
-		$media = new $class(compact('source', 'adapters'));
-		return $media;
+		return new $class(compact('source', 'adapters'));
 	}
 }
 

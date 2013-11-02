@@ -12,13 +12,17 @@
  * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Mime/Type.php';
+namespace mm\Media;
+
+use mm\Mime\Type;
+use Exception;
+use BadMethodCallException;
 
 /**
  * `Media_Process` is the media processing manager class and provides
  * a configurable factory method.
  */
-class Media_Process {
+class Process {
 
 	protected static $_config;
 
@@ -38,9 +42,9 @@ class Media_Process {
 	 *                      - `'source'`: An absolute path, a file or an open handle or
 	 *                                    a MIME type if `'adapter'` is an instance.
 	 *                      - `'adapter'`: A name or instance of a media adapter (i.e. `'Gd'`).
-	 * @return Media_Process_Generic An instance of a subclass of `Media_Process_Generic` or
-	 *                               if type could not be mapped an instance of the that class
-	 *                               itself.
+	 * @return mm\Media\Process\Generic An instance of a subclass of `mm\Media\Process\Generic` or
+	 *                                  if type could not be mapped an instance of the that class
+	 *                                  itself.
 	 */
 	public static function &factory(array $config = []) {
 		$default = ['source' => null, 'adapter' => null];
@@ -49,7 +53,8 @@ class Media_Process {
 		if (!$source) {
 			throw new BadMethodCallException("No source given.");
 		}
-		$name = Mime_Type::guessName($source);
+		$name = Type::guessName($source);
+		$class = "mm\Media\Process\\" . ucfirst($name);
 
 		if (!$adapter) {
 			if (!isset(self::$_config[$name])) {
@@ -57,16 +62,7 @@ class Media_Process {
 			}
 			$adapter = self::$_config[$name];
 		}
-
-		$name = ucfirst($name);
-		$class = "Media_Process_{$name}";
-
-		if (!class_exists($class)) { // Allows for injecting arbitrary classes.
-			require_once "Media/Process/{$name}.php";
-		}
-
-		$media = new $class(compact('source', 'adapter'));
-		return $media;
+		return new $class(compact('source', 'adapter'));
 	}
 }
 

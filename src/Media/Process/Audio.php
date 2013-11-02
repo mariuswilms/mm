@@ -12,12 +12,12 @@
  * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Media/Process/Generic.php';
+namespace mm\Media\Process;
 
 /**
- * `Media_Process_Audio` provides methods to manipulate audio files and streams.
+ * `Audio` provides methods to manipulate audio files and streams.
  */
-class Media_Process_Audio extends Media_Process_Generic {
+class Audio extends mm\Media\Process\Generic {
 
 	public function channels($value) {
 		return $this->_adapter->channels((integer) $value);

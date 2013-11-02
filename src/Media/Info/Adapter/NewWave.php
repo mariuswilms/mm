@@ -12,7 +12,9 @@
  * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Media/Info/Adapter.php';
+namespace mm\Media\Info\Adapter;
+
+use Exception;
 
 /**
  * This adapter contains a collection of methods which have no
@@ -20,7 +22,7 @@ require_once 'Media/Info/Adapter.php';
  * methods can be very resource intensive and return tons of data
  * (especially `samples()`).
  */
-class Media_Info_Adapter_NewWave extends Media_Info_Adapter {
+class NewWave extends mm\Media\Info\Adapter {
 
 	protected $_object;
 

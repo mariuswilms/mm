@@ -12,10 +12,12 @@
  * @link       http://github.com/davidpersson/mm
  */
 
+namespace mm\Media\Process;
+
 /**
  * This class must be subclass by all media process adapters.
  */
-abstract class Media_Process_Adapter {
+abstract class Adapter {
 
 	/**
 	 * Prepare the adapter and load the source.

@@ -12,15 +12,18 @@
  * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Media/Process/Adapter.php';
-require_once 'Mime/Type.php';
+namespace mm\Media\Process\Adapter;
+
+use mm\Mime\Type;
+use Exception;
+use RuntimeException;
 
 /**
  * This media process adapter interfaces with the `sox` binary through the shell.
  *
  * @link http://sox.sourceforge.net
  */
-class Media_Process_Adapter_SoxShell extends Media_Process_Adapter {
+class SoxShell extends mm\Media\Process\Adapter {
 
 	protected $_sampleRate;
 
@@ -53,7 +56,7 @@ class Media_Process_Adapter_SoxShell extends Media_Process_Adapter {
 
 		file_put_contents($this->_objectTemp, $handle);
 
-		$this->_objectType = $this->_type(Mime_Type::guessType($handle));
+		$this->_objectType = $this->_type(Type::guessType($handle));
 
 		return true;
 	}
@@ -69,7 +72,7 @@ class Media_Process_Adapter_SoxShell extends Media_Process_Adapter {
 	}
 
 	public function convert($mimeType) {
-		if (Mime_Type::guessName($mimeType) != 'audio') {
+		if (Type::guessName($mimeType) != 'audio') {
 			return true; // others care about inter media type conversions
 		}
 		$sourceType = $this->_objectType;
@@ -144,7 +147,7 @@ class Media_Process_Adapter_SoxShell extends Media_Process_Adapter {
 	}
 
 	protected function _type($object) {
-		$type = Mime_Type::guessExtension($object);
+		$type = Type::guessExtension($object);
 
 		$map = [
 			'ogv' => 'ogg',

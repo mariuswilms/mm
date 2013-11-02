@@ -12,13 +12,15 @@
  * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Mime/Type.php';
+namespace mm\Media\Info;
+
+use InvalidArgumentException;
 
 /**
- * `Media_Info_Generic` is the base class for all media information types. It provides
+ * `Generic` is the base class for all media information types. It provides
  * methods used by all type classes.
  */
-class Media_Info_Generic {
+class Generic {
 
 	protected $_adapters = [];
 
@@ -50,9 +52,7 @@ class Media_Info_Generic {
 				continue;
 			}
 			if ($adapter) {
-				$class = "Media_Info_Adapter_{$adapter}";
-				require_once dirname(__FILE__) . "/Adapter/{$adapter}.php";
-
+				$class = "mm\Media\Info\\Adapter\{$adapter}";
 				$adapter = new $class($source);
 			}
 		}

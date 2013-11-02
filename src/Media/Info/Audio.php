@@ -12,16 +12,15 @@
  * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Media/Info/Generic.php';
+namespace mm\Media\Info;
 
 /**
- * `Media_Info_Audio` handles all audio files.
- * Most methods are simply inherited from the generic media type wile some overlap with
- * those defined in `Media_Info_Video`.
+ * `Audio` handles all audio files. Most methods are simply inherited from the
+ * generic media type wile some overlap with those defined in `mm\Media\Info\Video`.
  *
- * @see Media_Info_Video
+ * @see mm\Media\Info\Video
  */
-class Media_Info_Audio extends Media_Info_Generic {
+class Audio extends mm\Media\Info\Generic {
 
 	/**
 	 * Determines the quality of the media by

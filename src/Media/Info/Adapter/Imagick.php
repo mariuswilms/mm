@@ -12,16 +12,16 @@
  * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Media/Info/Adapter.php';
+namespace mm\Media\Info\Adapter;
 
 /**
  * This media info adapter allows for interfacing with ImageMagick through
  * the `imagick` pecl extension (which must be loaded in order to use this adapter).
  *
- * @link       http://php.net/imagick
- * @link       http://www.imagemagick.org
+ * @link http://php.net/imagick
+ * @link http://www.imagemagick.org
  */
-class Media_Info_Adapter_Imagick extends Media_Info_Adapter {
+class Imagick extends mm\Media\Info\Adapter {
 
 	protected $_object;
 
