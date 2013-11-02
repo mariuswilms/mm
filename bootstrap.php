@@ -48,14 +48,18 @@ $hasFileinfo = extension_loaded('fileinfo');
 $hasImagick = extension_loaded('imagick');
 
 /*
- * Bootstrap the `mm` library. We are putting the library into the include path which
- * is expected (by the library) in order to be able to load classes.
+ * We are registering a custom autoloader here.
  */
-$mm = __DIR__;
+spl_autoload_register(function($class) {
+	if (strpos($class, 'mm\\') === false) {
+		return;
+	}
+	$file = __DIR__ . '/src/' . str_replace(['mm\\', '\\'], ['', '/'], $class) . '.php';
 
-if (strpos(ini_get('include_path'), $mm) === false) {
-	ini_set('include_path', "{$mm}/src" . PATH_SEPARATOR . ini_get('include_path'));
-}
+	if (file_exists($file)) {
+		include $file;
+	}
+});
 
 /*
  * Configure the MIME type detection. The detection class is two headed which means it
@@ -65,31 +69,31 @@ if (strpos(ini_get('include_path'), $mm) === false) {
  * variant with the addtion of a `Fileinfo` magic adapter. Not all adapters require
  * a file to be passed along with the configuration.
  */
-require_once 'Mime/Type.php';
+use mm\Mime\Type;
 
 if ($hasFileinfo) {
-	Mime_Type::config('magic', [
+	Type::config('magic', [
 		'adapter' => 'Fileinfo'
 	]);
 } else {
-	Mime_Type::config('magic', [
+	Type::config('magic', [
 		'adapter' => 'Freedesktop',
-		'file' => "{$mm}/data/magic.db"
+		'file' => __DIR__ . "/data/magic.db"
 	]);
 }
 if ($cached = $cacheRead('mime_type_glob')) {
-	Mime_Type::config('glob', [
+	Type::config('glob', [
 		'adapter' => 'Memory'
 	]);
 	foreach ($cached as $item) {
-		Mime_Type::$glob->register($item);
+		Type::$glob->register($item);
 	}
 } else {
-	Mime_Type::config('glob', [
+	Type::config('glob', [
 		'adapter' => 'Freedesktop',
-		'file' => "{$mm}/data/glob.db"
+		'file' => __DIR__ . "/data/glob.db"
 	]);
-	$cacheWrite('mime_type_glob', Mime_Type::$glob->to('array'));
+	$cacheWrite('mime_type_glob', Type::$glob->to('array'));
 }
 
 /*
@@ -99,9 +103,9 @@ if ($cached = $cacheRead('mime_type_glob')) {
  * image transformations. However the `Imagick` adapter may be more desirable
  * in other cases and also supports transformations for documents.
  */
-require_once 'Media/Process.php';
+use mm\Media\Process;
 
-Media_Process::config([
+Process::config([
 	// 'audio' => 'SoxShell',
 	'document' => $hasImagick ? 'Imagick' : null,
 	'image' => $hasImagick ? 'Imagick' : 'Gd',
@@ -111,12 +115,12 @@ Media_Process::config([
 /*
  * Configure the adpters to be used by the media info class. Adjust this
  * mapping of media names to adapters according to your environment. In contrast
- * to `Media_Process` which operates only with one adapter per media type
- * `Media_Info` can use multiple adapters per media type.
+ * to `Process` which operates only with one adapter per media type
+ * `Info` can use multiple adapters per media type.
  */
-require_once 'Media/Info.php';
+use mm\Media\Info;
 
-Media_Info::config([
+Info::config([
 	// 'audio' => ['NewWave'],
 	// 'document' => ['Imagick'],
 	'image' => $hasImagick ? ['ImageBasic', 'Imagick'] : ['ImageBasic'],
