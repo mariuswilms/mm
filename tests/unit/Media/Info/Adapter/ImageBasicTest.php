@@ -12,9 +12,11 @@
  * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Media/Info/Adapter/ImageBasic.php';
+namespace mm\tests\unit\Media\Info\Adapter;
 
-class Media_Info_Adapter_ImageBasicTest extends PHPUnit_Framework_TestCase {
+use mm\Media\Info\Adapter\ImageBasic;
+
+class ImageBasicTest extends \PHPUnit_Framework_TestCase {
 
 	protected $_files;
 	protected $_data;
@@ -30,7 +32,7 @@ class Media_Info_Adapter_ImageBasicTest extends PHPUnit_Framework_TestCase {
 
 	public function testAll() {
 		$source = "{$this->_files}/image_png.png";
-		$subject = new Media_Info_Adapter_ImageBasic($source);
+		$subject = new ImageBasic($source);
 
 		$result = $subject->all();
 		$this->assertInternalType('array', $result);
@@ -44,7 +46,7 @@ class Media_Info_Adapter_ImageBasicTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals(16, $result['bits']);
 
 		$source = "{$this->_files}/image_jpg.jpg";
-		$subject = new Media_Info_Adapter_ImageBasic($source);
+		$subject = new ImageBasic($source);
 
 		$result = $subject->all();
 		$this->assertInternalType('array', $result);
@@ -57,7 +59,7 @@ class Media_Info_Adapter_ImageBasicTest extends PHPUnit_Framework_TestCase {
 
 	public function testAllAndGetSymmetry() {
 		$source = "{$this->_files}/image_png.png";
-		$subject = new Media_Info_Adapter_ImageBasic($source);
+		$subject = new ImageBasic($source);
 
 		$results = $subject->all();
 

@@ -12,9 +12,9 @@
  * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Media/Process/Adapter.php';
+namespace mm\tests\mocks\Media\Process\Adapter;
 
-class Media_Process_Adapter_GenericMock extends Media_Process_Adapter {
+class GenericMock extends \mm\Media\Process\Adapter {
 
 	public $storeCopyFromStream;
 

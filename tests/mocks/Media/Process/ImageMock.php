@@ -12,9 +12,9 @@
  * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Media/Process/Image.php';
+namespace mm\tests\mocks\Media\Process;
 
-class Media_Process_ImageMock extends Media_Process_Image {
+class ImageMock extends mm\Media\Process\Image {
 
 	public function testBoxify($width, $height, $gravity = 'center') {
 		return parent::_boxify($width, $height, $gravity);

@@ -12,10 +12,12 @@
  * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Media/Info/Audio.php';
-require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/mocks/Media/Info/Adapter/GenericMock.php';
+namespace mm\tests\unit\Media\Info;
 
-class Media_Info_AudioTest extends PHPUnit_Framework_TestCase {
+use mm\Media\Info\Audio;
+use mm\tests\mocks\Media\Info\Adapter\GenericMock;
+
+class AudioTest extends \PHPUnit_Framework_TestCase {
 
 	protected $_files;
 	protected $_data;
@@ -26,8 +28,8 @@ class Media_Info_AudioTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testQuality() {
-		$adapter = $this->getMock('Media_Info_Adapter_GenericMock', ['get'], [null]);
-		$media = new Media_Info_Audio([
+		$adapter = $this->getMock('GenericMock', ['get'], [null]);
+		$media = new Audio([
 			'source' => "{$this->_files}/audio_ogg_snippet.ogg", // not used by adapter
 			'adapters' => [$adapter]
 		]);

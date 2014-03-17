@@ -12,8 +12,8 @@
  * @link       http://github.com/davidpersson/mm
  */
 
-require_once dirname(__FILE__) . '/GenericMock.php';
+namespace mm\tests\mocks\Media\Process\Adapter;
 
-class Media_Process_Adapter_GenericNameMock extends Media_Process_Adapter_GenericMock {}
+class GenericNameMock extends \mm\tests\mocks\Media\Process\Adapter\GenericMock {}
 
 ?>

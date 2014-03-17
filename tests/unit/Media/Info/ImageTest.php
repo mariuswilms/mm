@@ -12,10 +12,12 @@
  * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Media/Info/Image.php';
-require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/mocks/Media/Info/Adapter/GenericMock.php';
+namespace mm\tests\unit\Media\Info;
 
-class Media_Info_ImageTest extends PHPUnit_Framework_TestCase {
+use mm\Media\Info\Image;
+use mm\tests\mocks\Media\Info\Adapter\GenericMock;
+
+class ImageTest extends \PHPUnit_Framework_TestCase {
 
 	protected $_files;
 	protected $_data;
@@ -26,8 +28,8 @@ class Media_Info_ImageTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testQuality() {
-		$adapter = $this->getMock('Media_Info_Adapter_GenericMock', ['get'], [null]);
-		$media = new Media_Info_Image([
+		$adapter = $this->getMock('GenericMock', ['get'], [null]);
+		$media = new Image([
 			'source' => "{$this->_files}/image_png.png", // not used by adapter
 			'adapters' => [$adapter]
 		]);
@@ -61,8 +63,8 @@ class Media_Info_ImageTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testRatio() {
-		$adapter = $this->getMock('Media_Info_Adapter_GenericMock', ['get'], [null]);
-		$media = new Media_Info_Image([
+		$adapter = $this->getMock('GenericMock', ['get'], [null]);
+		$media = new Image([
 			'source' => "{$this->_files}/image_png.png", // not used by adapter
 			'adapters' => [$adapter]
 		]);
@@ -78,8 +80,8 @@ class Media_Info_ImageTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testKnownRatio() {
-		$adapter = $this->getMock('Media_Info_Adapter_GenericMock', ['get'], [null]);
-		$media = new Media_Info_Image([
+		$adapter = $this->getMock('GenericMock', ['get'], [null]);
+		$media = new Image([
 			'source' => "{$this->_files}/image_png.png", // not used by adapter
 			'adapters' => [$adapter]
 		]);

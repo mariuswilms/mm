@@ -12,9 +12,9 @@
  * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Media/Info/Adapter.php';
+namespace mm\tests\mocks\Media\Info\Adapter;
 
-class Media_Info_Adapter_GenericMock extends Media_Info_Adapter {
+class GenericMock extends \mm\Media\Info\Adapter {
 
 	public function __construct($file) {}
 
