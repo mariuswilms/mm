@@ -54,7 +54,8 @@ spl_autoload_register(function($class) {
 	if (strpos($class, 'mm\\') === false) {
 		return;
 	}
-	$file = __DIR__ . '/src/' . str_replace(['mm\\', '\\'], ['', '/'], $class) . '.php';
+	$subdir = strpos($class, 'mm\\tests\\') === false ? 'src/' : '';
+	$file = __DIR__ . "/" . $subdir . str_replace(['mm\\', '\\'], ['', '/'], $class) . '.php';
 
 	if (file_exists($file)) {
 		include $file;
