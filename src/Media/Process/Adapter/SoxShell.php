@@ -85,7 +85,7 @@ class Media_Process_Adapter_SoxShell extends Media_Process_Adapter {
 		}
 
 		rewind($this->_object);
-		$error = fopen('php://temp', 'wrb+');
+		$error = fopen('php://temp', 'w+b');
 		$sourceTemp = $this->_objectTemp;
 		$targetTemp = $this->_tempFile();
 
@@ -117,7 +117,7 @@ class Media_Process_Adapter_SoxShell extends Media_Process_Adapter {
 
 		// Workaround for header based formats which require the output stream to be seekable.
 		$target = fopen($targetTemp, 'rb');
-		$buffer = fopen('php://temp', 'wb+');
+		$buffer = fopen('php://temp', 'w+b');
 		stream_copy_to_stream($target, $buffer);
 
 		fclose($target);
