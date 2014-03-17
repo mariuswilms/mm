@@ -48,7 +48,7 @@ class Mime_Type_Glob_Adapter_Freedesktop extends Mime_Type_Glob_Adapter {
 	}
 
 	protected function _read($file) {
-		$handle = fopen($file, 'rb');
+		$handle = fopen($file, 'r');
 
 		$itemRegex = '^(\d{2}:)?[-\w.+]*\/[-\w.+]+:[\*\.a-zA-Z0-9]*$';
 

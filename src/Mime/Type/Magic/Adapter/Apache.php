@@ -41,7 +41,7 @@ class Mime_Type_Magic_Adapter_Apache extends Mime_Type_Magic_Adapter {
 	}
 
 	protected function _read($file) {
-		$handle = fopen($file, 'rb');
+		$handle = fopen($file, 'r');
 
 		$itemRegex = '^(\>*)(\d+)\t+(\S+)\t+([\S^\040]+)\t*([-\w.\+]+\/[-\w.\+]+)*\t*(\S*)$';
 

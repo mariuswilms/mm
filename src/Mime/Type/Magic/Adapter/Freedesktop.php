@@ -55,7 +55,7 @@ class Mime_Type_Magic_Adapter_Freedesktop extends Mime_Type_Magic_Adapter {
 	}
 
 	protected function _read($file) {
-		$handle = fopen($file, 'rb');
+		$handle = fopen($file, 'r');
 
 		$sectionRegex = '^\[(\d{1,3}):([-\w.\+]+\/[-\w.\+]+)\]$';
 		$itemRegex = '^(\d*)\>+(\d+)=+([^&~\+]{2})([^&~\+]+)&?([^~\+]*)~?(\d*)\+?(\d*).*$';

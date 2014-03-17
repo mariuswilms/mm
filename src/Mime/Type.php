@@ -203,7 +203,7 @@ class Mime_Type {
 		if (is_resource($file)) {
 			$handle = $file;
 		} elseif (is_file($file)) {
-			$handle = fopen($file, 'rb');
+			$handle = fopen($file, 'r');
 			$openedHere = true;
 		} else {
 			return;

@@ -42,7 +42,7 @@ class Mime_Type_Magic_Adapter_FileinfoSystemTest extends PHPUnit_Framework_TestC
 		];
 
 		foreach ($files as $file => $mimeTypes) {
-			$handle = fopen($this->_files . '/' . $file, 'rb');
+			$handle = fopen($this->_files . '/' . $file, 'r');
 			$this->assertContains($this->subject->analyze($handle), (array) $mimeTypes, "File `{$file}`.");
 			fclose($handle);
 		}

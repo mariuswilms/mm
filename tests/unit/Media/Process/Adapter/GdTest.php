@@ -39,7 +39,7 @@ class Media_Process_Adapter_GdTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testDimensions() {
-		$source = fopen("{$this->_files}/image_png.png", 'rb');
+		$source = fopen("{$this->_files}/image_png.png", 'r');
 		$subject = new Media_Process_Adapter_Gd($source);
 
 		$this->assertEquals(70, $subject->width());
@@ -49,8 +49,8 @@ class Media_Process_Adapter_GdTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testStore() {
-		$source = fopen("{$this->_files}/image_png.png", 'rb');
-		$target = fopen('php://temp', 'w+b');
+		$source = fopen("{$this->_files}/image_png.png", 'r');
+		$target = fopen('php://temp', 'w+');
 
 		$subject = new Media_Process_Adapter_Gd($source);
 		$result = $subject->store($target);
@@ -61,7 +61,7 @@ class Media_Process_Adapter_GdTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testConvertImageToImage() {
-		$source = fopen("{$this->_files}/image_png.png", 'rb');
+		$source = fopen("{$this->_files}/image_png.png", 'r');
 		$target = fopen('php://temp', 'wb');
 
 		$subject = new Media_Process_Adapter_Gd($source);
@@ -76,7 +76,7 @@ class Media_Process_Adapter_GdTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testCrop() {
-		$source = fopen("{$this->_files}/image_landscape.png", 'rb');
+		$source = fopen("{$this->_files}/image_landscape.png", 'r');
 		$subject = new Media_Process_Adapter_Gd($source);
 		// original size is 400x200
 
@@ -88,7 +88,7 @@ class Media_Process_Adapter_GdTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testResize() {
-		$source = fopen("{$this->_files}/image_landscape.png", 'rb');
+		$source = fopen("{$this->_files}/image_landscape.png", 'r');
 		$subject = new Media_Process_Adapter_Gd($source);
 		// original size is 400x200
 
@@ -100,7 +100,7 @@ class Media_Process_Adapter_GdTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testCropAndResize() {
-		$source = fopen("{$this->_files}/image_landscape.png", 'rb');
+		$source = fopen("{$this->_files}/image_landscape.png", 'r');
 		$subject = new Media_Process_Adapter_Gd($source);
 		// original size is 400x200
 
@@ -113,10 +113,10 @@ class Media_Process_Adapter_GdTest extends PHPUnit_Framework_TestCase {
 
 	public function testCompressPng() {
 		for ($i = 1; $i < 10; $i++) {
-			$source = fopen("{$this->_files}/image_png.png", 'rb');
+			$source = fopen("{$this->_files}/image_png.png", 'r');
 
-			$uncompressed = fopen('php://temp', 'w+b');
-			$compressed = fopen('php://temp', 'w+b');
+			$uncompressed = fopen('php://temp', 'w+');
+			$compressed = fopen('php://temp', 'w+');
 
 			$subject = new Media_Process_Adapter_Gd($source);
 			$subject->compress(0);
@@ -140,10 +140,10 @@ class Media_Process_Adapter_GdTest extends PHPUnit_Framework_TestCase {
 
 	public function testCompressJpeg() {
 		for ($i = 1; $i < 10; $i++) {
-			$source = fopen("{$this->_files}/image_jpg.jpg", 'rb');
+			$source = fopen("{$this->_files}/image_jpg.jpg", 'r');
 
-			$uncompressed = fopen('php://temp', 'w+b');
-			$compressed = fopen('php://temp', 'w+b');
+			$uncompressed = fopen('php://temp', 'w+');
+			$compressed = fopen('php://temp', 'w+');
 
 			$subject = new Media_Process_Adapter_Gd($source);
 			$subject->compress(0);

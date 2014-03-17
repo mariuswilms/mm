@@ -47,7 +47,7 @@ class Media_Info_Adapter_NewWave extends Media_Info_Adapter {
 
 	protected function _samples() {
 		$data = [];
-		$handle = fopen($this->_object, 'rb');
+		$handle = fopen($this->_object, 'r');
 
 		$header[] = fread($handle, 4); // 'RIFF'
 		$header[] = bin2hex(fread ($handle, 4));

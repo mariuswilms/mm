@@ -171,8 +171,8 @@ class Mime_TypeTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testGuessExtensionResource() {
-		$handleA = fopen("{$this->_files}/application_pdf.pdf", 'rb');
-		$handleB = fopen('php://temp', 'rb+');
+		$handleA = fopen("{$this->_files}/application_pdf.pdf", 'r');
+		$handleB = fopen('php://temp', 'r+');
 
 		stream_copy_to_stream($handleA, $handleB);
 
@@ -230,8 +230,8 @@ class Mime_TypeTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testGuessNameResource() {
-		$handleA = fopen("{$this->_files}/application_pdf.pdf", 'rb');
-		$handleB = fopen('php://temp', 'rb+');
+		$handleA = fopen("{$this->_files}/application_pdf.pdf", 'r');
+		$handleB = fopen('php://temp', 'r+');
 
 		stream_copy_to_stream($handleA, $handleB);
 

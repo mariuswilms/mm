@@ -42,8 +42,8 @@ class Media_Process_Adapter_SoxShellTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testStore() {
-		$source = fopen('php://temp', 'r+b');
-		$target = fopen('php://temp', 'w+b');
+		$source = fopen('php://temp', 'r+');
+		$target = fopen('php://temp', 'w+');
 
 		fwrite($source, 'test');
 		$subject = new Media_Process_Adapter_SoxShell($source);
@@ -55,7 +55,7 @@ class Media_Process_Adapter_SoxShellTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testConvert() {
-		$source = fopen("{$this->_files}/audio_vorbis_comments.ogg", 'rb');
+		$source = fopen("{$this->_files}/audio_vorbis_comments.ogg", 'r');
 		$target = fopen('php://temp', 'wb');
 
 		$subject = new Media_Process_Adapter_SoxShell($source);

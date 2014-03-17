@@ -57,7 +57,7 @@ class Media_ProcessTest extends PHPUnit_Framework_TestCase {
 
 	public function testMediaFactorySourceStream() {
 		$result = Media_Process::factory([
-			'source' => fopen("{$this->_files}/image_jpg.jpg", 'rb')
+			'source' => fopen("{$this->_files}/image_jpg.jpg", 'r')
 		]);
 		$this->assertInstanceOf('Media_Process_Image', $result);
 	}

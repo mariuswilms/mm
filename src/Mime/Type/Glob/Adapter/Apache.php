@@ -47,7 +47,7 @@ class Mime_Type_Glob_Adapter_Apache extends Mime_Type_Glob_Adapter {
 	}
 
 	protected function _read($file) {
-		$handle = fopen($file, 'rb');
+		$handle = fopen($file, 'r');
 
 		$itemRegex = '^[-\w.+]*\/[-\w.+]+\s+[a-zA-Z0-9]*$';
 

@@ -230,8 +230,8 @@ class Media_Process_Adapter_FfmpegShell extends Media_Process_Adapter {
 			throw new RuntimeException($message);
 		}
 
-		$target = fopen($targetTemp, 'rb');
-		$buffer = fopen('php://temp', 'wb+');
+		$target = fopen($targetTemp, 'r');
+		$buffer = fopen('php://temp', 'w+');
 		stream_copy_to_stream($target, $buffer);
 
 		fclose($target);

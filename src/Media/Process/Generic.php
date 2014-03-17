@@ -47,7 +47,7 @@ class Media_Process_Generic {
 			$this->_adapter = $adapter;
 		} else {
 			if (!is_resource($source)) {
-				$source = fopen($source, 'rb');
+				$source = fopen($source, 'r');
 			}
 			if ($adapter) {
 				$class = "Media_Process_Adapter_{$adapter}";
@@ -118,7 +118,7 @@ class Media_Process_Generic {
 				}
 				unlink($source);
 			}
-			$handle = fopen($source, 'wb');
+			$handle = fopen($source, 'w');
 			$this->_adapter->store($handle);
 			fclose($handle);
 		}

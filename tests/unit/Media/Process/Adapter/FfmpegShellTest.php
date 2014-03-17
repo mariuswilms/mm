@@ -45,8 +45,8 @@ class Media_Process_Adapter_FfmpegShellTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testStore() {
-		$source = fopen('php://temp', 'r+b');
-		$target = fopen('php://temp', 'w+b');
+		$source = fopen('php://temp', 'r+');
+		$target = fopen('php://temp', 'w+');
 
 		fwrite($source, 'test');
 		$subject = new Media_Process_Adapter_FfmpegShell($source);
@@ -58,7 +58,7 @@ class Media_Process_Adapter_FfmpegShellTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testConvertToImage() {
-		$source = fopen("{$this->_files}/video_theora_comments.ogv", 'rb');
+		$source = fopen("{$this->_files}/video_theora_comments.ogv", 'r');
 		$target = fopen('php://temp', 'wb');
 
 		$subject = new Media_Process_Adapter_FfmpegShell($source);
@@ -73,7 +73,7 @@ class Media_Process_Adapter_FfmpegShellTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testConvertToVideo() {
-		$source = fopen("{$this->_files}/video_theora_comments.ogv", 'rb');
+		$source = fopen("{$this->_files}/video_theora_comments.ogv", 'r');
 		$target = fopen('php://temp', 'wb');
 
 		$subject = new Media_Process_Adapter_FfmpegShell($source);
@@ -88,7 +88,7 @@ class Media_Process_Adapter_FfmpegShellTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testPassthru() {
-		$source = fopen("{$this->_files}/video_theora_comments.ogv", 'rb');
+		$source = fopen("{$this->_files}/video_theora_comments.ogv", 'r');
 		$target = fopen('php://temp', 'wb');
 
 		$subject = new Media_Process_Adapter_FfmpegShell($source);
@@ -105,7 +105,7 @@ class Media_Process_Adapter_FfmpegShellTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testDimensions() {
-		$source = fopen("{$this->_files}/video_theora_comments.ogv", 'rb');
+		$source = fopen("{$this->_files}/video_theora_comments.ogv", 'r');
 		$subject = new Media_Process_Adapter_FfmpegShell($source);
 
 		$this->assertEquals(320, $subject->width());

@@ -116,8 +116,8 @@ class Media_Process_Adapter_SoxShell extends Media_Process_Adapter {
 		}
 
 		// Workaround for header based formats which require the output stream to be seekable.
-		$target = fopen($targetTemp, 'rb');
-		$buffer = fopen('php://temp', 'w+b');
+		$target = fopen($targetTemp, 'r');
+		$buffer = fopen('php://temp', 'w+');
 		stream_copy_to_stream($target, $buffer);
 
 		fclose($target);

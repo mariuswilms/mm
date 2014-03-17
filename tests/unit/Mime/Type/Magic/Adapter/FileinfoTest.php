@@ -36,15 +36,15 @@ class Mime_Type_Magic_Adapter_FileinfoTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testAnalyzeFail() {
-		$handle = fopen('php://memory', 'rb');
+		$handle = fopen('php://memory', 'r');
 		$result = $this->subject->analyze($handle);
 		fclose($handle);
 		$this->assertNull($result);
 	}
 
 	public function testAnalyzeSeekedAnonymous() {
-		$source = fopen($this->_files . '/image_png.png', 'rb');
-		$handle = fopen('php://temp', 'r+b');
+		$source = fopen($this->_files . '/image_png.png', 'r');
+		$handle = fopen('php://temp', 'r+');
 		stream_copy_to_stream($source, $handle);
 
 		fclose($source);

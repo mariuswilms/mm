@@ -38,7 +38,7 @@ class Mime_Type_Magic_Adapter_FreedesktopTest extends PHPUnit_Framework_TestCase
 		$file = $this->_files . '/magic_freedesktop_snippet.db';
 		$this->subject = new Mime_Type_Magic_Adapter_Freedesktop(compact('file'));
 
-		$handle = fopen('php://memory', 'rb');
+		$handle = fopen('php://memory', 'r');
 		$result = $this->subject->analyze($handle);
 		fclose($handle);
 		$this->assertNull($result);

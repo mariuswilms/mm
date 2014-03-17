@@ -38,7 +38,7 @@ class Mime_Type_Magic_Adapter_ApacheTest extends PHPUnit_Framework_TestCase {
 		$file = $this->_files . '/magic_apache_snippet.db';
 		$this->subject = new Mime_Type_Magic_Adapter_Apache(compact('file'));
 
-		$handle = fopen('php://memory', 'rb');
+		$handle = fopen('php://memory', 'r');
 		$result = $this->subject->analyze($handle);
 		fclose($handle);
 		$this->assertNull($result);
@@ -64,7 +64,7 @@ class Mime_Type_Magic_Adapter_ApacheTest extends PHPUnit_Framework_TestCase {
 		];
 
 		foreach ($files as $file => $mimeTypes) {
-			$handle = fopen($this->_files . '/' . $file, 'rb');
+			$handle = fopen($this->_files . '/' . $file, 'r');
 			$this->assertContains($this->subject->analyze($handle), (array) $mimeTypes, "File `{$file}`.");
 			fclose($handle);
 		}

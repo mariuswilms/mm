@@ -55,8 +55,8 @@ class Media_Process_ConversionTest extends PHPUnit_Framework_TestCase {
 			'image' => 'GenericMock',
 			'video' => 'GenericNameMock'
 		]);
-		$source = fopen("{$this->_files}/video_theora_notag.ogv", 'rb');
-		$storeFrom = fopen("{$this->_files}/image_jpg.jpg", 'rb');
+		$source = fopen("{$this->_files}/video_theora_notag.ogv", 'r');
+		$storeFrom = fopen("{$this->_files}/image_jpg.jpg", 'r');
 
 		$adapter = new Media_Process_Adapter_GenericNameMock($source);
 		$adapter->storeCopyFromStream = $storeFrom;

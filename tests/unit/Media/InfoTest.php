@@ -58,7 +58,7 @@ class Media_InfoTest extends PHPUnit_Framework_TestCase {
 	public function testMediaFactorySourceFailStream() {
 		$this->setExpectedException('InvalidArgumentException');
 		Media_Info::factory([
-			'source' => fopen("{$this->_files}/image_jpg.jpg", 'rb')
+			'source' => fopen("{$this->_files}/image_jpg.jpg", 'r')
 		]);
 	}
 }

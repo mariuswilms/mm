@@ -33,7 +33,7 @@ class Media_Process_GenericTest extends PHPUnit_Framework_TestCase {
 		$this->assertInternalType('object', $result);
 
 		$result = new Media_Process_Generic([
-			'source' => fopen("{$this->_files}/image_jpg.jpg", 'rb'),
+			'source' => fopen("{$this->_files}/image_jpg.jpg", 'r'),
 			'adapter' => new Media_Process_Adapter_GenericMock(null)
 		]);
 		$this->assertInternalType('object', $result);
@@ -78,7 +78,7 @@ class Media_Process_GenericTest extends PHPUnit_Framework_TestCase {
 		touch($target);
 
 		$media = new Media_Process_Generic([
-			'source' => fopen('php://temp', 'rb'),
+			'source' => fopen('php://temp', 'r'),
 			'adapter' => new Media_Process_Adapter_GenericMock(null)
 		]);
 

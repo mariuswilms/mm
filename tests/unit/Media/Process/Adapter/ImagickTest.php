@@ -39,7 +39,7 @@ class Media_Process_Adapter_ImagickTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testDimensions() {
-		$source = fopen("{$this->_files}/image_png.png", 'rb');
+		$source = fopen("{$this->_files}/image_png.png", 'r');
 		$subject = new Media_Process_Adapter_Imagick($source);
 
 		$this->assertEquals(70, $subject->width());
@@ -53,7 +53,7 @@ class Media_Process_Adapter_ImagickTest extends PHPUnit_Framework_TestCase {
 			$this->markTestSkipped('The `imagick` extension lacks ghostscript support.');
 		}
 
-		$source = fopen("{$this->_files}/application_pdf.pdf", 'rb');
+		$source = fopen("{$this->_files}/application_pdf.pdf", 'r');
 		$subject = new Media_Process_Adapter_Imagick($source);
 
 		$this->assertEquals(595, $subject->width());
@@ -63,8 +63,8 @@ class Media_Process_Adapter_ImagickTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testStore() {
-		$source = fopen("{$this->_files}/image_png.png", 'rb');
-		$target = fopen('php://temp', 'w+b');
+		$source = fopen("{$this->_files}/image_png.png", 'r');
+		$target = fopen('php://temp', 'w+');
 
 		$subject = new Media_Process_Adapter_Imagick($source);
 		$result = $subject->store($target);
@@ -75,7 +75,7 @@ class Media_Process_Adapter_ImagickTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testConvertImageToImage() {
-		$source = fopen("{$this->_files}/image_png.png", 'rb');
+		$source = fopen("{$this->_files}/image_png.png", 'r');
 		$target = fopen('php://temp', 'wb');
 
 		$subject = new Media_Process_Adapter_Imagick($source);
@@ -94,7 +94,7 @@ class Media_Process_Adapter_ImagickTest extends PHPUnit_Framework_TestCase {
 			$this->markTestSkipped('The `imagick` extension lacks ghostscript support.');
 		}
 
-		$source = fopen("{$this->_files}/application_pdf.pdf", 'rb');
+		$source = fopen("{$this->_files}/application_pdf.pdf", 'r');
 		$target = fopen('php://temp', 'wb');
 
 		$subject = new Media_Process_Adapter_Imagick($source);
@@ -113,7 +113,7 @@ class Media_Process_Adapter_ImagickTest extends PHPUnit_Framework_TestCase {
 			$this->markTestSkipped('The `imagick` extension lacks ghostscript support.');
 		}
 
-		$source = fopen("{$this->_files}/application_pdf_multipage.pdf", 'rb');
+		$source = fopen("{$this->_files}/application_pdf_multipage.pdf", 'r');
 		$target = fopen('php://temp', 'wb');
 
 		$subject = new Media_Process_Adapter_Imagick($source);
@@ -128,7 +128,7 @@ class Media_Process_Adapter_ImagickTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testPassthru() {
-		$source = fopen("{$this->_files}/image_png.png", 'rb');
+		$source = fopen("{$this->_files}/image_png.png", 'r');
 		$target = fopen('php://temp', 'wb');
 
 		$subject = new Media_Process_Adapter_Imagick($source);
@@ -143,7 +143,7 @@ class Media_Process_Adapter_ImagickTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testCrop() {
-		$source = fopen("{$this->_files}/image_landscape.png", 'rb');
+		$source = fopen("{$this->_files}/image_landscape.png", 'r');
 		$subject = new Media_Process_Adapter_Imagick($source);
 		// original size is 400x200
 
@@ -155,7 +155,7 @@ class Media_Process_Adapter_ImagickTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testResize() {
-		$source = fopen("{$this->_files}/image_landscape.png", 'rb');
+		$source = fopen("{$this->_files}/image_landscape.png", 'r');
 		$subject = new Media_Process_Adapter_Imagick($source);
 		// original size is 400x200
 
@@ -167,7 +167,7 @@ class Media_Process_Adapter_ImagickTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testCropAndResize() {
-		$source = fopen("{$this->_files}/image_landscape.png", 'rb');
+		$source = fopen("{$this->_files}/image_landscape.png", 'r');
 		$subject = new Media_Process_Adapter_Imagick($source);
 		// original size is 400x200
 
@@ -179,7 +179,7 @@ class Media_Process_Adapter_ImagickTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testProfile() {
-		$source = fopen("{$this->_files}/image_landscape.png", 'rb');
+		$source = fopen("{$this->_files}/image_landscape.png", 'r');
 		$subject = new Media_Process_Adapter_Imagick($source);
 
 		$profile = file_get_contents("{$this->_data}/sRGB_IEC61966-2-1_black_scaled.icc");
@@ -191,7 +191,7 @@ class Media_Process_Adapter_ImagickTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testStrip() {
-		$source = fopen("{$this->_files}/image_landscape.png", 'rb');
+		$source = fopen("{$this->_files}/image_landscape.png", 'r');
 		$subject = new Media_Process_Adapter_Imagick($source);
 
 		$profile = file_get_contents("{$this->_data}/sRGB_IEC61966-2-1_black_scaled.icc");
@@ -207,10 +207,10 @@ class Media_Process_Adapter_ImagickTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testDepth() {
-		$source = fopen("{$this->_files}/image_png.png", 'rb'); // this one has 16 bit
+		$source = fopen("{$this->_files}/image_png.png", 'r'); // this one has 16 bit
 		$subject = new Media_Process_Adapter_Imagick($source);
 
-		$reduced = fopen('php://temp', 'w+b');
+		$reduced = fopen('php://temp', 'w+');
 
 		$result = $subject->depth(8);
 		$subject->store($reduced);
@@ -228,10 +228,10 @@ class Media_Process_Adapter_ImagickTest extends PHPUnit_Framework_TestCase {
 	public function testCompressPng() {
 		 // Test just first 4 because after that strangely the size goes up again
 		for ($i = 1; $i <= 4; $i++) {
-			$source = fopen("{$this->_files}/image_png.png", 'rb');
+			$source = fopen("{$this->_files}/image_png.png", 'r');
 
-			$uncompressed = fopen('php://temp', 'w+b');
-			$compressed = fopen('php://temp', 'w+b');
+			$uncompressed = fopen('php://temp', 'w+');
+			$compressed = fopen('php://temp', 'w+');
 
 			$subject = new Media_Process_Adapter_Imagick($source);
 			$subject->compress(0);
@@ -255,10 +255,10 @@ class Media_Process_Adapter_ImagickTest extends PHPUnit_Framework_TestCase {
 
 	public function testCompressJpeg() {
 		for ($i = 1; $i < 10; $i++) {
-			$source = fopen("{$this->_files}/image_jpg.jpg", 'rb');
+			$source = fopen("{$this->_files}/image_jpg.jpg", 'r');
 
-			$uncompressed = fopen('php://temp', 'w+b');
-			$compressed = fopen('php://temp', 'w+b');
+			$uncompressed = fopen('php://temp', 'w+');
+			$compressed = fopen('php://temp', 'w+');
 
 			$subject = new Media_Process_Adapter_Imagick($source);
 
