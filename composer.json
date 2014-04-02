@@ -1,7 +1,7 @@
 {
     "name": "davidpersson/mm",
     "description": "The PHP media library: media processing and MIME-Type/extension guessing.",
-    "tags": ["media", "mime", "imagick", "fileinfo", "sox", "ffmpeg", "pdf"],
+    "keywords": ["media", "mime", "imagick", "fileinfo", "sox", "ffmpeg", "pdf"],
     "license": "MIT",
     "authors": [
         {
