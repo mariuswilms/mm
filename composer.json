@@ -1,0 +1,20 @@
+{
+    "name": "davidpersson/mm",
+    "description": "The PHP media library: media processing and MIME-Type/extension guessing.",
+    "tags": ["media", "mime", "imagick", "fileinfo", "sox", "ffmpeg", "pdf"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "David Persson",
+            "email": "davidpersson@gmx.de"
+        }
+    ],
+    "require": {
+      "php": ">=5.5.0"
+    },
+    "autoload": {
+      "classmap": ["src/"],
+      "files": ["bootstrap.php"]
+    },
+    "include-path": ["src/"]
+}
