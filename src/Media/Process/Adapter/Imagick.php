@@ -151,6 +151,11 @@ class Media_Process_Adapter_Imagick extends Media_Process_Adapter {
 		return $this->_object->setInterlaceScheme(constant($constant));
 	}
 
+	public function background($rgb) {
+		$color = "rgb({$rgb[0]},{$rgb[1]},{$rgb[2]})";
+		return $this->_object->setImageBackgroundColor(new ImagickPixel($color));
+	}
+
 	public function crop($left, $top, $width, $height) {
 		$left   = (integer) $left;
 		$top    = (integer) $top;

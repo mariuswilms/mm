@@ -267,6 +267,16 @@ class Media_Process_Image extends Media_Process_Generic {
 	}
 
 	/**
+	 * Allows setting a background color as a replacement for the alpha channel.
+	 *
+	 * @param array $rgb An array of RGB values.
+	 * @return boolean
+	 */
+	public function background(array $rgb) {
+		return $this->_adapter->interlace($rgb);
+	}
+
+	/**
 	 * Normalizes dimensions ensuring they don't exceed actual dimensions of the image. This forces
 	 * all operations on the image to never scale up.
 	 *

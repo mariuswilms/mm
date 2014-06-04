@@ -173,6 +173,20 @@ class Media_Process_Adapter_Gd extends Media_Process_Adapter {
 		return true;
 	}
 
+	public function background($rgb) {
+		if (!$this->_isTransparent($this->_object)) {
+			return true;
+		}
+		$width  = $this->width();
+		$height = $this->height();
+
+		$color = imageColorAllocate($rgb[0], $rgb[1] , $rgb[2]);
+		$new = imageCreateTrueColor($width, $height);
+		imageFilledRectangle($new, 0, 0, $width, $height, $color);
+
+		return imageCopy($this->_object, $new, 0, 0, 0, 0, $width, $height);
+	}
+
 	public function crop($left, $top, $width, $height) {
 		$left   = (integer) $left;
 		$top    = (integer) $top;
