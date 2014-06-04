@@ -269,11 +269,15 @@ class Media_Process_Image extends Media_Process_Generic {
 	/**
 	 * Allows setting a background color as a replacement for the alpha channel.
 	 *
-	 * @param array $rgb An array of RGB values.
+	 * @todo Support hex, named and HSL color strings and convert them to RGB.
+	 * @param string $color A color string i.e. `'rgb(230,10,22)'`.
 	 * @return boolean
 	 */
-	public function background(array $rgb) {
-		return $this->_adapter->interlace($rgb);
+	public function background($color) {
+		if (!preg_match('/rgb\(([0-9]+),([0-9]+),([0-9]+)\)/i', $color, $matches)) {
+			throw new Exception("Unsupported color string `{$color}`.");
+		}
+		return $this->_adapter->interlace([$matches[1], $matches[2], $matches[3]]);
 	}
 
 	/**
