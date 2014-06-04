@@ -158,6 +158,7 @@ class Media_Process_Adapter_Imagick extends Media_Process_Adapter {
 		$colorized->newImage($this->width(), $this->height(), $color);
 		$colorized->compositeImage($this->_object, Imagick::COMPOSITE_OVER, 0, 0);
 
+		$this->_object = $colorized;
 		return true;
 	}
 

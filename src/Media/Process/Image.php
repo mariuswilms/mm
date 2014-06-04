@@ -277,7 +277,7 @@ class Media_Process_Image extends Media_Process_Generic {
 		if (!preg_match('/rgb\(([0-9]+),([0-9]+),([0-9]+)\)/i', $color, $matches)) {
 			throw new Exception("Unsupported color string `{$color}`.");
 		}
-		return $this->_adapter->interlace([$matches[1], $matches[2], $matches[3]]);
+		return $this->_adapter->background([$matches[1], $matches[2], $matches[3]]);
 	}
 
 	/**
