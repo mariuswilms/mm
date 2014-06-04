@@ -153,7 +153,12 @@ class Media_Process_Adapter_Imagick extends Media_Process_Adapter {
 
 	public function background($rgb) {
 		$color = "rgb({$rgb[0]},{$rgb[1]},{$rgb[2]})";
-		return $this->_object->setImageBackgroundColor(new ImagickPixel($color));
+
+		$colorized = new Imagick();
+		$colorized->newImage($this->width(), $this->height(), $color);
+		$colorized->compositeImage($this->_object, Imagick::COMPOSITE_OVER, 0, 0);
+
+		return true;
 	}
 
 	public function crop($left, $top, $width, $height) {
