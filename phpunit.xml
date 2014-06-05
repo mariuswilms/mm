@@ -21,12 +21,6 @@
 			<directory suffix="Test.php">tests/integration</directory>
 			<directory suffix="Test.php">tests/functional</directory> 
 		</testsuite>
-		<!-- This directory contains tests alongside data taken from running
-		production systems. Those files have certain restistriction on them
-		which makes it impossible to re-distritbute them. -->
-		<testsuite name="Internal">
-			<directory suffix="Test.php">internal/tests/system</directory>
-		</testsuite>
 	</testsuites>
 	<php>
 		<includePath>./src</includePath>
