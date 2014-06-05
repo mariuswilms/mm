@@ -36,6 +36,20 @@ class Mime_TypeSystemTest extends PHPUnit_Framework_TestCase {
 		Mime_Type::reset();
 	}
 
+	public function testGuessTypeResource() {
+		$files = [
+			'image_png.png' => 'image/png'
+		];
+		foreach ($files as $file => $mimeType) {
+			$this->assertEquals(
+				$mimeType,
+				Mime_Type::guessType($handle = fopen("{$this->_files}/{$file}", 'r')),
+				"File `{$file}`."
+			);
+			fclose($handle);
+		}
+	}
+
 	public function testGuessTypeFile() {
 		$files = [
 			'a.mp4' => 'video/mp4'
