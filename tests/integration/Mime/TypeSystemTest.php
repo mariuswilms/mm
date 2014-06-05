@@ -21,7 +21,7 @@ class Mime_TypeSystemTest extends PHPUnit_Framework_TestCase {
 
 	protected function setUp() {
 		$this->_files = dirname(dirname(dirname(__FILE__))) . '/data';
-		$this->_data = dirname(dirname(dirname(dirname(dirname(__FILE__))))) .'/data';
+		$this->_data = dirname(dirname(dirname(dirname(__FILE__)))) .'/data';
 
 		Mime_Type::config('magic', [
 			'adapter' => 'Fileinfo'
