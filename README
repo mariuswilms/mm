@@ -97,3 +97,9 @@ $ phpunit
 Documentation
 -------------
 Documentation is available in the `docs` directory.
+
+Sponsored Features
+------------------
+The retrieval of unique colors in an image and the letterbox trimming
+features have been sponsored by Atelier Disko (http://atelierdisko.de).
+
