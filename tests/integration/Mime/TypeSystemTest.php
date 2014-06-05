@@ -14,7 +14,7 @@
 
 require_once 'Mime/Type.php';
 
-class Mime_TypeTest extends PHPUnit_Framework_TestCase {
+class Mime_TypeSystemTest extends PHPUnit_Framework_TestCase {
 
 	protected $_files;
 	protected $_data;
