@@ -37,10 +37,6 @@ Face detection in pure PHP, will be added to `Media_Info_Image`. In turn
 `Media_Process_Image` methods which currently take a gravity will be modified
 to allow receiving coordinates from the face detection.
 
-* Letterbox Trimming, € 100
-`Media_Info_Image::trim()` will be added and allow for trimming letterboxes in
-i.e. video thumbnails, even if those containing noise.
-
 * GMagick Adapter, € 300
 The brand-new GMagick adapter will allow you swap out the Imagick adapter while
 and for those who prefer more performant image processing.
