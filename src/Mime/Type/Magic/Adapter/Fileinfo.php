@@ -61,7 +61,7 @@ class Fileinfo extends \mm\Mime\Type\Magic\Adapter {
 			}
 			return "{$type};{$attributes}";
 		}
-		if ($result != 'application/x-empty') {
+		if (strpos($result, 'application/x-empty') === false) {
 			return $result;
 		}
 	}
