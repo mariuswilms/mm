@@ -76,7 +76,7 @@ class Generic {
 	 * @return string I.e. `'generic'` or `'image'`.
 	 */
 	public function name() {
-		return strtolower(str_replace('Media_Info_', null, get_class($this)));
+		return strtolower(str_replace('mm\Media\Info\\', null, get_class($this)));
 	}
 
 	/**
@@ -102,7 +102,10 @@ class Generic {
 	 * @return array
 	 */
 	public function all() {
-		$methods = array_diff(get_class_methods($this), get_class_methods('Media_Info_Generic'));
+		$methods = array_diff(
+			get_class_methods($this),
+			get_class_methods('\mm\Media\Info\Generic')
+		);
 		$results = [];
 
 		foreach ($methods as $method) {
