@@ -30,7 +30,7 @@ abstract class Adapter {
 	/**
 	 * Writes the internal object to the provided handle.
 	 *
-	 * @see Media_Process_Generic::store()
+	 * @see mm\Media\Process\Generic::store()
 	 * @param resource $handle An open handle to use a the source.
 	 * @return boolean|integer
 	 */

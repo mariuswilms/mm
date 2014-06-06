@@ -19,7 +19,7 @@ use Exception;
 use BadMethodCallException;
 
 /**
- * `Media_Process` is the media processing manager class and provides
+ * `Media\Process` is the media processing manager class and provides
  * a configurable factory method.
  */
 class Process {

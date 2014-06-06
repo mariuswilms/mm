@@ -23,7 +23,7 @@ class Video extends \mm\Media\Process\Generic {
 	/**
 	 * Alias for fitInside
 	 *
-	 * @fixme This method is a 1:1 copy from Media_Process_Image.
+	 * @fixme This method is a 1:1 copy from mm\Media\Process\Image.
 	 * @param integer $width
 	 * @param integer $height
 	 * @return boolean
@@ -35,7 +35,7 @@ class Video extends \mm\Media\Process\Generic {
 	/**
 	 * Resizes media proportionally keeping both sides within given dimensions.
 	 *
-	 * @fixme This method is a 1:1 copy from Media_Process_Image.
+	 * @fixme This method is a 1:1 copy from mm\Media\Process\Image.
 	 * @param integer $width
 	 * @param integer $height
 	 * @return boolean
@@ -57,7 +57,7 @@ class Video extends \mm\Media\Process\Generic {
 	 * Normalizes dimensions ensuring they don't exceed actual dimensions of the image. This forces
 	 * all operations on the image to never scale up.
 	 *
-	 * @fixme This method is a 1:1 copy from Media_Process_Image.
+	 * @fixme This method is a 1:1 copy from mm\Media\Process\Image.
 	 * @param integer $width
 	 * @param integer $height
 	 * @param string $recalculateBy Recalculate missing values or ones exceeding maximums
