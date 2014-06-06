@@ -17,11 +17,11 @@ accordingly:
 - Retrieving media metadata
 - Determining a file's MIME-type
 
-The set of Media_* classes provide abstractions from underlying extensions or
+The set of Media\* classes provide abstractions from underlying extensions or
 libraries and most common methods for operations like resizing and conversion
 (even between i.e. PDFs, movies and images).
 
-The Mime_Type class helps with determining the MIME-type or correct extension
+The Mime\Type class helps with determining the MIME-type or correct extension
 of a file or stream. It comes with adapters for the fileinfo extension, glob
 and magic databases from the freedesktop project, as well as modmime style
 databases.
