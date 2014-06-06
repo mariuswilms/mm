@@ -13,6 +13,30 @@
  */
 
 /*
+ * We are registering a custom autoloader here.
+ */
+spl_autoload_register(function($class) {
+	if (strpos($class, 'mm\\') === false) {
+		return;
+	}
+	$subdir = strpos($class, 'mm\\tests\\') === false ? 'src/' : '';
+	$file = __DIR__ . "/" . $subdir . str_replace(['mm\\', '\\'], ['', '/'], $class) . '.php';
+
+	if (file_exists($file)) {
+		include $file;
+	}
+});
+
+/*
+ * When running our unit tests the following constant
+ * will be defined. We skip further caching setup
+ * to no confuse tests.
+ */
+if (defined('TEST_EXECUTION')) {
+	return;
+}
+
+/*
  * Setup caching, check if a cache class is made available i.e. through a
  * framework.
  */
@@ -46,21 +70,6 @@ if ($cakephp13 || $cakephp20) {
  */
 $hasFileinfo = extension_loaded('fileinfo');
 $hasImagick = extension_loaded('imagick');
-
-/*
- * We are registering a custom autoloader here.
- */
-spl_autoload_register(function($class) {
-	if (strpos($class, 'mm\\') === false) {
-		return;
-	}
-	$subdir = strpos($class, 'mm\\tests\\') === false ? 'src/' : '';
-	$file = __DIR__ . "/" . $subdir . str_replace(['mm\\', '\\'], ['', '/'], $class) . '.php';
-
-	if (file_exists($file)) {
-		include $file;
-	}
-});
 
 /*
  * Configure the MIME type detection. The detection class is two headed which means it

@@ -14,6 +14,7 @@
 <phpunit 
 	backupGlobals="false"
 	backupStaticAttributes="false"
+	bootstrap="bootstrap.php"
 >
 	<testsuites>
 		<testsuite name="Library">
@@ -23,6 +24,6 @@
 		</testsuite>
 	</testsuites>
 	<php>
-		<includePath>./src</includePath>
+		<const name="TEST_EXECUTION" value="true" />
 	</php>
 </phpunit>
