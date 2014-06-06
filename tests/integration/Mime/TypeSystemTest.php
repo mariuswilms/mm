@@ -52,7 +52,7 @@ class Mime_TypeSystemTest extends PHPUnit_Framework_TestCase {
 
 	public function testGuessTypeFile() {
 		$files = [
-			'a.mp4' => 'video/mp4'
+			'video_h264_qt_tag.mp4' => 'video/mp4'
 		];
 		foreach ($files as $file => $mimeType) {
 			$this->assertEquals(
@@ -65,7 +65,7 @@ class Mime_TypeSystemTest extends PHPUnit_Framework_TestCase {
 
 	public function testGuessNameFile() {
 		$map = [
-			'a.mp4' => 'video'
+			'video_h264_qt_tag.mp4' => 'video'
 		];
 		foreach ($map as $file => $name) {
 			$this->assertEquals(
