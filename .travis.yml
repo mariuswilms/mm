@@ -15,6 +15,7 @@ language: php
 php:
   - 5.4
   - 5.5
+  - 5.6
 
 before_install:
   - sudo apt-get -qq update
