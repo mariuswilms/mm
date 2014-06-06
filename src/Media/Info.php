@@ -47,7 +47,7 @@ class Info {
 	 *                               if type could not be mapped an instance of the that class
 	 *                               itself.
 	 */
-	public static function &factory(array $config = []) {
+	public static function factory(array $config = []) {
 		$default = ['source' => null, 'adapters' => []];
 		extract($config + $default);
 
