@@ -66,7 +66,7 @@ class ProcessTest extends \PHPUnit_Framework_TestCase {
 
 	public function testMediaFactoryTransplantAdapter() {
 		$result = Process::factory([
-			'adapter' => new Media_Process_Adapter_GenericMock(null),
+			'adapter' => new GenericMock(null),
 			'source' => 'image/jpeg'
 		]);
 		$this->assertInstanceOf('\mm\Media\Process\Image', $result);

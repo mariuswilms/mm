@@ -17,7 +17,7 @@ namespace mm\Media\Process;
 use mm\Mime\Type;
 use mm\Media\Process;
 use Exception;
-use InvalidException;
+use InvalidArgumentException;
 
 /**
  * `Generic` is the base class for all media processing types. It provides
@@ -54,7 +54,7 @@ class Generic {
 				$source = fopen($source, 'r');
 			}
 			if ($adapter) {
-				$class = "mm\Media\Process\\Adapter\{$adapter}";
+				$class = "\mm\Media\Process\\Adapter\\{$adapter}";
 				$this->_adapter = new $class($source);
 			}
 		}

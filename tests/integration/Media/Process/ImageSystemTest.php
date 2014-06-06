@@ -16,6 +16,7 @@ namespace mm\tests\integration\Media\Process;
 
 use mm\Mime\Type;
 use mm\Media\Process\Image;
+use Imagick as ImagickCore;
 
 class ImageSystemTest extends \PHPUnit_Framework_TestCase {
 
@@ -48,7 +49,7 @@ class ImageSystemTest extends \PHPUnit_Framework_TestCase {
 		$media->store($temporary);
 		rewind($temporary);
 
-		$media = new Imagick();
+		$media = new ImagickCore();
 		$media->readImageFile($temporary);
 
 		$expected = 400;

@@ -15,7 +15,6 @@
 namespace mm\tests\unit\Media\Info;
 
 use mm\Media\Info\Image;
-use mm\tests\mocks\Media\Info\Adapter\GenericMock;
 
 class ImageTest extends \PHPUnit_Framework_TestCase {
 
@@ -28,7 +27,11 @@ class ImageTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testQuality() {
-		$adapter = $this->getMock('GenericMock', ['get'], [null]);
+		$adapter = $this->getMock(
+			'\mm\tests\mocks\Media\Info\Adapter\GenericMock',
+			['get'],
+			[null]
+		);
 		$media = new Image([
 			'source' => "{$this->_files}/image_png.png", // not used by adapter
 			'adapters' => [$adapter]
@@ -63,7 +66,11 @@ class ImageTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testRatio() {
-		$adapter = $this->getMock('GenericMock', ['get'], [null]);
+		$adapter = $this->getMock(
+			'\mm\tests\mocks\Media\Info\Adapter\GenericMock',
+			['get'],
+			[null]
+		);
 		$media = new Image([
 			'source' => "{$this->_files}/image_png.png", // not used by adapter
 			'adapters' => [$adapter]
@@ -80,7 +87,11 @@ class ImageTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testKnownRatio() {
-		$adapter = $this->getMock('GenericMock', ['get'], [null]);
+		$adapter = $this->getMock(
+			'\mm\tests\mocks\Media\Info\Adapter\GenericMock',
+			['get'],
+			[null]
+		);
 		$media = new Image([
 			'source' => "{$this->_files}/image_png.png", // not used by adapter
 			'adapters' => [$adapter]

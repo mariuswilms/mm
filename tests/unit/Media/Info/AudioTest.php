@@ -15,7 +15,6 @@
 namespace mm\tests\unit\Media\Info;
 
 use mm\Media\Info\Audio;
-use mm\tests\mocks\Media\Info\Adapter\GenericMock;
 
 class AudioTest extends \PHPUnit_Framework_TestCase {
 
@@ -28,7 +27,11 @@ class AudioTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testQuality() {
-		$adapter = $this->getMock('GenericMock', ['get'], [null]);
+		$adapter = $this->getMock(
+			'\mm\tests\mocks\Media\Info\Adapter\GenericMock',
+			['get'],
+			[null]
+		);
 		$media = new Audio([
 			'source' => "{$this->_files}/audio_ogg_snippet.ogg", // not used by adapter
 			'adapters' => [$adapter]

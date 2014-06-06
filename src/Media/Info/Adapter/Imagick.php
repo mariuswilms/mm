@@ -14,6 +14,8 @@
 
 namespace mm\Media\Info\Adapter;
 
+use Imagick as ImagickCore;
+
 /**
  * This media info adapter allows for interfacing with ImageMagick through
  * the `imagick` pecl extension (which must be loaded in order to use this adapter).
@@ -31,7 +33,7 @@ class Imagick extends \mm\Media\Info\Adapter {
 	];
 
 	public function __construct($file) {
-		$this->_object = new Imagick($file);
+		$this->_object = new ImagickCore($file);
 	}
 
 	public function __destruct() {
@@ -78,7 +80,7 @@ class Imagick extends \mm\Media\Info\Adapter {
 		$colors = [];
 
 		$object = clone $this->_object;
-		$object->quantizeImage($spread, Imagick::COLORSPACE_RGB, 0, false, false);
+		$object->quantizeImage($spread, ImagickCore::COLORSPACE_RGB, 0, false, false);
 		$object->uniqueImageColors();
 
 		$rows = $object->getPixelIterator();

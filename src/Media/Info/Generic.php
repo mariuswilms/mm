@@ -52,7 +52,7 @@ class Generic {
 				continue;
 			}
 			if ($adapter) {
-				$class = "mm\Media\Info\\Adapter\{$adapter}";
+				$class = "\mm\Media\Info\\Adapter\\{$adapter}";
 				$adapter = new $class($source);
 			}
 		}

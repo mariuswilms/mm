@@ -201,11 +201,19 @@ class ImagickTest extends \PHPUnit_Framework_TestCase {
 
 		$result = $subject->strip('icc');
 		$this->assertTrue($result);
+	}
 
-		try {
-			$subject->profile('icc');
-			$this->fail('Expected exception not raised.');
-		} catch (Exception $expected) {}
+	public function testStripThrowsExceptionOnInvalidTag() {
+		$source = fopen("{$this->_files}/image_landscape.png", 'r');
+		$subject = new Imagick($source);
+
+		$profile = file_get_contents("{$this->_data}/sRGB_IEC61966-2-1_black_scaled.icc");
+		$subject->profile('icc', $profile);
+
+		$subject->strip('icc');
+
+		$this->setExpectedException('Exception');
+		$subject->profile('icc');
 	}
 
 	public function testDepth() {

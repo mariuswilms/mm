@@ -84,11 +84,6 @@ class GenericTest extends \PHPUnit_Framework_TestCase {
 			'adapter' => new GenericMock(null)
 		]);
 
-		try {
-			$media->store($target);
-			$this->fail('Expected exception not raised.');
-		} catch (Exception $expected) {}
-
 		$result = $media->store($target, ['overwrite' => true]);
 		$this->assertFileExists($result);
 
@@ -97,6 +92,19 @@ class GenericTest extends \PHPUnit_Framework_TestCase {
 		$this->assertFileExists($result);
 
 		unlink($target);
+	}
+
+	public function testStoreHonorsOverwriteAndThrowsException() {
+		$target = tempnam(sys_get_temp_dir(), 'mm_');
+		touch($target);
+
+		$media = new Generic([
+			'source' => fopen('php://temp', 'r'),
+			'adapter' => new GenericMock(null)
+		]);
+
+		$this->setExpectedException('Exception');
+		$media->store($target);
 	}
 
 	public function testPassthru() {

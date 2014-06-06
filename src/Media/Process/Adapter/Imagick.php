@@ -17,6 +17,7 @@ namespace mm\Media\Process\Adapter;
 use mm\Mime\Type;
 use Exception;
 use OutOfBoundsException;
+use Imagick as ImagickCore;
 
 /**
  * This media process adapter allows for interfacing with ImageMagick through
@@ -45,7 +46,7 @@ class Imagick extends \mm\Media\Process\Adapter {
 
 	public function __construct($handle) {
 		rewind($handle);
-		$this->_object = new Imagick();
+		$this->_object = new ImagickCore();
 		$this->_object->readImageFile($handle);
 
 		// Reset iterator to get just the first image from i.e. multipage PDFs.
@@ -102,15 +103,15 @@ class Imagick extends \mm\Media\Process\Adapter {
 	public function compress($value) {
 		switch ($this->_object->getFormat()) {
 			case 'tiff':
-				return $this->_object->setImageCompression(Imagick::COMPRESSION_LZW);
+				return $this->_object->setImageCompression(ImagickCore::COMPRESSION_LZW);
 			case 'png':
 				$filter = ($value * 10) % 10;
 				$level = (integer) $value;
 
-				return $this->_object->setImageCompression(Imagick::COMPRESSION_ZIP)
+				return $this->_object->setImageCompression(ImagickCore::COMPRESSION_ZIP)
 					&& $this->_object->setImageCompressionQuality($level * 10 + $filter);
 			case 'jpeg':
-				return $this->_object->setImageCompression(Imagick::COMPRESSION_JPEG)
+				return $this->_object->setImageCompression(ImagickCore::COMPRESSION_JPEG)
 					&& $this->_object->setImageCompressionQuality((integer) (100 - ($value * 10)));
 			default:
 				throw new Exception("Cannot compress this format.");
@@ -150,9 +151,9 @@ class Imagick extends \mm\Media\Process\Adapter {
 
 	public function interlace($value) {
 		if (!$value) {
-			return $this->_object->setInterlaceScheme(Imagick::INTERLACE_NO);
+			return $this->_object->setInterlaceScheme(ImagickCore::INTERLACE_NO);
 		}
-		$constant = 'Imagick::INTERLACE_' . strtoupper($this->_object->getFormat());
+		$constant = 'ImagickCore::INTERLACE_' . strtoupper($this->_object->getFormat());
 
 		if (!defined($constant)) {
 			throw new Exception("Cannot use interlace scheme; constant `{$constant}` not defined.");
@@ -163,9 +164,9 @@ class Imagick extends \mm\Media\Process\Adapter {
 	public function background($rgb) {
 		$color = "rgb({$rgb[0]},{$rgb[1]},{$rgb[2]})";
 
-		$colorized = new Imagick();
+		$colorized = new ImagickCore();
 		$colorized->newImage($this->width(), $this->height(), $color);
-		$colorized->compositeImage($this->_object, Imagick::COMPOSITE_OVER, 0, 0);
+		$colorized->compositeImage($this->_object, ImagickCore::COMPOSITE_OVER, 0, 0);
 
 		$this->_object = $colorized;
 		return true;
@@ -184,7 +185,7 @@ class Imagick extends \mm\Media\Process\Adapter {
 		$width  = (integer) $width;
 		$height = (integer) $height;
 
-		return $this->_object->resizeImage($width, $height, Imagick::FILTER_LANCZOS, 1);
+		return $this->_object->resizeImage($width, $height, ImagickCore::FILTER_LANCZOS, 1);
 	}
 
 	public function cropAndResize($cropLeft, $cropTop, $cropWidth, $cropHeight, $resizeWidth, $resizeHeight) {

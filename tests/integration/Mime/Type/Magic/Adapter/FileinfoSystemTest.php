@@ -14,7 +14,7 @@
 
 namespace mm\tests\integration\Mime\Type\Magic\Adapter;
 
-use mm\Mime\Type\Glob\Adapter\Fileinfo;
+use mm\Mime\Type\Magic\Adapter\Fileinfo;
 
 class FileinfoSystemTest extends \PHPUnit_Framework_TestCase {
 
