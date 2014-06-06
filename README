@@ -46,9 +46,18 @@ MM, the PHP media library is Copyright (c) 2007-2014 David Persson
 if not otherwise stated. The code is distributed under the terms
 of the MIT License. For the full license text see the LICENSE file.
 
+Sponsors
+--------
+Features for this open source project can be sponsored. Have a look
+at the SUPPORT file for more information.
+
+The retrieval of unique colors in an image and the letterbox trimming
+features have been sponsored by Atelier Disko (http://atelierdisko.de).
+
 Versions & Requirements
 -----------------------
 Version 1.2.0, PHP >=5.5.0 (in progress)
+Version 1.2.0, PHP >=5.5.0
 Version 1.1.0, PHP >=5.3.0
 Version 1.0.0, PHP >=5.2.1
 
@@ -98,8 +107,4 @@ Documentation
 -------------
 Documentation is available in the `docs` directory.
 
-Sponsored Features
-------------------
-The retrieval of unique colors in an image and the letterbox trimming
-features have been sponsored by Atelier Disko (http://atelierdisko.de).
 
