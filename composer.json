@@ -13,8 +13,6 @@
       "php": ">=5.5.0"
     },
     "autoload": {
-      "classmap": ["src/"],
       "files": ["bootstrap.php"]
-    },
-    "include-path": ["src/"]
+    }
 }
