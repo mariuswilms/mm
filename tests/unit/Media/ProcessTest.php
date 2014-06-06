@@ -12,11 +12,13 @@
  * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Media/Process.php';
-require_once 'Mime/Type.php';
-require_once dirname(dirname(dirname(__FILE__))) . '/mocks/Media/Process/Adapter/GenericMock.php';
+namespace mm\tests\unit\Media;
 
-class Media_ProcessTest extends PHPUnit_Framework_TestCase {
+use mm\Mime\Type;
+use mm\Media\Process;
+use mm\tests\mocks\Media\Process\Adapter\GenericMock;
+
+class ProcessTest extends PHPUnit_Framework_TestCase {
 
 	protected $_files;
 	protected $_data;
@@ -25,49 +27,49 @@ class Media_ProcessTest extends PHPUnit_Framework_TestCase {
 		$this->_files = dirname(dirname(dirname(__FILE__))) . '/data';
 		$this->_data = dirname(dirname(dirname(dirname(__FILE__)))) .'/data';
 
-		Media_Process::config([
-			'image' => new Media_Process_Adapter_GenericMock(null),
-			'audio' => new Media_Process_Adapter_GenericMock(null),
-			'document' => new Media_Process_Adapter_GenericMock(null),
-			'video' => new Media_Process_Adapter_GenericMock(null)
+		Process::config([
+			'image' => new GenericMock(null),
+			'audio' => new GenericMock(null),
+			'document' => new GenericMock(null),
+			'video' => new GenericMock(null)
 		]);
-		Mime_Type::config('magic', [
+		Type::config('magic', [
 			'adapter' => 'Freedesktop',
 			'file' => "{$this->_data}/magic.db"
 		]);
-		Mime_Type::config('glob', [
+		Type::config('glob', [
 			'adapter' => 'Freedesktop',
 			'file' => "{$this->_data}/glob.db"
 		]);
 	}
 
 	public function testMediaFactorySourceFile() {
-		$result = Media_Process::factory(['source' => "{$this->_files}/image_jpg.jpg"]);
-		$this->assertInstanceOf('Media_Process_Image', $result);
+		$result = Process::factory(['source' => "{$this->_files}/image_jpg.jpg"]);
+		$this->assertInstanceOf('\mm\Media\Process\Image', $result);
 
-		$result = Media_Process::factory(['source' => "{$this->_files}/image_png.png"]);
-		$this->assertInstanceOf('Media_Process_Image', $result);
+		$result = Process::factory(['source' => "{$this->_files}/image_png.png"]);
+		$this->assertInstanceOf('\mm\Media\Process\Image', $result);
 
-		$result = Media_Process::factory(['source' => "{$this->_files}/application_pdf.pdf"]);
-		$this->assertInstanceOf('Media_Process_Document', $result);
+		$result = Process::factory(['source' => "{$this->_files}/application_pdf.pdf"]);
+		$this->assertInstanceOf('\mm\Media\Process\Document', $result);
 
-		$result = Media_Process::factory(['source' => "{$this->_files}/audio_ogg_snippet.ogg"]);
-		$this->assertInstanceOf('Media_Process_Audio', $result);
+		$result = Process::factory(['source' => "{$this->_files}/audio_ogg_snippet.ogg"]);
+		$this->assertInstanceOf('\mm\Media\Process\Audio', $result);
 	}
 
 	public function testMediaFactorySourceStream() {
-		$result = Media_Process::factory([
+		$result = Process::factory([
 			'source' => fopen("{$this->_files}/image_jpg.jpg", 'r')
 		]);
-		$this->assertInstanceOf('Media_Process_Image', $result);
+		$this->assertInstanceOf('\mm\Media\Process\Image', $result);
 	}
 
 	public function testMediaFactoryTransplantAdapter() {
-		$result = Media_Process::factory([
+		$result = Process::factory([
 			'adapter' => new Media_Process_Adapter_GenericMock(null),
 			'source' => 'image/jpeg'
 		]);
-		$this->assertInstanceOf('Media_Process_Image', $result);
+		$this->assertInstanceOf('\mm\Media\Process\Image', $result);
 	}
 }
 

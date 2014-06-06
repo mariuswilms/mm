@@ -12,9 +12,12 @@
  * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Media/Info/Image.php';
+namespace mm\tests\integration\Media\Info;
 
-class Media_Info_ImageSystemTest extends PHPUnit_Framework_TestCase {
+use mm\Mime\Type;
+use mm\Media\Info\Image;
+
+class ImageSystemTest extends PHPUnit_Framework_TestCase {
 
 	protected $_files;
 	protected $_data;
@@ -28,7 +31,7 @@ class Media_Info_ImageSystemTest extends PHPUnit_Framework_TestCase {
 		if (!extension_loaded('imagick')) {
 			$this->markTestSkipped('The `imagick` extension is not available.');
 		}
-		$media = new Media_Info_Image([
+		$media = new Image([
 			'source' => "{$this->_files}/image_png.png",
 			'adapters' => ['Imagick']
 		]);

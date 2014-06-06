@@ -12,11 +12,12 @@
  * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Media/Process/Image.php';
-require_once 'Media/Process/Adapter/Imagick.php';
-require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/mocks/Media/Process/ImageMock.php';
+namespace mm\tests\unit\Media\Process;
 
-class Media_Process_ImageTest extends PHPUnit_Framework_TestCase {
+use mm\Media\Process\Image;
+use mm\tests\mocks\Media\Process\ImageMock;
+
+class ImageTest extends PHPUnit_Framework_TestCase {
 
 	protected $_files;
 	protected $_data;
@@ -28,7 +29,7 @@ class Media_Process_ImageTest extends PHPUnit_Framework_TestCase {
 
 	public function testFitInside() {
 		$adapterMock = $this->getMock(
-			'Media_Process_Adapter_Imagick',
+			'\mm\Media\Process\Adapter\Imagick',
 			[], [], '', false
 		);
 		$adapterMock->expects($this->any())->method('width')->will($this->returnValue(70));
@@ -36,7 +37,7 @@ class Media_Process_ImageTest extends PHPUnit_Framework_TestCase {
 
 		$adapterMock->expects($this->once())->method('resize')->with($this->equalTo(30, 20));
 
-		$media = new Media_Process_ImageMock([
+		$media = new ImageMock([
 			'adapter' => $adapterMock
 		]);
 
@@ -45,7 +46,7 @@ class Media_Process_ImageTest extends PHPUnit_Framework_TestCase {
 
 	public function testFitOutside() {
 		$adapterMock = $this->getMock(
-			'Media_Process_Adapter_Imagick',
+			'\mm\Media\Process\Adapter\Imagick',
 			[], [], '', false
 		);
 		$adapterMock->expects($this->any())->method('width')->will($this->returnValue(70));
@@ -53,7 +54,7 @@ class Media_Process_ImageTest extends PHPUnit_Framework_TestCase {
 
 		$adapterMock->expects($this->once())->method('resize')->with($this->equalTo(30, 20));
 
-		$media = new Media_Process_ImageMock([
+		$media = new ImageMock([
 			'adapter' => $adapterMock
 		]);
 
@@ -62,13 +63,13 @@ class Media_Process_ImageTest extends PHPUnit_Framework_TestCase {
 
 	public function testNormalizeDimensionsRatio() {
 		$adapterMock = $this->getMock(
-			'Media_Process_Adapter_Imagick',
+			'\mm\Media\Process\Adapter\Imagick',
 			[], [], '', false
 		);
 		$adapterMock->expects($this->any())->method('width')->will($this->returnValue(70));
 		$adapterMock->expects($this->any())->method('height')->will($this->returnValue(47));
 
-		$media = new Media_Process_ImageMock([
+		$media = new ImageMock([
 			'adapter' => $adapterMock
 		]);
 
@@ -79,13 +80,13 @@ class Media_Process_ImageTest extends PHPUnit_Framework_TestCase {
 
 	public function testNormalizeDimensionsMaximum() {
 		$adapterMock = $this->getMock(
-			'Media_Process_Adapter_Imagick',
+			'\mm\Media\Process\Adapter\Imagick',
 			[], [], '', false
 		);
 		$adapterMock->expects($this->any())->method('width')->will($this->returnValue(70));
 		$adapterMock->expects($this->any())->method('height')->will($this->returnValue(47));
 
-		$media = new Media_Process_ImageMock([
+		$media = new ImageMock([
 			'adapter' => $adapterMock
 		]);
 
@@ -96,13 +97,13 @@ class Media_Process_ImageTest extends PHPUnit_Framework_TestCase {
 
 	public function testBoxify() {
 		$adapterMock = $this->getMock(
-			'Media_Process_Adapter_Imagick',
+			'\mm\Media\Process\Adapter\Imagick',
 			[], [], '', false
 		);
 		$adapterMock->expects($this->any())->method('width')->will($this->returnValue(70));
 		$adapterMock->expects($this->any())->method('height')->will($this->returnValue(47));
 
-		$media = new Media_Process_ImageMock([
+		$media = new ImageMock([
 			'adapter' => $adapterMock
 		]);
 

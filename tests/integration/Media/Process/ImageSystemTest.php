@@ -12,9 +12,12 @@
  * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Media/Process/Image.php';
+namespace mm\tests\integration\Media\Process;
 
-class Media_Process_ImageSystemTest extends PHPUnit_Framework_TestCase {
+use mm\Mime\Type;
+use mm\Media\Process\Image;
+
+class ImageSystemTest extends PHPUnit_Framework_TestCase {
 
 	protected $_files;
 	protected $_data;
@@ -23,10 +26,10 @@ class Media_Process_ImageSystemTest extends PHPUnit_Framework_TestCase {
 		$this->_files = dirname(dirname(dirname(dirname(__FILE__)))) . '/data';
 		$this->_data = dirname(dirname(dirname(dirname(dirname(__FILE__))))) .'/data';
 
-		Mime_Type::config('magic', [
+		Type::config('magic', [
 			'adapter' => 'Fileinfo'
 		]);
-		Mime_Type::config('glob', [
+		Type::config('glob', [
 			'adapter' => 'Freedesktop',
 			'file' => $this->_data . '/glob.db'
 		]);
@@ -36,7 +39,7 @@ class Media_Process_ImageSystemTest extends PHPUnit_Framework_TestCase {
 		if (!extension_loaded('imagick')) {
 			$this->markTestSkipped('The `imagick` extension is not available.');
 		}
-		$media = new Media_Process_Image([
+		$media = new Image([
 			'source' => "{$this->_files}/image_letterboxed.png",
 			'adapter' => 'Imagick'
 		]);

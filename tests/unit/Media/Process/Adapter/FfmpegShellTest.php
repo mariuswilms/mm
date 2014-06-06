@@ -12,10 +12,12 @@
  * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Media/Process/Adapter/FfmpegShell.php';
-require_once 'Mime/Type.php';
+namespace mm\tests\unit\Media\Process\Adapter;
 
-class Media_Process_Adapter_FfmpegShellTest extends PHPUnit_Framework_TestCase {
+use mm\Media\Process\Adapter\FfmpegShell;
+use mm\Mime\Type;
+
+class FfmpegShellTest extends PHPUnit_Framework_TestCase {
 
 	protected $_files;
 	protected $_data;
@@ -34,11 +36,11 @@ class Media_Process_Adapter_FfmpegShellTest extends PHPUnit_Framework_TestCase {
 		$this->_files = dirname(dirname(dirname(dirname(dirname(__FILE__))))) . '/data';
 		$this->_data = dirname(dirname(dirname((dirname(dirname(dirname(__FILE__))))))) .'/data';
 
-		Mime_Type::config('magic', [
+		Type::config('magic', [
 			'adapter' => 'Freedesktop',
 			'file' => "{$this->_data}/magic.db"
 		]);
-		Mime_Type::config('glob', [
+		Type::config('glob', [
 			'adapter' => 'Freedesktop',
 			'file' => "{$this->_data}/glob.db"
 		]);
@@ -49,7 +51,7 @@ class Media_Process_Adapter_FfmpegShellTest extends PHPUnit_Framework_TestCase {
 		$target = fopen('php://temp', 'w+');
 
 		fwrite($source, 'test');
-		$subject = new Media_Process_Adapter_FfmpegShell($source);
+		$subject = new FfmpegShell($source);
 		$subject->store($target);
 		$this->assertEquals('test', stream_get_contents($target, -1, 0));
 
@@ -61,12 +63,12 @@ class Media_Process_Adapter_FfmpegShellTest extends PHPUnit_Framework_TestCase {
 		$source = fopen("{$this->_files}/video_theora_comments.ogv", 'r');
 		$target = fopen('php://temp', 'wb');
 
-		$subject = new Media_Process_Adapter_FfmpegShell($source);
+		$subject = new FfmpegShell($source);
 		$subject->convert('image/png');
 		$result = $subject->store($target);
 
 		$this->assertTrue($result);
-		$this->assertEquals('image/png', Mime_Type::guessType($target));
+		$this->assertEquals('image/png', Type::guessType($target));
 
 		fclose($source);
 		fclose($target);
@@ -76,12 +78,12 @@ class Media_Process_Adapter_FfmpegShellTest extends PHPUnit_Framework_TestCase {
 		$source = fopen("{$this->_files}/video_theora_comments.ogv", 'r');
 		$target = fopen('php://temp', 'wb');
 
-		$subject = new Media_Process_Adapter_FfmpegShell($source);
+		$subject = new FfmpegShell($source);
 		$subject->convert('video/mpeg');
 		$result = $subject->store($target);
 
 		$this->assertTrue($result);
-		$this->assertEquals('video/mpeg', Mime_Type::guessType($target));
+		$this->assertEquals('video/mpeg', Type::guessType($target));
 
 		fclose($source);
 		fclose($target);
@@ -91,13 +93,13 @@ class Media_Process_Adapter_FfmpegShellTest extends PHPUnit_Framework_TestCase {
 		$source = fopen("{$this->_files}/video_theora_comments.ogv", 'r');
 		$target = fopen('php://temp', 'wb');
 
-		$subject = new Media_Process_Adapter_FfmpegShell($source);
+		$subject = new FfmpegShell($source);
 		$subject->passthru('s', '50x100');
 		$subject->store($target);
 
 		fclose($source);
 
-		$subject = new Media_Process_Adapter_FfmpegShell($target);
+		$subject = new FfmpegShell($target);
 		$this->assertEquals(50, $subject->width());
 		$this->assertEquals(100, $subject->height());
 
@@ -106,7 +108,7 @@ class Media_Process_Adapter_FfmpegShellTest extends PHPUnit_Framework_TestCase {
 
 	public function testDimensions() {
 		$source = fopen("{$this->_files}/video_theora_comments.ogv", 'r');
-		$subject = new Media_Process_Adapter_FfmpegShell($source);
+		$subject = new FfmpegShell($source);
 
 		$this->assertEquals(320, $subject->width());
 		$this->assertEquals(176, $subject->height());

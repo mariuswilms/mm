@@ -28,10 +28,10 @@ class InfoTest extends \PHPUnit_Framework_TestCase {
 		$this->_data = dirname(dirname(dirname(dirname(__FILE__)))) .'/data';
 
 		Info::config([
-			'image' => new Media_Info_Adapter_GenericMock(null),
-			'audio' => new Media_Info_Adapter_GenericMock(null),
-			'document' => new Media_Info_Adapter_GenericMock(null),
-			'video' => new Media_Info_Adapter_GenericMock(null)
+			'image' => new GenericMock(null),
+			'audio' => new GenericMock(null),
+			'document' => new GenericMock(null),
+			'video' => new GenericMock(null)
 		]);
 		Type::config('magic', [
 			'adapter' => 'Freedesktop',
