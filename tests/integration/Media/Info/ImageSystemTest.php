@@ -17,7 +17,7 @@ namespace mm\tests\integration\Media\Info;
 use mm\Mime\Type;
 use mm\Media\Info\Image;
 
-class ImageSystemTest extends PHPUnit_Framework_TestCase {
+class ImageSystemTest extends \PHPUnit_Framework_TestCase {
 
 	protected $_files;
 	protected $_data;

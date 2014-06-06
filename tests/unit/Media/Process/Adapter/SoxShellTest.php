@@ -18,7 +18,7 @@ use mm\Mime\Type;
 use mm\Media\Process\Adapter\SoxShell;
 
 
-class SoxShellTest extends PHPUnit_Framework_TestCase {
+class SoxShellTest extends \PHPUnit_Framework_TestCase {
 
 	protected $_files;
 	protected $_data;

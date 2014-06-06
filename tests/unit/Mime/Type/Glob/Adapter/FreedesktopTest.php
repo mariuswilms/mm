@@ -16,7 +16,7 @@ namespace mm\tests\unit\Mime\Type\Glob\Adapter;
 
 use mm\Mime\Type\Glob\Adapter\Freedesktop;
 
-class FreedesktopTest extends PHPUnit_Framework_TestCase {
+class FreedesktopTest extends \PHPUnit_Framework_TestCase {
 
 	public $subject;
 

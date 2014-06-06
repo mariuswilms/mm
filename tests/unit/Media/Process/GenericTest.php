@@ -17,7 +17,7 @@ namespace mm\tests\unit\Media\Process;
 use mm\Media\Process\Generic;
 use mm\tests\mocks\Media\Process\Adapter\GenericMock;
 
-class GenericTest extends PHPUnit_Framework_TestCase {
+class GenericTest extends \PHPUnit_Framework_TestCase {
 
 	protected $_files;
 	protected $_data;

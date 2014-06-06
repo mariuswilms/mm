@@ -16,7 +16,7 @@ namespace mm\tests\integration\Mime\Type\Magic\Adapter;
 
 use mm\Mime\Type\Glob\Adapter\Fileinfo;
 
-class FileinfoSystemTest extends PHPUnit_Framework_TestCase {
+class FileinfoSystemTest extends \PHPUnit_Framework_TestCase {
 
 	public $subject;
 

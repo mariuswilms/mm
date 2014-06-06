@@ -17,7 +17,7 @@ namespace mm\tests\unit\Media\Process\Adapter;
 use mm\Mime\Type;
 use mm\Media\Process\Adapter\Gd;
 
-class GdTest extends PHPUnit_Framework_TestCase {
+class GdTest extends \PHPUnit_Framework_TestCase {
 
 	protected $_files;
 	protected $_data;

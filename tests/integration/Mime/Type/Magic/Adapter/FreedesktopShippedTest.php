@@ -16,7 +16,7 @@ namespace mm\tests\integration\Mime\Type\Magic\Adapter;
 
 use mm\Mime\Type\Magic\Adapter\Freedesktop;
 
-class FreedesktopShippedTest extends PHPUnit_Framework_TestCase {
+class FreedesktopShippedTest extends \PHPUnit_Framework_TestCase {
 
 	public $subject;
 

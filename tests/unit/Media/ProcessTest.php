@@ -18,7 +18,7 @@ use mm\Mime\Type;
 use mm\Media\Process;
 use mm\tests\mocks\Media\Process\Adapter\GenericMock;
 
-class ProcessTest extends PHPUnit_Framework_TestCase {
+class ProcessTest extends \PHPUnit_Framework_TestCase {
 
 	protected $_files;
 	protected $_data;

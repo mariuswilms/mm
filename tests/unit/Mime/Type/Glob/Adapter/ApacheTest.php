@@ -16,7 +16,7 @@ namespace mm\tests\unit\Mime\Type\Glob\Adapter;
 
 use mm\Mime\Type\Glob\Adapter\Apache;
 
-class ApacheTest extends PHPUnit_Framework_TestCase {
+class ApacheTest extends \PHPUnit_Framework_TestCase {
 
 	public $subject;
 

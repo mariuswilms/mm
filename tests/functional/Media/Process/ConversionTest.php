@@ -21,7 +21,7 @@ use mm\Media\Process\Video;
 use mm\tests\mocks\Media\Process\Adapter\GenericMock;
 use mm\tests\mocks\Media\Process\Adapter\GenericNameMock;
 
-class ConversionTest extends PHPUnit_Framework_TestCase {
+class ConversionTest extends \PHPUnit_Framework_TestCase {
 
 	protected $_files;
 	protected $_data;

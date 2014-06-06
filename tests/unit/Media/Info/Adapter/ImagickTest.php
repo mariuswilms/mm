@@ -16,7 +16,7 @@ namespace mm\tests\unit\Media\Info\Adapter;
 
 use mm\Media\Info\Adapter\Imagick;
 
-class ImagickTest extends PHPUnit_Framework_TestCase {
+class ImagickTest extends \PHPUnit_Framework_TestCase {
 
 	protected $_files;
 	protected $_data;

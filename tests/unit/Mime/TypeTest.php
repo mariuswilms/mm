@@ -16,7 +16,7 @@ namespace mm\tests\unit\Mime;
 
 use mm\Mime\Type;
 
-class TypeTest extends PHPUnit_Framework_TestCase {
+class TypeTest extends \PHPUnit_Framework_TestCase {
 
 	protected $_files;
 	protected $_data;

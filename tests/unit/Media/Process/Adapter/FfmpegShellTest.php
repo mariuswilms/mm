@@ -17,7 +17,7 @@ namespace mm\tests\unit\Media\Process\Adapter;
 use mm\Media\Process\Adapter\FfmpegShell;
 use mm\Mime\Type;
 
-class FfmpegShellTest extends PHPUnit_Framework_TestCase {
+class FfmpegShellTest extends \PHPUnit_Framework_TestCase {
 
 	protected $_files;
 	protected $_data;
