@@ -12,6 +12,14 @@
     "require": {
       "php": ">=5.5.0"
     },
+    "suggest": {
+      "ext-fileinfo": "Enables the recommended fileinfo MIME-type magic adapter.",
+      "ext-imagick >= 3.0.0": "Enables the high quality media process/info Imagick adapter.",
+      "ext-gd": "Enabled media process/info GD adapter, good when imagick is not an option.",
+      "ghostscript": "Enables converting documents to images.",
+      "FFmpeg": "Enables transcoding and processing of videos.",
+      "SoX": "Enables transcoding and processing of audio data."
+    },
     "autoload": {
       "files": ["bootstrap.php"]
     }
