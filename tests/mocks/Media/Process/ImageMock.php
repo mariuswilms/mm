@@ -14,7 +14,7 @@
 
 namespace mm\tests\mocks\Media\Process;
 
-class ImageMock extends mm\Media\Process\Image {
+class ImageMock extends \mm\Media\Process\Image {
 
 	public function testBoxify($width, $height, $gravity = 'center') {
 		return parent::_boxify($width, $height, $gravity);

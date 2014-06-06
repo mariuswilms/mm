@@ -12,9 +12,11 @@
  * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Mime/Type/Magic/Adapter/Freedesktop.php';
+namespace mm\tests\integration\Mime\Type\Magic\Adapter;
 
-class Mime_Type_Magic_Adapter_FreedesktopShippedTest extends PHPUnit_Framework_TestCase {
+use mm\Mime\Type\Magic\Adapter\Freedesktop;
+
+class FreedesktopShippedTest extends PHPUnit_Framework_TestCase {
 
 	public $subject;
 
@@ -28,7 +30,7 @@ class Mime_Type_Magic_Adapter_FreedesktopShippedTest extends PHPUnit_Framework_T
 
 	public function testAnalyze() {
 		$file = $this->_data . '/magic.db';
-		$this->subject = new Mime_Type_Magic_Adapter_Freedesktop(compact('file'));
+		$this->subject = new Freedesktop(compact('file'));
 
 		$files = [
 			'ms_snippet.avi' => 'video/x-msvideo',

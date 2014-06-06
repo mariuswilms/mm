@@ -12,9 +12,11 @@
  * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Mime/Type.php';
+namespace mm\tests\integration\Mime;
 
-class Mime_TypeSystemTest extends PHPUnit_Framework_TestCase {
+use mm\Mime\Type;
+
+class TypeSystemTest extends PHPUnit_Framework_TestCase {
 
 	protected $_files;
 	protected $_data;
@@ -23,17 +25,17 @@ class Mime_TypeSystemTest extends PHPUnit_Framework_TestCase {
 		$this->_files = dirname(dirname(dirname(__FILE__))) . '/data';
 		$this->_data = dirname(dirname(dirname(dirname(__FILE__)))) .'/data';
 
-		Mime_Type::config('magic', [
+		Type::config('magic', [
 			'adapter' => 'Fileinfo'
 		]);
-		Mime_Type::config('glob', [
+		Type::config('glob', [
 			'adapter' => 'Freedesktop',
 			'file' => $this->_data . '/glob.db'
 		]);
 	}
 
 	protected function tearDown() {
-		Mime_Type::reset();
+		Type::reset();
 	}
 
 	public function testGuessTypeResource() {
@@ -43,7 +45,7 @@ class Mime_TypeSystemTest extends PHPUnit_Framework_TestCase {
 		foreach ($files as $file => $mimeType) {
 			$this->assertEquals(
 				$mimeType,
-				Mime_Type::guessType($handle = fopen("{$this->_files}/{$file}", 'r')),
+				Type::guessType($handle = fopen("{$this->_files}/{$file}", 'r')),
 				"File `{$file}`."
 			);
 			fclose($handle);
@@ -57,7 +59,7 @@ class Mime_TypeSystemTest extends PHPUnit_Framework_TestCase {
 		foreach ($files as $file => $mimeType) {
 			$this->assertEquals(
 				$mimeType,
-				Mime_Type::guessType("{$this->_files}/{$file}"),
+				Type::guessType("{$this->_files}/{$file}"),
 				"File `{$file}`."
 			);
 		}
@@ -70,7 +72,7 @@ class Mime_TypeSystemTest extends PHPUnit_Framework_TestCase {
 		foreach ($map as $file => $name) {
 			$this->assertEquals(
 				$name,
-				Mime_Type::guessName($this->_files . '/' . $file),
+				Type::guessName($this->_files . '/' . $file),
 				"File `{$file}`."
 			);
 		}

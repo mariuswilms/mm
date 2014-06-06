@@ -12,9 +12,11 @@
  * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Mime/Type/Magic/Adapter/Fileinfo.php';
+namespace mm\tests\integration\Mime\Type\Magic\Adapter;
 
-class Mime_Type_Magic_Adapter_FileinfoSystemTest extends PHPUnit_Framework_TestCase {
+use mm\Mime\Type\Glob\Adapter\Fileinfo;
+
+class FileinfoSystemTest extends PHPUnit_Framework_TestCase {
 
 	public $subject;
 
@@ -23,7 +25,7 @@ class Mime_Type_Magic_Adapter_FileinfoSystemTest extends PHPUnit_Framework_TestC
 
 	protected function setUp() {
 		if (extension_loaded('fileinfo')) {
-			$this->subject = new Mime_Type_Magic_Adapter_Fileinfo();
+			$this->subject = new Fileinfo();
 		} else {
 			$this->markTestSkipped('The `fileinfo` extension is not available.');
 		}
