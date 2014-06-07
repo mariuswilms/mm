@@ -43,7 +43,7 @@ class Info {
 	 * @param array $config Valid values are:
 	 *                      - `'source'`: An absolute path to a file.
 	 *                      - `'adapters'`: Names or instances of media adapters (i.e. `['Gd']`).
-	 * @return \mm\Media\Info\Generic An instance of a subclass of `mm\Media\Process\Generic` or
+	 * @return \mm\Media\Info\Generic An instance of a subclass of `\mm\Media\Info\Generic` or
 	 *                               if type could not be mapped an instance of the that class
 	 *                               itself.
 	 */
