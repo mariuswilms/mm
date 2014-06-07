@@ -107,11 +107,11 @@ class Type {
 		}
 		$class = 'mm\Mime\Type\\' . ucfirst($type) . '\Adapter\\' . $config['adapter'];
 
-		self::${$type} = new $class($config);
+		static::${$type} = new $class($config);
 	}
 
 	public static function reset() {
-		self::$glob = self::$magic = null;
+		static::$glob = static::$magic = null;
 	}
 
 	/**
@@ -144,18 +144,18 @@ class Type {
 	 * @return string|void A string with the first matching extension (w/o leading dot).
 	 */
 	public static function guessExtension($file) {
-		if (is_string($file) && preg_match('/' . self::REGEX . '/', $file)) {
-			$mimeType = self::simplify($file, false, true);
+		if (is_string($file) && preg_match('/' . static::REGEX . '/', $file)) {
+			$mimeType = static::simplify($file, false, true);
 		} else {
-			$mimeType = self::guessType($file);
+			$mimeType = static::guessType($file);
 		}
 
-		$globMatch = (array) self::$glob->analyze($mimeType, true);
+		$globMatch = (array) static::$glob->analyze($mimeType, true);
 		if (count($globMatch) === 1) {
 			return array_shift($globMatch);
 		}
 
-		$preferMatch = array_intersect($globMatch, self::$preferredExtensions);
+		$preferMatch = array_intersect($globMatch, static::$preferredExtensions);
 		if (count($preferMatch) === 1) {
 			return array_shift($preferMatch);
 		}
@@ -190,12 +190,12 @@ class Type {
 			} else {
 				$name = $file;
 			}
-			$globMatch = (array) self::$glob->analyze($name);
+			$globMatch = (array) static::$glob->analyze($name);
 
 			if (count($globMatch) === 1) {
-				 return self::simplify(array_shift($globMatch), $properties, $experimental);
+				 return static::simplify(array_shift($globMatch), $properties, $experimental);
 			}
-			$preferMatch = array_intersect($globMatch, self::$preferredTypes);
+			$preferMatch = array_intersect($globMatch, static::$preferredTypes);
 
 			if (count($preferMatch) === 1) {
 				return array_shift($preferMatch);
@@ -211,7 +211,7 @@ class Type {
 			return;
 		}
 
-		$magicMatch = self::$magic->analyze($handle);
+		$magicMatch = static::$magic->analyze($handle);
 		$magicMatch = empty($magicMatch) ? [] : [$magicMatch];
 
 		if (empty($magicMatch)) {
@@ -233,14 +233,14 @@ class Type {
 		}
 
 		if (count($magicMatch) === 1) {
-			return self::simplify(array_shift($magicMatch), $properties, $experimental);
+			return static::simplify(array_shift($magicMatch), $properties, $experimental);
 		}
 
 		if ($globMatch && $magicMatch) {
 			$combinedMatch = array_intersect($globMatch, $magicMatch);
 
 			if (count($combinedMatch) === 1) {
-				return self::simplify(array_shift($combinedMatch), $properties, $experimental);
+				return static::simplify(array_shift($combinedMatch), $properties, $experimental);
 			}
 		}
 	}
@@ -252,12 +252,12 @@ class Type {
 	 * @return string
 	 */
 	public static function guessName($file) {
-		if (is_string($file) && preg_match('/' . self::REGEX . '/', $file)) {
-			$mimeType = self::simplify($file);
+		if (is_string($file) && preg_match('/' . static::REGEX . '/', $file)) {
+			$mimeType = static::simplify($file);
 		} else {
-			$mimeType = self::guessType($file, ['experimental' => false]);
+			$mimeType = static::guessType($file, ['experimental' => false]);
 		}
-		foreach (self::$name as $pattern => $name) {
+		foreach (static::$name as $pattern => $name) {
 			if (strpos($mimeType, $pattern) !== false) {
 				return $name;
 			}

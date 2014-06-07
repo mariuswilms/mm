@@ -28,9 +28,9 @@ class Process {
 
 	public static function config(array $config = []) {
 		if (!$config) {
-			return self::$_config;
+			return static::$_config;
 		}
-		self::$_config = $config;
+		static::$_config = $config;
 	}
 
 	/**
@@ -57,10 +57,10 @@ class Process {
 		$class = "\mm\Media\Process\\" . ucfirst($name);
 
 		if (!$adapter) {
-			if (!isset(self::$_config[$name])) {
+			if (!isset(static::$_config[$name])) {
 				throw new Exception("No adapter configured for media name `{$name}`.");
 			}
-			$adapter = self::$_config[$name];
+			$adapter = static::$_config[$name];
 		}
 		return new $class(compact('source', 'adapter'));
 	}

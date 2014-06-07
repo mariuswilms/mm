@@ -30,9 +30,9 @@ class Info {
 
 	public static function config(array $config = []) {
 		if (!$config) {
-			return self::$_config;
+			return static::$_config;
 		}
-		self::$_config = $config;
+		static::$_config = $config;
 	}
 
 	/**
@@ -58,10 +58,10 @@ class Info {
 		$class = "\mm\Media\Info\\" . ucfirst($name);
 
 		if (!$adapters) {
-			if (!isset(self::$_config[$name])) {
+			if (!isset(static::$_config[$name])) {
 				throw new Exception("No adapters configured for media name `{$name}`.");
 			}
-			$adapters = self::$_config[$name];
+			$adapters = static::$_config[$name];
 		}
 		return new $class(compact('source', 'adapters'));
 	}
