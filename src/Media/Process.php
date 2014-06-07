@@ -42,7 +42,7 @@ class Process {
 	 *                      - `'source'`: An absolute path, a file or an open handle or
 	 *                                    a MIME type if `'adapter'` is an instance.
 	 *                      - `'adapter'`: A name or instance of a media adapter (i.e. `'Gd'`).
-	 * @return mm\Media\Process\Generic An instance of a subclass of `mm\Media\Process\Generic` or
+	 * @return \mm\Media\Process\Generic An instance of a subclass of `mm\Media\Process\Generic` or
 	 *                                  if type could not be mapped an instance of the that class
 	 *                                  itself.
 	 */
@@ -54,7 +54,7 @@ class Process {
 			throw new BadMethodCallException("No source given.");
 		}
 		$name = Type::guessName($source);
-		$class = "mm\Media\Process\\" . ucfirst($name);
+		$class = "\mm\Media\Process\\" . ucfirst($name);
 
 		if (!$adapter) {
 			if (!isset(self::$_config[$name])) {
