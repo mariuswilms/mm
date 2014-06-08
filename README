@@ -164,8 +164,8 @@ $media->colorProfile(__DIR__ . '/data/sRGB_IEC61966-2-1_black_scaled.icc');
 // Reduce color depth.
 $media->colorDepth(8);
 
-// All but the `convert` method operate on the loaded source. `convert` will
-// leave return the new `Image` object.
+// All but the `convert` method operate on the loaded source. `convert`
+// instead returns a new `Image` object which must be used from now on.
 $media = $media->convert('image/jpeg');
 
 // Now we store the converted image.
