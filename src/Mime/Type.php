@@ -101,7 +101,7 @@ class Type {
 		if ($type != 'magic' && $type != 'glob') {
 			throw new OutOfBoundsException("Invalid type `{$type}`.");
 		}
-		$class = 'mm\Mime\Type\\' . ucfirst($type) . '\Adapter\\' . $config['adapter'];
+		$class = '\mm\Mime\Type\\' . ucfirst($type) . '\Adapter\\' . $config['adapter'];
 
 		static::${$type} = new $class($config);
 	}
