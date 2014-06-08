@@ -6,9 +6,9 @@ x   x  x   x
 
 Synopsis
 --------
-Making media processing portable isn't easy. Retrieving meta data from media
-through one of the thousand extension is by times overwhelming. Dealing with
-MIME-types is most often limited to magic lookup.
+Making media processing portable isn't easy. Retrieving meta data from
+media through one of the thousand extensions is by times overwhelming.
+Dealing with MIME-types is most often limited to magic lookup.
 
 This library is concerned with three aspects of media and organized
 accordingly:
@@ -17,20 +17,20 @@ accordingly:
 - Retrieving media metadata
 - Determining a file's MIME-type
 
-The set of Media\* classes provide abstractions from underlying extensions or
-libraries and most common methods for operations like resizing and conversion
-(even between i.e. PDFs, movies and images).
+The set of \mm\Media\* classes provide abstractions from underlying
+extensions or libraries and most common methods for operations like
+resizing and conversion (even between i.e. PDFs, movies and images).
 
-The Mime\Type class helps with determining the MIME-type or correct extension
-of a file or stream. It comes with adapters for the fileinfo extension, glob
-and magic databases from the freedesktop project, as well as modmime style
-databases.
+The \mm\Mime\Type class helps with determining the MIME-type or correct
+extension of a file or stream. It comes with adapters for the fileinfo
+extension, glob and magic databases from the freedesktop project, as well
+as modmime style databases.
 
-The files required to make MIME detection work autonomously (i.e. without the
-fileinfo extension installed) are shipped with the library. You'll find those
-files in the data directory. Please note that the MIME magic implementation in
-pure PHP will always be a lot slower than the PHP extensions in C and currently
-has to be considered experimental
+The files required to make MIME detection work autonomously (i.e. without
+the fileinfo extension installed) are shipped with the library. You'll
+find those files in the data directory. Please note that the MIME magic
+implementation in pure PHP will always be a lot slower than the PHP
+extensions in C and currently has to be considered experimental.
 
 Features
 --------
