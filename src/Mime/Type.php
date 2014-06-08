@@ -91,13 +91,6 @@ class Type {
 	 *              e.g. `['adapter' => 'Fileinfo', 'file' => '/etc/magic']`.
 	 */
 	public static function config($type, array $config = []) {
-		if ($type == 'Magic' || $type == 'Glob') {
-			$message  = 'Previously types could be specified with a leading capital';
-			$message .= 'letter (i.e. `Magic` instead of `magic`). Support for';
-			$message .= 'this has been deprecated and the all lowercase version should';
-			$message .= 'be used. However for now capitalized types continue to work';
-			trigger_error($message, E_USER_DEPRECATED);
-		}
 		if ($type != 'magic' && $type != 'glob') {
 			throw new OutOfBoundsException("Invalid type `{$type}`.");
 		}
