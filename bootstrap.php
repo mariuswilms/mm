@@ -84,7 +84,7 @@ if ($hasFileinfo) {
 } else {
 	Type::config('magic', [
 		'adapter' => 'Freedesktop',
-		'file' => __DIR__ . "/data/magic.db"
+		'file' => __DIR__ . '/data/magic.db'
 	]);
 }
 if ($cached = $cacheRead('mime_type_glob')) {
@@ -97,7 +97,7 @@ if ($cached = $cacheRead('mime_type_glob')) {
 } else {
 	Type::config('glob', [
 		'adapter' => 'Freedesktop',
-		'file' => __DIR__ . "/data/glob.db"
+		'file' => __DIR__ . '/data/glob.db'
 	]);
 	$cacheWrite('mime_type_glob', Type::$glob->to('array'));
 }
