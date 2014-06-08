@@ -107,7 +107,7 @@ Guess the MIME type of the file.
 <?php
 Type::guessType('example.png'); // returns 'image/png'
 Type::guessType('/path/to/example.png'); // returns 'image/png'
-Type::guessType($handle = fopen('/path/to/example.png', 'rb')); // returns 'image/png'
+Type::guessType(fopen('/path/to/example.png', 'r')); // returns 'image/png'
 ?>
 
 Guess the extension (suffix) for an existing file or a MIME type.
@@ -115,7 +115,7 @@ Guess the extension (suffix) for an existing file or a MIME type.
 <?php
 Type::guessExtension('application/pdf'); // returns 'pdf'
 Type::guessExtension('/path/to/example.png'); // returns 'png'
-Type::guessExtension($handle = fopen('/path/to/example.png', 'rb')); // returns 'png'
+Type::guessExtension(fopen('/path/to/example.png', 'r')); // returns 'png'
 ?>
 
 Determine the common lowercase media name, with and without hints from a magic
@@ -126,7 +126,7 @@ Type::guessName('example.png'); // returns 'image'
 Type::guessName('example.webm'); // returns 'video'
 Type::guessName('application/pdf'); // returns 'document'
 Type::guessName('/path/to/example.png'); // returns 'image'
-Type::guessName($handle = fopen('/path/to/example.png', 'rb')); // returns 'image'
+Type::guessName(fopen('/path/to/example.png', 'r')); // returns 'image'
 ?>
 
 Quickstart: Media Processing
