@@ -36,6 +36,8 @@ Features
 --------
 The most significant features of this library are:
 
+- Full suit of unit and integration tests
+- Battle tested and used in production since over 6 years
 - PSR-0 and PSR-4 compatiblity
 - Fast Freedesktop mime file parser implemented in pure PHP
 - FFmpeg and SoX adapters for video and audio conversion
