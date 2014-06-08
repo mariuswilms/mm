@@ -79,6 +79,155 @@ add the library as a dependency via:
 
 $ composer require davidpersson/mm
 
+Quickstart: MIME-type Detection
+-------------------------------
+Before we can use any of the classes we must configure them. The
+following is just a minimal example. Have a look at the included
+`bootstrap.php` for more information what's possible.
+
+More documentation for MIME-type detection is available in the
+`docs` subdirectory.
+
+<?php
+use mm\Mime\Type;
+
+Type::config('glob', [
+	'adapter' => 'Freedesktop',
+	'file' => __DIR__ . '/data/glob.db'
+]);
+Type::config('magic', [
+	'adapter' => 'Fileinfo'
+]);
+?>
+
+Guess the MIME type of the file.
+
+<?php
+Type::guessType('example.png'); // returns 'image/png'
+Type::guessType('/path/to/example.png'); // returns 'image/png'
+Type::guessType($handle = fopen('/path/to/example.png', 'rb')); // returns 'image/png'
+?>
+
+Guess the extension (suffix) for an existing file or a MIME type.
+
+<?php
+Type::guessExtension('application/pdf'); // returns 'pdf'
+Type::guessExtension('/path/to/example.png'); // returns 'png'
+Type::guessExtension($handle = fopen('/path/to/example.png', 'rb')); // returns 'png'
+?>
+
+Determine the common lowercase media name, with and without hints from a magic
+lookup.
+
+<?php
+Type::guessName('example.png'); // returns 'image'
+Type::guessName('example.webm'); // returns 'video'
+Type::guessName('application/pdf'); // returns 'document'
+Type::guessName('/path/to/example.png'); // returns 'image'
+Type::guessName($handle = fopen('/path/to/example.png', 'rb')); // returns 'image'
+?>
+
+Quickstart: Media Processing
+----------------------------
+First we configure the class.
+
+<?php
+use mm\Media\Process;
+
+Process::config([
+	'image' => 'Imagick',
+	'video' => 'Ffmpeg'
+]);
+?>
+
+A common task is to convert an image into another format,
+apply some compression while ensuring it has the sRGB profile
+embbeded. We'll utilize the factory method here which handles
+MIME-type detection of the source file for us and returns
+an appropriate \mm\Media\Process\* class for us.
+
+<?php
+use mm\Media\Process;
+
+$media = Process::factory(['source' => '/path/to/cat.png']);
+// $media is now an instance of `\mm\Media\Process\Image`.
+
+// Fit image into a square of 500 by 500px. More resizing methods like crop
+// and zoom are available, too.
+$media->fit(500, 500);
+
+// We use the official ICC sRGB profile that comes with this library.
+$media->colorProfile(__DIR__ . '/data/sRGB_IEC61966-2-1_black_scaled.icc');
+
+// Reduce color depth.
+$media->colorDepth(8);
+
+// All but the `convert` method operate on the loaded source. `convert` will
+// leave return the new `Image` object.
+$media = $media->convert('image/jpeg');
+
+// Now we store the converted image.
+$media->store('/path/to/cat_square.jpg');
+?>
+
+Using the `Ffmpeg` adapter we can transcode videos programmatically. Using
+the `passthru` method we can access the adapter more or less directly.
+
+<?php
+use mm\Media\Process;
+
+$media = Process::factory(['source' => '/path/to/dog.mp4']);
+// $media is now an instance of `\mm\Media\Process\Video`.
+
+// Resizing is the same as with operating on images. Here
+// we resize to 720p HD.
+$media->fit(1280, 720);
+
+// We want to transcode to WEBM here.
+$media = $media->convert('video/webm');
+
+// We can tune the output accessing certain parameters of FFmpeg direcly.
+$media->passthru('codec:a', 'libvorbis');
+$media->passthru('codec:v', 'libvpx');
+$media->passthru('b:a', '192k'); // audio bitrate
+$media->passthru('b:v', '1024k); // video bitrate
+$media->passthru('quality', 'good);
+
+// Finally start transcoding and store file.
+$media->store('/path/to/dog_720p.webm');
+?>
+
+Quickstart: Media Information
+-----------------------------
+First we configure the class.
+
+<?php
+use mm\Media\Info;
+
+Info::config([
+	'image' => ['ImageBasic', 'Imagick']
+]);
+?>
+
+Getting information from an image. Information is assembled
+by all configured adapters for the type.
+
+<?php
+$media = Info::factory(['source' => '/path/to/cat.png']);
+// $media is now an instance of `\mm\Media\Info\Image`.
+
+// The following showcases some basic methods.
+$width      = $media->width();
+$megapixel  = $media->megapixel();
+$knownRatio = $media->knownRatio(); // may return 'Φ:1' (Goldener Schnitt).
+
+// Get all available information as an array from the media.
+// This is also a good method to give you an overview which data is possibly available
+// using certain adapter combinations.
+$meta = $media->all();
+
+?>
+
 Running the Tests
 -----------------
 This library is continously integrated. Please check the following URL
