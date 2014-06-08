@@ -36,7 +36,7 @@ Features
 --------
 The most significant features of this library are:
 
-- PSR-0 compatiblity
+- PSR-0 and PSR-4 compatiblity
 - Fast Freedesktop mime file parser implemented in pure PHP
 - FFmpeg and SoX adapters for video and audio conversion
 
@@ -225,7 +225,6 @@ $knownRatio = $media->knownRatio(); // may return 'Φ:1' (Goldener Schnitt).
 // This is also a good method to give you an overview which data is possibly available
 // using certain adapter combinations.
 $meta = $media->all();
-
 ?>
 
 Running the Tests
