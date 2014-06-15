@@ -114,6 +114,10 @@ class FfmpegShell extends \mm\Media\Process\Adapter {
 		return true;
 	}
 
+	public function crop($left, $top, $width, $height) {
+		throw new Exception("The adapter doesn't support the `crop` action.");
+	}
+
 	public function resize($width, $height) {
 		return (boolean) $this->_options['resize'] = [
 			(integer) $width,
