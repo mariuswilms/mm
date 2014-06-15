@@ -12,6 +12,9 @@
     "require": {
       "php": ">=5.5.0"
     },
+    "require-dev": {
+        "phpunit": ">=4.0.0"
+    },
     "suggest": {
       "ext-fileinfo": "Enables the recommended fileinfo MIME-type magic adapter.",
       "ext-imagick >= 3.0.0": "Enables the high quality media process/info Imagick adapter.",
