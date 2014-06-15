@@ -15,23 +15,7 @@ namespace mm\Media\Info;
  */
 class Image extends \mm\Media\Info\Generic {
 
-	/**
-	 * Determines the ratio.
-	 *
-	 * @return float
-	 */
-	public function ratio() {
-		return $this->get('width') / $this->get('height');
-	}
-
-	/**
-	 * Determines the known ratio.
-	 *
-	 * @return string
-	 */
-	public function knownRatio() {
-		return $this->_knownRatio();
-	}
+	use \mm\Media\Info\RatioTrait;
 
 	/**
 	 * Determines megapixels of media.

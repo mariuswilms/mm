@@ -13,29 +13,13 @@ namespace mm\Media\Info;
 /**
  * `Document` handles document files like PDFs. Most methods are simply
  * inherited from the generic media type wile some overlap with those defined
- * in `mm\Media\Info\Image`.
+ * in `\mm\Media\Info\Image`.
  *
  * @see mm\Media\Info\Image
  */
 class Document extends \mm\Media\Info\Generic {
 
-	/**
-	 * Determines the ratio.
-	 *
-	 * @return float
-	 */
-	public function ratio() {
-		return $this->get('width') / $this->get('height');
-	}
-
-	/**
-	 * Determines the known ratio.
-	 *
-	 * @return string
-	 */
-	public function knownRatio() {
-		return $this->_knownRatio();
-	}
+	use \mm\Media\Info\RatioTrait;
 }
 
 ?>
