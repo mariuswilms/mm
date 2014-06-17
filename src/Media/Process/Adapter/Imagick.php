@@ -149,7 +149,7 @@ class Imagick extends \mm\Media\Process\Adapter {
 		if (!$value) {
 			return $this->_object->setInterlaceScheme(ImagickCore::INTERLACE_NO);
 		}
-		$constant = 'ImagickCore::INTERLACE_' . strtoupper($this->_object->getFormat());
+		$constant = '\Imagick::INTERLACE_' . strtoupper($this->_object->getFormat());
 
 		if (!defined($constant)) {
 			throw new Exception("Cannot use interlace scheme; constant `{$constant}` not defined.");
