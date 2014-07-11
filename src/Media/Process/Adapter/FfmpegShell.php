@@ -105,6 +105,11 @@ class FfmpegShell extends \mm\Media\Process\Adapter {
 					'noAudio' => '-an',
 				] + $this->_options;
 
+				if ($mimeType == 'image/jpeg') {
+					// Get highest quality jpeg as possible; will
+					// be compressed later.
+					$this->_options['qscale:v'] = '-qscale:v 1';
+				}
 				$this->_targetType = 'rawvideo';
 				break;
 			case 'video':
@@ -252,7 +257,8 @@ class FfmpegShell extends \mm\Media\Process\Adapter {
 
 		$map = [
 			'ogv' => 'ogg',
-			'oga' => 'ogg'
+			'oga' => 'ogg',
+			'jpg' => 'mjpeg' // There is no jpeg video encoder.
 		];
 		return isset($map[$type]) ? $map[$type] : $type;
 	}
