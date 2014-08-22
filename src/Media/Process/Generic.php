@@ -21,6 +21,8 @@ use InvalidArgumentException;
  */
 class Generic {
 
+	use \mm\Media\NameTrait;
+
 	protected $_adapter;
 
 	/**
@@ -57,11 +59,9 @@ class Generic {
 	}
 
 	/**
-	 * Allows for more-or-less direct access to the adapter
-	 * currently in use. Adapters are allowed to react
-	 * differently to the arguments passed. This method may
-	 * be used for cases where abstraction for i.e. a certain
-	 * command is incomplete or doesn't make sense.
+	 * Allows for more-or-less direct access to the adapter currently in use. Adapters are
+	 * allowed to react differently to the arguments passed. This method may be used for cases
+	 * where abstraction for i.e. a certain command is incomplete or doesn't make sense.
 	 *
 	 * @param string|integer $key
 	 * @param mixed $value Optional when `$key` is a boolean switch.
@@ -69,26 +69,6 @@ class Generic {
 	 */
 	public function passthru($key, $value = null) {
 		return $this->_adapter->passthru($key, $value);
-	}
-
-	/**
-	 * Checks if the name of the type (i.e. `'generic'` or `'image'`)
-	 * equals the provided one.
-	 *
-	 * @param string $name Name of the type to compare against.
-	 * @return boolean
-	 */
-	public function is($name) {
-		return $this->name() == $name;
-	}
-
-	/**
-	 * Returns the lowercase name of the type.
-	 *
-	 * @return string I.e. `'generic'` or `'image'`.
-	 */
-	public function name() {
-		return strtolower(str_replace('mm\Media\Process\\', null, get_class($this)));
 	}
 
 	/**
