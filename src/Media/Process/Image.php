@@ -43,8 +43,8 @@ class Image extends \mm\Media\Process\Generic {
 	 * controlling the compression level. Therefore the given value is simply ignored.
 	 * Compression for tiff images is lossless.
 	 *
-	 * @param float $value Zero for no compression at all or a value between 0 and 9.9999999
-	 * 	(highest compression); defaults to 1.5
+	 * @param float $value Zero for no compression at all or a value
+	 *        between 0 and 9.9999999(highest compression); defaults to 1.5.
 	 * @return boolean
 	 */
 	public function compress($value = 1.5) {
@@ -58,8 +58,8 @@ class Image extends \mm\Media\Process\Generic {
 	 * Strips unwanted data from an image. This operation is therefore always lossful.
 	 * Be careful when removing color profiles (icc) and copyright information (iptc/xmp).
 	 *
-	 * @param string $type One of either `'8bim'`, `'icc'`, `'iptc'`, `'xmp'`, `'app1'`, `'app12'`, `'exif'`.
-	 *                     Repeat argument to strip multiple types.
+	 * @param string $type One of either `'8bim'`, `'icc'`, `'iptc'`, `'xmp'`, `'app1'`, `'app12'`,
+	 *        `'exif'`. Repeat argument to strip multiple types.
 	 * @return boolean
 	 */
 	public function strip($type) {
@@ -109,8 +109,7 @@ class Image extends \mm\Media\Process\Generic {
 	 * Changes the color depths (of the channels).
 	 *
 	 * @param integer $value The number of bits in a color sample within a pixel. Usually `8`.
-	 *                       This is _not_ the total number of bits per pixel but the bits per
-	 *                       channel.
+	 *        This is _not_ the total number of bits per pixel but the bits per channel.
 	 * @return boolean
 	 */
 	public function colorDepth($value) {
@@ -120,8 +119,8 @@ class Image extends \mm\Media\Process\Generic {
 	/**
 	 * Enables or disables interlacing. Formats like PNG, GIF and JPEG support interlacing.
 	 *
-	 * @param boolean $value `true` to enable interlacing (progressive rendering), or
-	 *                       `false` to disable it.
+	 * @param boolean $value `true` to enable interlacing (progressive rendering),
+	 *        or `false` to disable it.
 	 * @return boolean
 	 */
 	public function interlace($value) {

@@ -11,7 +11,7 @@
 namespace mm\Media\Info;
 
 /**
- * `Image`
+ * `Image` handles all image files.
  */
 class Image extends \mm\Media\Info\Generic {
 
