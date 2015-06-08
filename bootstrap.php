@@ -9,21 +9,6 @@
  */
 
 /*
- * We are registering a custom autoloader here.
- */
-spl_autoload_register(function($class) {
-	if (strpos($class, 'mm\\') === false) {
-		return;
-	}
-	$subdir = strpos($class, 'mm\\tests\\') === false ? 'src/' : '';
-	$file = __DIR__ . "/" . $subdir . str_replace(['mm\\', '\\'], ['', '/'], $class) . '.php';
-
-	if (file_exists($file)) {
-		include $file;
-	}
-});
-
-/*
  * When running our unit tests the following constant
  * will be defined. We skip further caching setup
  * to no confuse tests.
