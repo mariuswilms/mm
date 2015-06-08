@@ -24,8 +24,7 @@
       "SoX": "Enables transcoding and processing of audio data."
     },
     "autoload": {
-      "psr-4": {"mm\\": "src/"},
-      "files": ["bootstrap.php"]
+      "psr-4": {"mm\\": "src/"}
     },
     "autoload-dev": {
       "psr-4": {"mm\\tests\\": "tests/"}

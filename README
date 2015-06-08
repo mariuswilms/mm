@@ -81,6 +81,10 @@ as a dependency via:
 
 $ composer require davidpersson/mm
 
+To bootstrap and pre-configure the library load the bootstrap file:
+
+require /path/to/mm/bootstrap.php
+
 Quickstart: MIME-type Detection
 -------------------------------
 Before we can use any of the classes we must configure them. The following
