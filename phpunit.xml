@@ -6,14 +6,11 @@
  
  Distributed under the terms of the MIT License.
  Redistributions of files must retain the above copyright notice.
- 
- @copyright  2007-2014 David Persson <nperson@gmx.de>
- @license    http://www.opensource.org/licenses/mit-license.php The MIT License
- @link       http://github.com/davidpersson/mm
 -->
 <phpunit 
 	backupGlobals="false"
 	backupStaticAttributes="false"
+	bootstrap="bootstrap.php"
 >
 	<testsuites>
 		<testsuite name="Library">
@@ -23,6 +20,6 @@
 		</testsuite>
 	</testsuites>
 	<php>
-		<includePath>./src</includePath>
+		<const name="TEST_EXECUTION" value="true" />
 	</php>
 </phpunit>

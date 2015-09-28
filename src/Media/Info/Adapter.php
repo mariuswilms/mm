@@ -6,16 +6,14 @@
  *
  * Distributed under the terms of the MIT License.
  * Redistributions of files must retain the above copyright notice.
- *
- * @copyright  2007-2014 David Persson <nperson@gmx.de>
- * @license    http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link       http://github.com/davidpersson/mm
  */
+
+namespace mm\Media\Info;
 
 /**
  * This class must be subclass by all media info adapters.
  */
-abstract class Media_Info_Adapter {
+abstract class Adapter {
 
 	/**
 	 * Prepare the adapter and load the source.

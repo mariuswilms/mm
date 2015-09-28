@@ -6,15 +6,11 @@
  *
  * Distributed under the terms of the MIT License.
  * Redistributions of files must retain the above copyright notice.
- *
- * @copyright  2007-2014 David Persson <nperson@gmx.de>
- * @license    http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Media/Info/Adapter.php';
+namespace mm\tests\mocks\Media\Info\Adapter;
 
-class Media_Info_Adapter_GenericMock extends Media_Info_Adapter {
+class GenericMock extends \mm\Media\Info\Adapter {
 
 	public function __construct($file) {}
 

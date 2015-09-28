@@ -6,21 +6,20 @@
  *
  * Distributed under the terms of the MIT License.
  * Redistributions of files must retain the above copyright notice.
- *
- * @copyright  2007-2014 David Persson <nperson@gmx.de>
- * @license    http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Media/Process/Adapter.php';
-require_once 'Mime/Type.php';
+namespace mm\Media\Process\Adapter;
+
+use mm\Mime\Type;
+use Exception;
+use RuntimeException;
 
 /**
  * This media process adapter interfaces with the `ffmpeg` binary through the shell.
  *
  * @link http://ffmpeg.org
  */
-class Media_Process_Adapter_FfmpegShell extends Media_Process_Adapter {
+class FfmpegShell extends \mm\Media\Process\Adapter {
 
 	protected $_object;
 
@@ -62,7 +61,7 @@ class Media_Process_Adapter_FfmpegShell extends Media_Process_Adapter {
 
 		file_put_contents($this->_objectTemp, $handle);
 
-		$this->_objectType = $this->_type(Mime_Type::guessType($handle));
+		$this->_objectType = $this->_type(Type::guessType($handle));
 		$this->_targetType = $this->_objectType;
 
 		$this->_info = $this->_info();
@@ -97,7 +96,7 @@ class Media_Process_Adapter_FfmpegShell extends Media_Process_Adapter {
 	}
 
 	public function convert($mimeType) {
-		switch (Mime_Type::guessName($mimeType)) {
+		switch (Type::guessName($mimeType)) {
 			case 'image':
 				$this->_options = [
 					'vcodec' => '-vcodec ' . $this->_type($mimeType),
@@ -106,6 +105,11 @@ class Media_Process_Adapter_FfmpegShell extends Media_Process_Adapter {
 					'noAudio' => '-an',
 				] + $this->_options;
 
+				if ($mimeType == 'image/jpeg') {
+					// Get highest quality jpeg as possible; will
+					// be compressed later.
+					$this->_options['qscale:v'] = '-qscale:v 1';
+				}
 				$this->_targetType = 'rawvideo';
 				break;
 			case 'video':
@@ -113,6 +117,10 @@ class Media_Process_Adapter_FfmpegShell extends Media_Process_Adapter {
 				break;
 		}
 		return true;
+	}
+
+	public function crop($left, $top, $width, $height) {
+		throw new Exception("The adapter doesn't support the `crop` action.");
 	}
 
 	public function resize($width, $height) {
@@ -245,11 +253,12 @@ class Media_Process_Adapter_FfmpegShell extends Media_Process_Adapter {
 	}
 
 	protected function _type($object) {
-		$type = Mime_Type::guessExtension($object);
+		$type = Type::guessExtension($object);
 
 		$map = [
 			'ogv' => 'ogg',
-			'oga' => 'ogg'
+			'oga' => 'ogg',
+			'jpg' => 'mjpeg' // There is no jpeg video encoder.
 		];
 		return isset($map[$type]) ? $map[$type] : $type;
 	}

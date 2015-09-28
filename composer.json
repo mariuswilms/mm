@@ -1,7 +1,7 @@
 {
     "name": "davidpersson/mm",
     "description": "The PHP media library: media processing and MIME-Type/extension guessing.",
-    "keywords": ["media", "mime", "imagick", "fileinfo", "sox", "ffmpeg", "pdf"],
+    "keywords": ["media", "mime", "imagick", "fileinfo", "sox", "ffmpeg", "pdf", "freedesktop", "glob", "xdg"],
     "license": "MIT",
     "authors": [
         {
@@ -12,9 +12,21 @@
     "require": {
       "php": ">=5.5.0"
     },
-    "autoload": {
-      "classmap": ["src/"],
-      "files": ["bootstrap.php"]
+    "require-dev": {
+        "phpunit/phpunit": ">=4.0.0"
     },
-    "include-path": ["src/"]
+    "suggest": {
+      "ext-fileinfo": "Enables the recommended fileinfo MIME-type magic adapter.",
+      "ext-imagick >= 3.0.0": "Enables the high quality media process/info Imagick adapter.",
+      "ext-gd": "Enabled media process/info GD adapter, good when imagick is not an option.",
+      "ghostscript": "Enables converting documents to images.",
+      "FFmpeg 1.*": "Enables transcoding and processing of videos.",
+      "SoX": "Enables transcoding and processing of audio data."
+    },
+    "autoload": {
+      "psr-4": {"mm\\": "src/"}
+    },
+    "autoload-dev": {
+      "psr-4": {"mm\\tests\\": "tests/"}
+    }
 }

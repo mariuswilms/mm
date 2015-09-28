@@ -6,15 +6,13 @@
  *
  * Distributed under the terms of the MIT License.
  * Redistributions of files must retain the above copyright notice.
- *
- * @copyright  2007-2014 David Persson <nperson@gmx.de>
- * @license    http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Mime/Type/Glob/Adapter/Freedesktop.php';
+namespace mm\tests\unit\Mime\Type\Glob\Adapter;
 
-class Mime_Type_Glob_Adapter_FreedesktopTest extends PHPUnit_Framework_TestCase {
+use mm\Mime\Type\Glob\Adapter\Freedesktop;
+
+class FreedesktopTest extends \PHPUnit_Framework_TestCase {
 
 	public $subject;
 
@@ -28,7 +26,7 @@ class Mime_Type_Glob_Adapter_FreedesktopTest extends PHPUnit_Framework_TestCase 
 
 	public function testToArray() {
 		$file = $this->_files . '/glob_freedesktop_snippet.db';
-		$this->subject = new Mime_Type_Glob_Adapter_Freedesktop(compact('file'));
+		$this->subject = new Freedesktop(compact('file'));
 
 		$result = $this->subject->to('array');
 		$this->assertEquals(55, count($result));
@@ -36,7 +34,7 @@ class Mime_Type_Glob_Adapter_FreedesktopTest extends PHPUnit_Framework_TestCase 
 
 	public function testAnalyzeFail() {
 		$file = $this->_files . '/glob_freedesktop_snippet.db';
-		$this->subject = new Mime_Type_Glob_Adapter_Freedesktop(compact('file'));
+		$this->subject = new Freedesktop(compact('file'));
 
 		$result = $this->subject->analyze('');
 		$this->assertEquals([], $result);
@@ -44,7 +42,7 @@ class Mime_Type_Glob_Adapter_FreedesktopTest extends PHPUnit_Framework_TestCase 
 
 	public function testAnalyze() {
 		$file = $this->_files . '/glob_freedesktop_snippet.db';
-		$this->subject = new Mime_Type_Glob_Adapter_Freedesktop(compact('file'));
+		$this->subject = new Freedesktop(compact('file'));
 
 		$files = [
 			'file.bz2' => ['application/x-bzip'],
@@ -73,7 +71,7 @@ class Mime_Type_Glob_Adapter_FreedesktopTest extends PHPUnit_Framework_TestCase 
 
 	public function testAnalyzeReverse() {
 		$file = $this->_files . '/glob_freedesktop_snippet.db';
-		$this->subject = new Mime_Type_Glob_Adapter_Freedesktop(compact('file'));
+		$this->subject = new Freedesktop(compact('file'));
 
 		$files = [
 			'application/x-bzip' => ['bz2', 'bz'],

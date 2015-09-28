@@ -6,29 +6,29 @@
  *
  * Distributed under the terms of the MIT License.
  * Redistributions of files must retain the above copyright notice.
- *
- * @copyright  2007-2014 David Persson <nperson@gmx.de>
- * @license    http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Mime/Type.php';
+namespace mm\Media;
+
+use mm\Mime\Type;
+use Exception;
+use BadMethodCallException;
 
 /**
- * `Media_Info` is the media information manager class and provides
- * a configurable factory method. In contrast to `Media_Process` the `Media_Info` type
- * classes operate with multiple adapters. This is possible due to the fact that the source'
+ * `Info` is the media information manager class and provides a configurable
+ * factory method. In contrast to `Process` the `Info` type classes operate
+ * with multiple adapters. This is possible due to the fact that the source'
  * state is not changed by the adapters (they're read only).
  */
-class Media_Info {
+class Info {
 
 	protected static $_config;
 
 	public static function config(array $config = []) {
 		if (!$config) {
-			return self::$_config;
+			return static::$_config;
 		}
-		self::$_config = $config;
+		static::$_config = $config;
 	}
 
 	/**
@@ -37,35 +37,28 @@ class Media_Info {
 	 * and instantiates it.
 	 *
 	 * @param array $config Valid values are:
-	 *                      - `'source'`: An absolute path to a file.
-	 *                      - `'adapters'`: Names or instances of media adapters (i.e. `['Gd']`).
-	 * @return Media_Process_Generic An instance of a subclass of `Media_Process_Generic` or
-	 *                               if type could not be mapped an instance of the that class
-	 *                               itself.
+	 *        - `'source'`: An absolute path to a file.
+	 *        - `'adapters'`: Names or instances of media adapters (i.e. `['Gd']`).
+	 * @return \mm\Media\Info\Generic An instance of a subclass of `\mm\Media\Info\Generic` or
+	 *         if type could not be mapped an instance of the that class itself.
 	 */
-	public static function &factory(array $config = []) {
+	public static function factory(array $config = []) {
 		$default = ['source' => null, 'adapters' => []];
 		extract($config + $default);
 
 		if (!$source) {
 			throw new BadMethodCallException("No source given.");
 		}
-		$name = Mime_Type::guessName($source);
+		$name = Type::guessName($source);
+		$class = "\mm\Media\Info\\" . ucfirst($name);
 
 		if (!$adapters) {
-			if (!isset(self::$_config[$name])) {
+			if (!isset(static::$_config[$name])) {
 				throw new Exception("No adapters configured for media name `{$name}`.");
 			}
-			$adapters = self::$_config[$name];
+			$adapters = static::$_config[$name];
 		}
-
-		$name = ucfirst($name);
-		$class = "Media_Info_{$name}";
-
-		require_once "Media/Info/{$name}.php";
-
-		$media = new $class(compact('source', 'adapters'));
-		return $media;
+		return new $class(compact('source', 'adapters'));
 	}
 }
 

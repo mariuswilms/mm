@@ -6,19 +6,15 @@
  *
  * Distributed under the terms of the MIT License.
  * Redistributions of files must retain the above copyright notice.
- *
- * @copyright  2007-2014 David Persson <nperson@gmx.de>
- * @license    http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Mime/Type/Glob/Adapter.php';
+namespace mm\Mime\Type\Glob\Adapter;
 
 /**
  * This is a very simplistic adapter and can be used for building up your own
  * glob database in memory.
  */
-class Mime_Type_Glob_Adapter_Memory extends Mime_Type_Glob_Adapter {
+class Memory extends \mm\Mime\Type\Glob\Adapter {
 
 	public function register($item) {
 		return $this->_register($item);

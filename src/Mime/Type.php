@@ -6,18 +6,19 @@
  *
  * Distributed under the terms of the MIT License.
  * Redistributions of files must retain the above copyright notice.
- *
- * @copyright  2007-2014 David Persson <nperson@gmx.de>
- * @license    http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link       http://github.com/davidpersson/mm
  */
 
+namespace mm\Mime;
+
+use OutOfBoundsException;
+
 /**
- * The `Mime_Type` class allows for detecting MIME types of files and streams
- * by analyzing it's contents and/or extension. The class makes use of two adapters
- * (`magic` and `glob`) which must be configured before using any of the methods.
+ * The `Type` class allows for detecting MIME types of files and streams
+ * by analyzing it's contents and/or extension. The class makes use of two
+ * adapters (`magic` and `glob`) which must be configured before using any
+ * of the methods.
  */
-class Mime_Type {
+class Type {
 
 	const REGEX = '^[\-\w\.\+]+\/[\-\w\.\+]+$';
 
@@ -25,7 +26,7 @@ class Mime_Type {
 	 * Magic.
 	 *
 	 * @see config()
-	 * @var Mime_Type_Magic_Adapter
+	 * @var mm\Mime\Type\Magic\Adapter
 	 */
 	public static $magic;
 
@@ -33,7 +34,7 @@ class Mime_Type {
 	 * Glob.
 	 *
 	 * @see config()
-	 * @var Mime_Type_Glob_Adapter
+	 * @var mm\Mime\Type\Glob\Adapter
 	 */
 	public static $glob;
 
@@ -90,26 +91,16 @@ class Mime_Type {
 	 *              e.g. `['adapter' => 'Fileinfo', 'file' => '/etc/magic']`.
 	 */
 	public static function config($type, array $config = []) {
-		if ($type == 'Magic' || $type == 'Glob') {
-			$message  = 'Previously types could be specified with a leading capital';
-			$message .= 'letter (i.e. `Magic` instead of `magic`). Support for';
-			$message .= 'this has been deprecated and the all lowercase version should';
-			$message .= 'be used. However for now capitalized types continue to work';
-			trigger_error($message, E_USER_DEPRECATED);
-		}
 		if ($type != 'magic' && $type != 'glob') {
-			throw new OutOfBoundsExeption("Invalid type `{$type}`.");
+			throw new OutOfBoundsException("Invalid type `{$type}`.");
 		}
-		$class = 'Mime_Type_' . ucfirst($type) . '_Adapter_' . $config['adapter'];
-		$file = str_replace('_', '/', $class) . '.php';
+		$class = '\mm\Mime\Type\\' . ucfirst($type) . '\Adapter\\' . $config['adapter'];
 
-		require_once $file;
-
-		self::${$type} = new $class($config);
+		static::${$type} = new $class($config);
 	}
 
 	public static function reset() {
-		self::$glob = self::$magic = null;
+		static::$glob = static::$magic = null;
 	}
 
 	/**
@@ -142,18 +133,18 @@ class Mime_Type {
 	 * @return string|void A string with the first matching extension (w/o leading dot).
 	 */
 	public static function guessExtension($file) {
-		if (is_string($file) && preg_match('/' . self::REGEX . '/', $file)) {
-			$mimeType = self::simplify($file, false, true);
+		if (is_string($file) && preg_match('/' . static::REGEX . '/', $file)) {
+			$mimeType = static::simplify($file, false, true);
 		} else {
-			$mimeType = self::guessType($file);
+			$mimeType = static::guessType($file);
 		}
 
-		$globMatch = (array) self::$glob->analyze($mimeType, true);
+		$globMatch = (array) static::$glob->analyze($mimeType, true);
 		if (count($globMatch) === 1) {
 			return array_shift($globMatch);
 		}
 
-		$preferMatch = array_intersect($globMatch, self::$preferredExtensions);
+		$preferMatch = array_intersect($globMatch, static::$preferredExtensions);
 		if (count($preferMatch) === 1) {
 			return array_shift($preferMatch);
 		}
@@ -188,12 +179,12 @@ class Mime_Type {
 			} else {
 				$name = $file;
 			}
-			$globMatch = (array) self::$glob->analyze($name);
+			$globMatch = (array) static::$glob->analyze($name);
 
 			if (count($globMatch) === 1) {
-				 return self::simplify(array_shift($globMatch), $properties, $experimental);
+				 return static::simplify(array_shift($globMatch), $properties, $experimental);
 			}
-			$preferMatch = array_intersect($globMatch, self::$preferredTypes);
+			$preferMatch = array_intersect($globMatch, static::$preferredTypes);
 
 			if (count($preferMatch) === 1) {
 				return array_shift($preferMatch);
@@ -209,7 +200,7 @@ class Mime_Type {
 			return;
 		}
 
-		$magicMatch = self::$magic->analyze($handle);
+		$magicMatch = static::$magic->analyze($handle);
 		$magicMatch = empty($magicMatch) ? [] : [$magicMatch];
 
 		if (empty($magicMatch)) {
@@ -231,14 +222,14 @@ class Mime_Type {
 		}
 
 		if (count($magicMatch) === 1) {
-			return self::simplify(array_shift($magicMatch), $properties, $experimental);
+			return static::simplify(array_shift($magicMatch), $properties, $experimental);
 		}
 
 		if ($globMatch && $magicMatch) {
 			$combinedMatch = array_intersect($globMatch, $magicMatch);
 
 			if (count($combinedMatch) === 1) {
-				return self::simplify(array_shift($combinedMatch), $properties, $experimental);
+				return static::simplify(array_shift($combinedMatch), $properties, $experimental);
 			}
 		}
 	}
@@ -250,12 +241,12 @@ class Mime_Type {
 	 * @return string
 	 */
 	public static function guessName($file) {
-		if (is_string($file) && preg_match('/' . self::REGEX . '/', $file)) {
-			$mimeType = self::simplify($file);
+		if (is_string($file) && preg_match('/' . static::REGEX . '/', $file)) {
+			$mimeType = static::simplify($file);
 		} else {
-			$mimeType = self::guessType($file, ['experimental' => false]);
+			$mimeType = static::guessType($file, ['experimental' => false]);
 		}
-		foreach (self::$name as $pattern => $name) {
+		foreach (static::$name as $pattern => $name) {
 			if (strpos($mimeType, $pattern) !== false) {
 				return $name;
 			}

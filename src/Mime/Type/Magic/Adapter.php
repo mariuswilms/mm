@@ -6,17 +6,18 @@
  *
  * Distributed under the terms of the MIT License.
  * Redistributions of files must retain the above copyright notice.
- *
- * @copyright  2007-2014 David Persson <nperson@gmx.de>
- * @license    http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link       http://github.com/davidpersson/mm
  */
 
+namespace mm\Mime\Type\Magic;
+
+use Exception;
+use InvalidArgumentException;
+
 /**
- * The `Mime_Type_Magic_Adapter class forms the base clase from which all mime type
+ * The `Adapter` class forms the base clase from which all mime type
  * magic adatpers must subclass.
  */
-abstract class Mime_Type_Magic_Adapter {
+abstract class Adapter {
 
 	protected $_items = [];
 

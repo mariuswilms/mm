@@ -6,19 +6,19 @@
  *
  * Distributed under the terms of the MIT License.
  * Redistributions of files must retain the above copyright notice.
- *
- * @copyright  2007-2014 David Persson <nperson@gmx.de>
- * @license    http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Mime/Type.php';
+namespace mm\Media\Info;
+
+use InvalidArgumentException;
 
 /**
- * `Media_Info_Generic` is the base class for all media information types. It provides
+ * `Generic` is the base class for all media information types. It provides
  * methods used by all type classes.
  */
-class Media_Info_Generic {
+class Generic {
+
+	use \mm\Media\NameTrait;
 
 	protected $_adapters = [];
 
@@ -50,33 +50,11 @@ class Media_Info_Generic {
 				continue;
 			}
 			if ($adapter) {
-				$class = "Media_Info_Adapter_{$adapter}";
-				require_once dirname(__FILE__) . "/Adapter/{$adapter}.php";
-
+				$class = "\mm\Media\Info\\Adapter\\{$adapter}";
 				$adapter = new $class($source);
 			}
 		}
 		$this->_adapters = $adapters;
-	}
-
-	/**
-	 * Checks if the name of the type (i.e. `'generic'` or `'image'`)
-	 * equals the provided one.
-	 *
-	 * @param string $name Name of the type to compare against.
-	 * @return boolean
-	 */
-	public function is($name) {
-		return $this->name() == $name;
-	}
-
-	/**
-	 * Returns the lowercase name of the type.
-	 *
-	 * @return string I.e. `'generic'` or `'image'`.
-	 */
-	public function name() {
-		return strtolower(str_replace('Media_Info_', null, get_class($this)));
 	}
 
 	/**
@@ -102,7 +80,10 @@ class Media_Info_Generic {
 	 * @return array
 	 */
 	public function all() {
-		$methods = array_diff(get_class_methods($this), get_class_methods('Media_Info_Generic'));
+		$methods = array_diff(
+			get_class_methods($this),
+			get_class_methods('\mm\Media\Info\Generic')
+		);
 		$results = [];
 
 		foreach ($methods as $method) {
@@ -159,45 +140,6 @@ class Media_Info_Generic {
 				return $result;
 			}
 		}
-	}
-
-	/**
-	 * Figures out which known ratio is closest to provided one.
-	 * Can be reused by specific media type classes.
-	 *
-	 * @return string
-	 */
-	protected function _knownRatio() {
-		$width = $this->get('width');
-		$height = $this->get('height');
-
-		if (empty($width) || empty($height)) {
-			return null;
-		}
-
-		$knownRatios = [
-			'1:1.294' => 1/1.294,
-			'1:1.545' => 1/1.1545,
-			'4:3'     => 4/3,
-			'1.375:1' => 1.375,
-			'3:2'     => 3/2,
-			'16:9'    => 16/9,
-			'1.85:1'  => 1.85,
-			'1.96:1'  => 1.96,
-			'2.35:1'  => 2.35,
-			'√2:1'    => pow(2, 1/2), /* dina4 quer */
-			'1:√2'    => 1 / (pow(2, 1/2)), /* dina4 hoch */
-			'Φ:1'     => (1 + pow(5, 1/2)) / 2, /* goldener schnitt */
-			'1:Φ'     => 1 / ((1 + pow(5, 1/2)) / 2), /* goldener schnitt */
-		];
-
-		foreach ($knownRatios as $knownRatioName => &$knownRatio) {
-			$knownRatio = abs(($width / $height) - $knownRatio);
-		}
-
-		asort($knownRatios);
-		$names = array_keys($knownRatios);
-		return array_shift($names);
 	}
 }
 

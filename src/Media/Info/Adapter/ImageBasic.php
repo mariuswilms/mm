@@ -6,20 +6,16 @@
  *
  * Distributed under the terms of the MIT License.
  * Redistributions of files must retain the above copyright notice.
- *
- * @copyright  2007-2014 David Persson <nperson@gmx.de>
- * @license    http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Media/Info/Adapter.php';
+namespace mm\Media\Info\Adapter;
 
 /**
  * This adapter makes us of image related PHP functions which
  * act directly on a given stream or file. It aims to deliver
  * some few but most common values (i.e. width and height).
  */
-class Media_Info_Adapter_ImageBasic extends Media_Info_Adapter {
+class ImageBasic extends \mm\Media\Info\Adapter {
 
 	protected $_object;
 

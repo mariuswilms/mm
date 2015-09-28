@@ -6,15 +6,13 @@
  *
  * Distributed under the terms of the MIT License.
  * Redistributions of files must retain the above copyright notice.
- *
- * @copyright  2007-2014 David Persson <nperson@gmx.de>
- * @license    http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Mime/Type/Magic/Adapter/Apache.php';
+namespace mm\tests\unit\Mime\Type\Magic\Adapter;
 
-class Mime_Type_Magic_Adapter_ApacheTest extends PHPUnit_Framework_TestCase {
+use mm\Mime\Type\Magic\Adapter\Apache;
+
+class ApacheTest extends \PHPUnit_Framework_TestCase {
 
 	public $subject;
 
@@ -28,7 +26,7 @@ class Mime_Type_Magic_Adapter_ApacheTest extends PHPUnit_Framework_TestCase {
 
 	public function testToArray() {
 		$file = $this->_files . '/magic_apache_snippet.db';
-		$this->subject = new Mime_Type_Magic_Adapter_Apache(compact('file'));
+		$this->subject = new Apache(compact('file'));
 
 		$result = $this->subject->to('array');
 		$this->assertEquals(38, count($result));
@@ -36,7 +34,7 @@ class Mime_Type_Magic_Adapter_ApacheTest extends PHPUnit_Framework_TestCase {
 
 	public function testAnalyzeFail() {
 		$file = $this->_files . '/magic_apache_snippet.db';
-		$this->subject = new Mime_Type_Magic_Adapter_Apache(compact('file'));
+		$this->subject = new Apache(compact('file'));
 
 		$handle = fopen('php://memory', 'r');
 		$result = $this->subject->analyze($handle);
@@ -46,7 +44,7 @@ class Mime_Type_Magic_Adapter_ApacheTest extends PHPUnit_Framework_TestCase {
 
 	public function testWithSnippetDb() {
 		$file = $this->_files . '/magic_apache_snippet.db';
-		$this->subject = new Mime_Type_Magic_Adapter_Apache(compact('file'));
+		$this->subject = new Apache(compact('file'));
 
 		/* @todo Commented fail but are present in data */
 		$files = [

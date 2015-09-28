@@ -6,16 +6,14 @@
  *
  * Distributed under the terms of the MIT License.
  * Redistributions of files must retain the above copyright notice.
- *
- * @copyright  2007-2014 David Persson <nperson@gmx.de>
- * @license    http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link       http://github.com/davidpersson/mm
  */
+
+namespace mm\Media\Process;
 
 /**
  * This class must be subclass by all media process adapters.
  */
-abstract class Media_Process_Adapter {
+abstract class Adapter {
 
 	/**
 	 * Prepare the adapter and load the source.
@@ -28,7 +26,7 @@ abstract class Media_Process_Adapter {
 	/**
 	 * Writes the internal object to the provided handle.
 	 *
-	 * @see Media_Process_Generic::store()
+	 * @see mm\Media\Process\Generic::store()
 	 * @param resource $handle An open handle to use a the source.
 	 * @return boolean|integer
 	 */

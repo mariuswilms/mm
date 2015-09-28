@@ -6,36 +6,16 @@
  *
  * Distributed under the terms of the MIT License.
  * Redistributions of files must retain the above copyright notice.
- *
- * @copyright  2007-2014 David Persson <nperson@gmx.de>
- * @license    http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Media/Info/Generic.php';
+namespace mm\Media\Info;
 
 /**
- * `Media_Info_Image`
+ * `Image` handles all image files.
  */
-class Media_Info_Image extends Media_Info_Generic {
+class Image extends \mm\Media\Info\Generic {
 
-	/**
-	 * Determines the ratio.
-	 *
-	 * @return float
-	 */
-	public function ratio() {
-		return $this->get('width') / $this->get('height');
-	}
-
-	/**
-	 * Determines the known ratio.
-	 *
-	 * @return string
-	 */
-	public function knownRatio() {
-		return $this->_knownRatio();
-	}
+	use \mm\Media\Info\RatioTrait;
 
 	/**
 	 * Determines megapixels of media.

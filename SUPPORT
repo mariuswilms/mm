@@ -33,8 +33,8 @@ In order to sponsor a project write a mail to nperson@gmx.de with the subject
 you'd like to sponsor. I'll then respond with further details.
 
 * Face Detection (PHP), € 400
-Face detection in pure PHP, will be added to `Media_Info_Image`. In turn
-`Media_Process_Image` methods which currently take a gravity will be modified
+Face detection in pure PHP, will be added to `Media\Info\Image`. In turn
+`Media\Process\Image` methods which currently take a gravity will be modified
 to allow receiving coordinates from the face detection.
 
 * GMagick Adapter, € 300
@@ -46,21 +46,21 @@ Videos that have been faststarted will immediately start playing and not wait
 until the file is downloaded. This feature adds support for giving MPEG4 videos
 this post-processing treatment improving the overall experience on HTML5 video.
 // ...
-Media_Process::factory("file.mp4")->faststart();
+Media\Process::factory("file.mp4")->faststart();
 // ...
 					
 * Crush Images, € 100 
 This feature will provide means to crush most images by using either pngcrush
 or jpegtran.
 // ...
-Media_Process::factory("file.png")->crush();
+Media\Process::factory("file.png")->crush();
 // ...
 
 * Document to Text Conversion, € 200
 Allows any document (PDF) to converted to plain text by leveraging tools to
 extract text.
 // ...
-Media_Process::factory("file.pdf")->convert("text/plain");
+Media\Process::factory("file.pdf")->convert("text/plain");
 // ...
 
 Commercial Support

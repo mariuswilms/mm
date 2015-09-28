@@ -6,22 +6,20 @@
  *
  * Distributed under the terms of the MIT License.
  * Redistributions of files must retain the above copyright notice.
- *
- * @copyright  2007-2014 David Persson <nperson@gmx.de>
- * @license    http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Media/Info/Adapter.php';
+namespace mm\Media\Info\Adapter;
+
+use Imagick as ImagickCore;
 
 /**
  * This media info adapter allows for interfacing with ImageMagick through
  * the `imagick` pecl extension (which must be loaded in order to use this adapter).
  *
- * @link       http://php.net/imagick
- * @link       http://www.imagemagick.org
+ * @link http://php.net/imagick
+ * @link http://www.imagemagick.org
  */
-class Media_Info_Adapter_Imagick extends Media_Info_Adapter {
+class Imagick extends \mm\Media\Info\Adapter {
 
 	protected $_object;
 
@@ -31,7 +29,7 @@ class Media_Info_Adapter_Imagick extends Media_Info_Adapter {
 	];
 
 	public function __construct($file) {
-		$this->_object = new Imagick($file);
+		$this->_object = new ImagickCore($file);
 	}
 
 	public function __destruct() {
@@ -78,7 +76,7 @@ class Media_Info_Adapter_Imagick extends Media_Info_Adapter {
 		$colors = [];
 
 		$object = clone $this->_object;
-		$object->quantizeImage($spread, Imagick::COLORSPACE_RGB, 0, false, false);
+		$object->quantizeImage($spread, ImagickCore::COLORSPACE_RGB, 0, false, false);
 		$object->uniqueImageColors();
 
 		$rows = $object->getPixelIterator();

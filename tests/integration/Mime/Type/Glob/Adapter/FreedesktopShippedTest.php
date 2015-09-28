@@ -6,15 +6,13 @@
  *
  * Distributed under the terms of the MIT License.
  * Redistributions of files must retain the above copyright notice.
- *
- * @copyright  2007-2014 David Persson <nperson@gmx.de>
- * @license    http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Mime/Type/Glob/Adapter/Freedesktop.php';
+namespace mm\tests\integration\Mime\Type\Glob\Adapter;
 
-class Mime_Type_Glob_Adapter_FreedesktopShippedTest extends PHPUnit_Framework_TestCase {
+use mm\Mime\Type\Glob\Adapter\Freedesktop;
+
+class FreedesktopShippedTest extends \PHPUnit_Framework_TestCase {
 
 	public $subject;
 
@@ -26,7 +24,7 @@ class Mime_Type_Glob_Adapter_FreedesktopShippedTest extends PHPUnit_Framework_Te
 		$this->_data = dirname(dirname(dirname(dirname(dirname(dirname(dirname(__FILE__))))))) .'/data';
 
 		$file = $this->_data . '/glob.db';
-		$this->subject = new Mime_Type_Glob_Adapter_Freedesktop(compact('file'));
+		$this->subject = new Freedesktop(compact('file'));
 	}
 
 	public function testAnalyze() {

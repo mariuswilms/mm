@@ -6,16 +6,14 @@
  *
  * Distributed under the terms of the MIT License.
  * Redistributions of files must retain the above copyright notice.
- *
- * @copyright  2007-2014 David Persson <nperson@gmx.de>
- * @license    http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Media/Process/Generic.php';
-require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/mocks/Media/Process/Adapter/GenericMock.php';
+namespace mm\tests\unit\Media\Process;
 
-class Media_Process_GenericTest extends PHPUnit_Framework_TestCase {
+use mm\Media\Process\Generic;
+use mm\tests\mocks\Media\Process\Adapter\GenericMock;
+
+class GenericTest extends \PHPUnit_Framework_TestCase {
 
 	protected $_files;
 	protected $_data;
@@ -26,49 +24,49 @@ class Media_Process_GenericTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testConstruct() {
-		$result = new Media_Process_Generic([
+		$result = new Generic([
 			'source' => "{$this->_files}/image_jpg.jpg",
-			'adapter' => new Media_Process_Adapter_GenericMock(null)
+			'adapter' => new GenericMock(null)
 		]);
 		$this->assertInternalType('object', $result);
 
-		$result = new Media_Process_Generic([
+		$result = new Generic([
 			'source' => fopen("{$this->_files}/image_jpg.jpg", 'r'),
-			'adapter' => new Media_Process_Adapter_GenericMock(null)
+			'adapter' => new GenericMock(null)
 		]);
 		$this->assertInternalType('object', $result);
 
-		$result = new Media_Process_Generic([
+		$result = new Generic([
 			'source' => "{$this->_files}/image_jpg.jpg",
-			'adapter' => new Media_Process_Adapter_GenericMock('test')
+			'adapter' => new GenericMock('test')
 		]);
 		$this->assertInternalType('object', $result);
 
-		$result = new Media_Process_Generic([
-			'adapter' => new Media_Process_Adapter_GenericMock('test')
+		$result = new Generic([
+			'adapter' => new GenericMock('test')
 		]);
 		$this->assertInternalType('object', $result);
 	}
 
 	public function testConstructFailWithNoArgs() {
 		$this->setExpectedException('InvalidArgumentException');
-		new Media_Process_Generic([]);
+		new Generic([]);
 	}
 
 	public function testConstructFailWithSourceButNoAdapter() {
 		$this->setExpectedException('InvalidArgumentException');
-		new Media_Process_Generic(['source' => "{$this->_files}/image_jpg.jpg"]);
+		new Generic(['source' => "{$this->_files}/image_jpg.jpg"]);
 	}
 
 	public function testConstructFailWithStringAdapterButNoSource() {
 		$this->setExpectedException('InvalidArgumentException');
-		new Media_Process_Generic(['adapter' => 'Dummy']);
+		new Generic(['adapter' => 'Dummy']);
 	}
 
 	public function testName() {
-		$result = new Media_Process_Generic([
+		$result = new Generic([
 			'source' => "{$this->_files}/image_jpg.jpg",
-			'adapter' => new Media_Process_Adapter_GenericMock(null)
+			'adapter' => new GenericMock(null)
 		]);
 		$this->assertEquals($result->name(), 'generic');
 	}
@@ -77,15 +75,10 @@ class Media_Process_GenericTest extends PHPUnit_Framework_TestCase {
 		$target = tempnam(sys_get_temp_dir(), 'mm_');
 		touch($target);
 
-		$media = new Media_Process_Generic([
+		$media = new Generic([
 			'source' => fopen('php://temp', 'r'),
-			'adapter' => new Media_Process_Adapter_GenericMock(null)
+			'adapter' => new GenericMock(null)
 		]);
-
-		try {
-			$media->store($target);
-			$this->fail('Expected exception not raised.');
-		} catch (Exception $expected) {}
 
 		$result = $media->store($target, ['overwrite' => true]);
 		$this->assertFileExists($result);
@@ -97,10 +90,23 @@ class Media_Process_GenericTest extends PHPUnit_Framework_TestCase {
 		unlink($target);
 	}
 
+	public function testStoreHonorsOverwriteAndThrowsException() {
+		$target = tempnam(sys_get_temp_dir(), 'mm_');
+		touch($target);
+
+		$media = new Generic([
+			'source' => fopen('php://temp', 'r'),
+			'adapter' => new GenericMock(null)
+		]);
+
+		$this->setExpectedException('Exception');
+		$media->store($target);
+	}
+
 	public function testPassthru() {
-		$result = new Media_Process_Generic([
+		$result = new Generic([
 			'source' => "{$this->_files}/image_jpg.jpg",
-			'adapter' => new Media_Process_Adapter_GenericMock(null)
+			'adapter' => new GenericMock(null)
 		]);
 		$this->assertEquals($result->passthru('depth', 8), true);
 	}

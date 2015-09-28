@@ -6,17 +6,15 @@
  *
  * Distributed under the terms of the MIT License.
  * Redistributions of files must retain the above copyright notice.
- *
- * @copyright  2007-2014 David Persson <nperson@gmx.de>
- * @license    http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Media/Info.php';
-require_once 'Mime/Type.php';
-require_once dirname(dirname(dirname(__FILE__))) . '/mocks/Media/Info/Adapter/GenericMock.php';
+namespace mm\tests\unit\Media;
 
-class Media_InfoTest extends PHPUnit_Framework_TestCase {
+use mm\Media\Info;
+use mm\Mime\Type;
+use mm\tests\mocks\Media\Info\Adapter\GenericMock;
+
+class InfoTest extends \PHPUnit_Framework_TestCase {
 
 	protected $_files;
 	protected $_data;
@@ -25,39 +23,40 @@ class Media_InfoTest extends PHPUnit_Framework_TestCase {
 		$this->_files = dirname(dirname(dirname(__FILE__))) . '/data';
 		$this->_data = dirname(dirname(dirname(dirname(__FILE__)))) .'/data';
 
-		Media_Info::config([
-			'image' => new Media_Info_Adapter_GenericMock(null),
-			'audio' => new Media_Info_Adapter_GenericMock(null),
-			'document' => new Media_Info_Adapter_GenericMock(null),
-			'video' => new Media_Info_Adapter_GenericMock(null)
+		Info::config([
+			'image' => new GenericMock(null),
+			'audio' => new GenericMock(null),
+			'document' => new GenericMock(null),
+			'video' => new GenericMock(null)
 		]);
-		Mime_Type::config('magic', [
+		Type::config('magic', [
 			'adapter' => 'Freedesktop',
 			'file' => "{$this->_data}/magic.db"
 		]);
-		Mime_Type::config('glob', [
+		Type::config('glob', [
 			'adapter' => 'Freedesktop',
 			'file' => "{$this->_data}/glob.db"
 		]);
 	}
 
 	public function testMediaFactorySourceFile() {
-		$result = Media_Info::factory(['source' => "{$this->_files}/image_jpg.jpg"]);
-		$this->assertTrue(is_a($result, 'Media_Info_Image'));
+		$result = Info::factory(['source' => "{$this->_files}/image_jpg.jpg"]);
+		$this->assertTrue(is_a($result, '\mm\Media\Info\Image'));
 
-		$result = Media_Info::factory(['source' => "{$this->_files}/image_png.png"]);
-		$this->assertTrue(is_a($result, 'Media_Info_Image'));
+		$result = Info::factory(['source' => "{$this->_files}/image_png.png"]);
+		$this->assertTrue(is_a($result, '\mm\Media\Info\Image'));
 
-		$result = Media_Info::factory(['source' => "{$this->_files}/application_pdf.pdf"]);
-		$this->assertTrue(is_a($result, 'Media_Info_Document'));
+		$result = Info::factory(['source' => "{$this->_files}/application_pdf.pdf"]);
+		$this->assertTrue(is_a($result, '\mm\Media\Info\Document'));
 
-		$result = Media_Info::factory(['source' => "{$this->_files}/audio_ogg_snippet.ogg"]);
-		$this->assertInstanceOf('Media_Info_Audio', $result);
+		$result = Info::factory(['source' => "{$this->_files}/audio_ogg_snippet.ogg"]);
+		$this->assertInstanceOf('\mm\Media\Info\Audio', $result);
 	}
 
 	public function testMediaFactorySourceFailStream() {
 		$this->setExpectedException('InvalidArgumentException');
-		Media_Info::factory([
+
+		Info::factory([
 			'source' => fopen("{$this->_files}/image_jpg.jpg", 'r')
 		]);
 	}

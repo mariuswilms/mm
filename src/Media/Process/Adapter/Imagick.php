@@ -6,22 +6,23 @@
  *
  * Distributed under the terms of the MIT License.
  * Redistributions of files must retain the above copyright notice.
- *
- * @copyright  2007-2014 David Persson <nperson@gmx.de>
- * @license    http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Media/Process/Adapter.php';
+namespace mm\Media\Process\Adapter;
+
+use mm\Mime\Type;
+use Exception;
+use OutOfBoundsException;
+use Imagick as ImagickCore;
 
 /**
  * This media process adapter allows for interfacing with ImageMagick through
  * the `imagick` pecl extension (which must be loaded in order to use this adapter).
  *
- * @link       http://php.net/imagick
- * @link       http://www.imagemagick.org
+ * @link http://php.net/imagick
+ * @link http://www.imagemagick.org
  */
-class Media_Process_Adapter_Imagick extends Media_Process_Adapter {
+class Imagick extends \mm\Media\Process\Adapter {
 
 	protected $_object;
 
@@ -41,15 +42,14 @@ class Media_Process_Adapter_Imagick extends Media_Process_Adapter {
 
 	public function __construct($handle) {
 		rewind($handle);
-		$this->_object = new Imagick();
+		$this->_object = new ImagickCore();
 		$this->_object->readImageFile($handle);
 
-		// Reset iterator to get just the first image from i.e. multipage PDFs.
+		// For sequences reset iterator to get to first one first.
 		if ($this->_object->getNumberImages() > 1) {
 			$this->_object->setFirstIterator();
 		}
-
-		$mimeType = Mime_Type::guessType($handle);
+		$mimeType = Type::guessType($handle);
 
 		if (!isset($this->_formatMap[$mimeType])) {
 			throw new OutOfBoundsException("MIME type `{$mimeType}` cannot be mapped to a format.");
@@ -65,11 +65,14 @@ class Media_Process_Adapter_Imagick extends Media_Process_Adapter {
 	}
 
 	public function store($handle) {
+		if ($this->_isAnimated()) {
+			return $this->_object->writeImagesFile($handle);
+		}
 		return $this->_object->writeImageFile($handle);
 	}
 
 	public function convert($mimeType) {
-		if (Mime_Type::guessName($mimeType) != 'image') {
+		if (Type::guessName($mimeType) != 'image') {
 			return true;
 		}
 		if (!isset($this->_formatMap[$mimeType])) {
@@ -98,15 +101,15 @@ class Media_Process_Adapter_Imagick extends Media_Process_Adapter {
 	public function compress($value) {
 		switch ($this->_object->getFormat()) {
 			case 'tiff':
-				return $this->_object->setImageCompression(Imagick::COMPRESSION_LZW);
+				return $this->_object->setImageCompression(ImagickCore::COMPRESSION_LZW);
 			case 'png':
 				$filter = ($value * 10) % 10;
 				$level = (integer) $value;
 
-				return $this->_object->setImageCompression(Imagick::COMPRESSION_ZIP)
+				return $this->_object->setImageCompression(ImagickCore::COMPRESSION_ZIP)
 					&& $this->_object->setImageCompressionQuality($level * 10 + $filter);
 			case 'jpeg':
-				return $this->_object->setImageCompression(Imagick::COMPRESSION_JPEG)
+				return $this->_object->setImageCompression(ImagickCore::COMPRESSION_JPEG)
 					&& $this->_object->setImageCompressionQuality((integer) (100 - ($value * 10)));
 			default:
 				throw new Exception("Cannot compress this format.");
@@ -146,9 +149,9 @@ class Media_Process_Adapter_Imagick extends Media_Process_Adapter {
 
 	public function interlace($value) {
 		if (!$value) {
-			return $this->_object->setInterlaceScheme(Imagick::INTERLACE_NO);
+			return $this->_object->setInterlaceScheme(ImagickCore::INTERLACE_NO);
 		}
-		$constant = 'Imagick::INTERLACE_' . strtoupper($this->_object->getFormat());
+		$constant = '\Imagick::INTERLACE_' . strtoupper($this->_object->getFormat());
 
 		if (!defined($constant)) {
 			throw new Exception("Cannot use interlace scheme; constant `{$constant}` not defined.");
@@ -159,9 +162,9 @@ class Media_Process_Adapter_Imagick extends Media_Process_Adapter {
 	public function background($rgb) {
 		$color = "rgb({$rgb[0]},{$rgb[1]},{$rgb[2]})";
 
-		$colorized = new Imagick();
+		$colorized = new ImagickCore();
 		$colorized->newImage($this->width(), $this->height(), $color);
-		$colorized->compositeImage($this->_object, Imagick::COMPOSITE_OVER, 0, 0);
+		$colorized->compositeImage($this->_object, ImagickCore::COMPOSITE_OVER, 0, 0);
 
 		$this->_object = $colorized;
 		return true;
@@ -180,7 +183,7 @@ class Media_Process_Adapter_Imagick extends Media_Process_Adapter {
 		$width  = (integer) $width;
 		$height = (integer) $height;
 
-		return $this->_object->resizeImage($width, $height, Imagick::FILTER_LANCZOS, 1);
+		return $this->_object->resizeImage($width, $height, ImagickCore::FILTER_LANCZOS, 1);
 	}
 
 	public function cropAndResize($cropLeft, $cropTop, $cropWidth, $cropHeight, $resizeWidth, $resizeHeight) {
@@ -199,6 +202,16 @@ class Media_Process_Adapter_Imagick extends Media_Process_Adapter {
 	public function quantumRange() {
 		$result = $this->_object->getQuantumRange();
 		return $result['quantumRangeLong'];
+	}
+
+	/**
+	 * Helper method to detect animated images. These most often are GIFs. PDFs
+	 * will never be detected as animated.
+	 *
+	 * @return boolean
+	 */
+	protected function _isAnimated() {
+		return $this->_object->getNumberImages() > 1 && $this->_object->getFormat() !== 'pdf';
 	}
 }
 

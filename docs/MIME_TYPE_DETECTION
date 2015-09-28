@@ -1,47 +1,47 @@
 MIME type detection
 -------------------
-The detection class `Media_Type` allows for detecting MIME types of files and
+The detection class `\mm\Mime\Type` allows for detecting MIME types of files and
 streams by analyzing it's contents and/or extension. The class makes use of two
 adapters (`magic` and `glob`) which must be configured before using any of the
 methods and is thus "two-headed".
 
 Usage
 '''''
-`Mime_Type::guessType(...)`
+`Type::guessType(...)`
 Guesses the MIME type of the file.
 
 ```
-Mime_Type::guessType('example.png'); // returns 'image/png'
-Mime_Type::guessType('/path/to/example.png'); // returns 'image/png'
-Mime_Type::guessType($handle = fopen('/path/to/example.png', 'rb')); // returns 'image/png'
+Type::guessType('example.png'); // returns 'image/png'
+Type::guessType('/path/to/example.png'); // returns 'image/png'
+Type::guessType($handle = fopen('/path/to/example.png', 'rb')); // returns 'image/png'
 ```
 
-`Mime_Type::guessExtension(...)`
+`Type::guessExtension(...)`
 Guesses the extension (suffix) for an existing file or a MIME type.
 
 ```
-Mime_Type::guessExtension('application/pdf'); // returns 'pdf'
-Mime_Type::guessExtension('/path/to/example.png'); // returns 'png'
-Mime_Type::guessExtension($handle = fopen('/path/to/example.png', 'rb')); // returns 'png'
+Type::guessExtension('application/pdf'); // returns 'pdf'
+Type::guessExtension('/path/to/example.png'); // returns 'png'
+Type::guessExtension($handle = fopen('/path/to/example.png', 'rb')); // returns 'png'
 ```
 
-`Mime_Type::guessName(...)`
+`Type::guessName(...)`
 Determine the common lowercase media name, with and without hints from a magic
 lookup.
 
 ```
-Mime_Type::guessName('example.png'); // returns 'image'
-Mime_Type::guessName('example.webm'); // returns 'video'
-Mime_Type::guessName('application/pdf'); // returns 'document'
-Mime_Type::guessName('/path/to/example.png'); // returns 'image'
-Mime_Type::guessName($handle = fopen('/path/to/example.png', 'rb')); // returns 'image'
+Type::guessName('example.png'); // returns 'image'
+Type::guessName('example.webm'); // returns 'video'
+Type::guessName('application/pdf'); // returns 'document'
+Type::guessName('/path/to/example.png'); // returns 'image'
+Type::guessName($handle = fopen('/path/to/example.png', 'rb')); // returns 'image'
 ```
 
 Note: Most methods have additional options which give you more control about
       the output. Please consult the API documentation for more information
       on these options.
 
-Available `Mime_Glob` Adapters
+Available `Glob` Adapters
 ''''''''''''''''''''''''''''''
 `Apache`
 This adapter supports files like the ones that come with the `mod_mime_magic`
@@ -79,7 +79,7 @@ Can parse files containing one huge PHP array. Files must look like this:
 ]; ?>
 ```
 
-Available `Mime_Magic` Adapters
+Available `Magic` Adapters
 '''''''''''''''''''''''''''''''
 `Apache`
 This adapter supports files like the ones that come with the `mod_mime_magic`

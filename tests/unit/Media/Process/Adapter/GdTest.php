@@ -6,16 +6,14 @@
  *
  * Distributed under the terms of the MIT License.
  * Redistributions of files must retain the above copyright notice.
- *
- * @copyright  2007-2014 David Persson <nperson@gmx.de>
- * @license    http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Media/Process/Adapter/Gd.php';
-require_once 'Mime/Type.php';
+namespace mm\tests\unit\Media\Process\Adapter;
 
-class Media_Process_Adapter_GdTest extends PHPUnit_Framework_TestCase {
+use mm\Mime\Type;
+use mm\Media\Process\Adapter\Gd;
+
+class GdTest extends \PHPUnit_Framework_TestCase {
 
 	protected $_files;
 	protected $_data;
@@ -28,11 +26,11 @@ class Media_Process_Adapter_GdTest extends PHPUnit_Framework_TestCase {
 		$this->_files = dirname(dirname(dirname(dirname(dirname(__FILE__))))) . '/data';
 		$this->_data = dirname(dirname(dirname((dirname(dirname(dirname(__FILE__))))))) .'/data';
 
-		Mime_Type::config('magic', [
+		Type::config('magic', [
 			'adapter' => 'Freedesktop',
 			'file' => "{$this->_data}/magic.db"
 		]);
-		Mime_Type::config('glob', [
+		Type::config('glob', [
 			'adapter' => 'Freedesktop',
 			'file' => "{$this->_data}/glob.db"
 		]);
@@ -40,7 +38,7 @@ class Media_Process_Adapter_GdTest extends PHPUnit_Framework_TestCase {
 
 	public function testDimensions() {
 		$source = fopen("{$this->_files}/image_png.png", 'r');
-		$subject = new Media_Process_Adapter_Gd($source);
+		$subject = new Gd($source);
 
 		$this->assertEquals(70, $subject->width());
 		$this->assertEquals(54, $subject->height());
@@ -52,7 +50,7 @@ class Media_Process_Adapter_GdTest extends PHPUnit_Framework_TestCase {
 		$source = fopen("{$this->_files}/image_png.png", 'r');
 		$target = fopen('php://temp', 'w+');
 
-		$subject = new Media_Process_Adapter_Gd($source);
+		$subject = new Gd($source);
 		$result = $subject->store($target);
 		$this->assertTrue($result);
 
@@ -64,12 +62,12 @@ class Media_Process_Adapter_GdTest extends PHPUnit_Framework_TestCase {
 		$source = fopen("{$this->_files}/image_png.png", 'r');
 		$target = fopen('php://temp', 'wb');
 
-		$subject = new Media_Process_Adapter_Gd($source);
+		$subject = new Gd($source);
 		$subject->convert('image/jpeg');
 		$result = $subject->store($target);
 
 		$this->assertTrue($result);
-		$this->assertEquals('image/jpeg', Mime_Type::guessType($target));
+		$this->assertEquals('image/jpeg', Type::guessType($target));
 
 		fclose($source);
 		fclose($target);
@@ -77,7 +75,7 @@ class Media_Process_Adapter_GdTest extends PHPUnit_Framework_TestCase {
 
 	public function testCrop() {
 		$source = fopen("{$this->_files}/image_landscape.png", 'r');
-		$subject = new Media_Process_Adapter_Gd($source);
+		$subject = new Gd($source);
 		// original size is 400x200
 
 		$result = $subject->crop(10, 10, 100, 50);
@@ -89,7 +87,7 @@ class Media_Process_Adapter_GdTest extends PHPUnit_Framework_TestCase {
 
 	public function testResize() {
 		$source = fopen("{$this->_files}/image_landscape.png", 'r');
-		$subject = new Media_Process_Adapter_Gd($source);
+		$subject = new Gd($source);
 		// original size is 400x200
 
 		$result = $subject->resize(100, 50);
@@ -101,7 +99,7 @@ class Media_Process_Adapter_GdTest extends PHPUnit_Framework_TestCase {
 
 	public function testCropAndResize() {
 		$source = fopen("{$this->_files}/image_landscape.png", 'r');
-		$subject = new Media_Process_Adapter_Gd($source);
+		$subject = new Gd($source);
 		// original size is 400x200
 
 		$result = $subject->cropAndResize(10, 10, 100, 50, 70, 50);
@@ -118,7 +116,7 @@ class Media_Process_Adapter_GdTest extends PHPUnit_Framework_TestCase {
 			$uncompressed = fopen('php://temp', 'w+');
 			$compressed = fopen('php://temp', 'w+');
 
-			$subject = new Media_Process_Adapter_Gd($source);
+			$subject = new Gd($source);
 			$subject->compress(0);
 			$subject->store($uncompressed);
 
@@ -145,7 +143,7 @@ class Media_Process_Adapter_GdTest extends PHPUnit_Framework_TestCase {
 			$uncompressed = fopen('php://temp', 'w+');
 			$compressed = fopen('php://temp', 'w+');
 
-			$subject = new Media_Process_Adapter_Gd($source);
+			$subject = new Gd($source);
 			$subject->compress(0);
 			$subject->store($uncompressed);
 

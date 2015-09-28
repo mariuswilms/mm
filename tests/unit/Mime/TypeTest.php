@@ -6,15 +6,13 @@
  *
  * Distributed under the terms of the MIT License.
  * Redistributions of files must retain the above copyright notice.
- *
- * @copyright  2007-2014 David Persson <nperson@gmx.de>
- * @license    http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Mime/Type.php';
+namespace mm\tests\unit\Mime;
 
-class Mime_TypeTest extends PHPUnit_Framework_TestCase {
+use mm\Mime\Type;
+
+class TypeTest extends \PHPUnit_Framework_TestCase {
 
 	protected $_files;
 	protected $_data;
@@ -23,44 +21,44 @@ class Mime_TypeTest extends PHPUnit_Framework_TestCase {
 		$this->_files = dirname(dirname(dirname(__FILE__))) . '/data';
 		$this->_data = dirname(dirname(dirname(dirname(__FILE__)))) .'/data';
 
-		Mime_Type::config('magic', [
+		Type::config('magic', [
 			'adapter' => 'Freedesktop',
 			'file' => $this->_data . '/magic.db'
 		]);
-		Mime_Type::config('glob', [
+		Type::config('glob', [
 			'adapter' => 'Freedesktop',
 			'file' => $this->_data . '/glob.db'
 		]);
 	}
 
 	protected function tearDown() {
-		Mime_Type::reset();
+		Type::reset();
 	}
 
 	public function testSimplify() {
 		$this->assertEquals(
 			'application/pdf',
-			Mime_Type::simplify('application/x-pdf')
+			Type::simplify('application/x-pdf')
 		);
 		$this->assertEquals(
 			'inode/directory',
-			Mime_Type::simplify('x-inode/x-directory')
+			Type::simplify('x-inode/x-directory')
 		);
 		$this->assertEquals(
 			'application/octet-stream',
-			Mime_Type::simplify('application/octet-stream; encoding=compress')
+			Type::simplify('application/octet-stream; encoding=compress')
 		);
 		$this->assertEquals(
 			'application/test',
-			Mime_Type::simplify('application/x-test; encoding=compress')
+			Type::simplify('application/x-test; encoding=compress')
 		);
 		$this->assertEquals(
 			'text/plain',
-			Mime_Type::simplify('text/plain; charset=iso-8859-1')
+			Type::simplify('text/plain; charset=iso-8859-1')
 		);
 		$this->assertEquals(
 			'text/plain',
-			Mime_Type::simplify('text/plain charset=us-ascii')
+			Type::simplify('text/plain charset=us-ascii')
 		);
 	}
 
@@ -84,7 +82,7 @@ class Mime_TypeTest extends PHPUnit_Framework_TestCase {
 		foreach ($files as $file => $mimeType) {
 			$this->assertEquals(
 				$mimeType,
-				Mime_Type::guessType("{$this->_files}/{$file}"),
+				Type::guessType("{$this->_files}/{$file}"),
 				"File `{$file}`."
 			);
 		}
@@ -113,7 +111,7 @@ class Mime_TypeTest extends PHPUnit_Framework_TestCase {
 		foreach ($files as $file => $mimeType) {
 			$this->assertEquals(
 				$mimeType,
-				Mime_Type::guessType($file),
+				Type::guessType($file),
 				"Filename `{$file}`."
 			);
 		}
@@ -122,11 +120,11 @@ class Mime_TypeTest extends PHPUnit_Framework_TestCase {
 	public function testGuessTypeParanoid() {
 		$this->assertEquals(
 			'image/png',
-			Mime_Type::guessType("{$this->_files}/image_png.jpg", ['paranoid' => true])
+			Type::guessType("{$this->_files}/image_png.jpg", ['paranoid' => true])
 		);
 		$this->assertEquals(
 			'image/jpeg',
-			Mime_Type::guessType("{$this->_files}/image_png.jpg", ['paranoid' => false])
+			Type::guessType("{$this->_files}/image_png.jpg", ['paranoid' => false])
 		);
 	}
 
@@ -138,36 +136,36 @@ class Mime_TypeTest extends PHPUnit_Framework_TestCase {
 		foreach ($files as $file => $mimeType) {
 			$this->assertEquals(
 				$mimeType,
-				Mime_Type::guessType("{$this->_files}/{$file}"),
+				Type::guessType("{$this->_files}/{$file}"),
 				"File `{$file}`."
 			);
 		}
 	}
 
 	public function testGuessTypePreferredTypes() {
-		$result = Mime_Type::guessType('test.ogg');
+		$result = Type::guessType('test.ogg');
 		$this->assertEquals('audio/ogg', $result);
 	}
 
 	public function testGuessExtensionFail() {
-		$this->assertNull(Mime_Type::guessExtension('i-m-not-a-mime-type'));
-		$this->assertNull(Mime_Type::guessExtension('/tmp/i-do-not-exist'));
+		$this->assertNull(Type::guessExtension('i-m-not-a-mime-type'));
+		$this->assertNull(Type::guessExtension('/tmp/i-do-not-exist'));
 	}
 
 	public function testGuessExtensionFilename() {
-		$this->assertEquals('txt', Mime_Type::guessExtension('/tmp/i-do-not-exist.txt'));
+		$this->assertEquals('txt', Type::guessExtension('/tmp/i-do-not-exist.txt'));
 	}
 
 	public function testGuessExtensionMimeType() {
-		$this->assertEquals('jpg', Mime_Type::guessExtension('image/jpeg'));
-		$this->assertEquals('xhtml', Mime_Type::guessExtension('application/xhtml+xml'));
-		$this->assertEquals('bin', Mime_Type::guessExtension('application/octet-stream'));
-		$this->assertEquals('wav', Mime_Type::guessExtension('audio/x-wav'));
-		$this->assertEquals('oga', Mime_Type::guessExtension('audio/ogg'));
-		$this->assertEquals('m4a', Mime_Type::guessExtension('audio/mp4'));
-		$this->assertEquals('ogv', Mime_Type::guessExtension('video/ogg'));
-		$this->assertEquals('mp4', Mime_Type::guessExtension('video/mp4'));
-		$this->assertEquals('mov', Mime_Type::guessExtension('video/quicktime'));
+		$this->assertEquals('jpg', Type::guessExtension('image/jpeg'));
+		$this->assertEquals('xhtml', Type::guessExtension('application/xhtml+xml'));
+		$this->assertEquals('bin', Type::guessExtension('application/octet-stream'));
+		$this->assertEquals('wav', Type::guessExtension('audio/x-wav'));
+		$this->assertEquals('oga', Type::guessExtension('audio/ogg'));
+		$this->assertEquals('m4a', Type::guessExtension('audio/mp4'));
+		$this->assertEquals('ogv', Type::guessExtension('video/ogg'));
+		$this->assertEquals('mp4', Type::guessExtension('video/mp4'));
+		$this->assertEquals('mov', Type::guessExtension('video/quicktime'));
 	}
 
 	public function testGuessExtensionResource() {
@@ -176,8 +174,8 @@ class Mime_TypeTest extends PHPUnit_Framework_TestCase {
 
 		stream_copy_to_stream($handleA, $handleB);
 
-		$this->assertEquals('pdf', Mime_Type::guessExtension($handleA));
-		$this->assertEquals('pdf', Mime_Type::guessExtension($handleB));
+		$this->assertEquals('pdf', Type::guessExtension($handleA));
+		$this->assertEquals('pdf', Type::guessExtension($handleB));
 
 		fclose($handleA);
 		fclose($handleB);
@@ -196,7 +194,7 @@ class Mime_TypeTest extends PHPUnit_Framework_TestCase {
 			'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => 'document'
 		];
 		foreach ($map as $mimeType => $name) {
-			$this->assertEquals($name, Mime_Type::guessName($mimeType), "MIME type `{$mimeType}`.");
+			$this->assertEquals($name, Type::guessName($mimeType), "MIME type `{$mimeType}`.");
 		}
 	}
 
@@ -209,7 +207,7 @@ class Mime_TypeTest extends PHPUnit_Framework_TestCase {
 			'path/to/test.pdf' => 'document'
 		];
 		foreach ($map as $mimeType => $name) {
-			$this->assertEquals($name, Mime_Type::guessName($mimeType), "MIME type `{$mimeType}`.");
+			$this->assertEquals($name, Type::guessName($mimeType), "MIME type `{$mimeType}`.");
 		}
 	}
 
@@ -223,7 +221,7 @@ class Mime_TypeTest extends PHPUnit_Framework_TestCase {
 		foreach ($map as $file => $name) {
 			$this->assertEquals(
 				$name,
-				Mime_Type::guessName($this->_files . '/' . $file),
+				Type::guessName($this->_files . '/' . $file),
 				"File `{$file}`."
 			);
 		}
@@ -235,8 +233,8 @@ class Mime_TypeTest extends PHPUnit_Framework_TestCase {
 
 		stream_copy_to_stream($handleA, $handleB);
 
-		$this->assertEquals('document', Mime_Type::guessName($handleA));
-		$this->assertEquals('document', Mime_Type::guessName($handleB));
+		$this->assertEquals('document', Type::guessName($handleA));
+		$this->assertEquals('document', Type::guessName($handleB));
 
 		fclose($handleA);
 		fclose($handleB);

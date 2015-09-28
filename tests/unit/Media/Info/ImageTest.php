@@ -6,16 +6,13 @@
  *
  * Distributed under the terms of the MIT License.
  * Redistributions of files must retain the above copyright notice.
- *
- * @copyright  2007-2014 David Persson <nperson@gmx.de>
- * @license    http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Media/Info/Image.php';
-require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/mocks/Media/Info/Adapter/GenericMock.php';
+namespace mm\tests\unit\Media\Info;
 
-class Media_Info_ImageTest extends PHPUnit_Framework_TestCase {
+use mm\Media\Info\Image;
+
+class ImageTest extends \PHPUnit_Framework_TestCase {
 
 	protected $_files;
 	protected $_data;
@@ -26,8 +23,12 @@ class Media_Info_ImageTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testQuality() {
-		$adapter = $this->getMock('Media_Info_Adapter_GenericMock', ['get'], [null]);
-		$media = new Media_Info_Image([
+		$adapter = $this->getMock(
+			'\mm\tests\mocks\Media\Info\Adapter\GenericMock',
+			['get'],
+			[null]
+		);
+		$media = new Image([
 			'source' => "{$this->_files}/image_png.png", // not used by adapter
 			'adapters' => [$adapter]
 		]);
@@ -61,8 +62,12 @@ class Media_Info_ImageTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testRatio() {
-		$adapter = $this->getMock('Media_Info_Adapter_GenericMock', ['get'], [null]);
-		$media = new Media_Info_Image([
+		$adapter = $this->getMock(
+			'\mm\tests\mocks\Media\Info\Adapter\GenericMock',
+			['get'],
+			[null]
+		);
+		$media = new Image([
 			'source' => "{$this->_files}/image_png.png", // not used by adapter
 			'adapters' => [$adapter]
 		]);
@@ -78,8 +83,12 @@ class Media_Info_ImageTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testKnownRatio() {
-		$adapter = $this->getMock('Media_Info_Adapter_GenericMock', ['get'], [null]);
-		$media = new Media_Info_Image([
+		$adapter = $this->getMock(
+			'\mm\tests\mocks\Media\Info\Adapter\GenericMock',
+			['get'],
+			[null]
+		);
+		$media = new Image([
 			'source' => "{$this->_files}/image_png.png", // not used by adapter
 			'adapters' => [$adapter]
 		]);

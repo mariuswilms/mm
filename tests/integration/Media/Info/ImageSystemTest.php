@@ -6,15 +6,14 @@
  *
  * Distributed under the terms of the MIT License.
  * Redistributions of files must retain the above copyright notice.
- *
- * @copyright  2007-2014 David Persson <nperson@gmx.de>
- * @license    http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Media/Info/Image.php';
+namespace mm\tests\integration\Media\Info;
 
-class Media_Info_ImageSystemTest extends PHPUnit_Framework_TestCase {
+use mm\Mime\Type;
+use mm\Media\Info\Image;
+
+class ImageSystemTest extends \PHPUnit_Framework_TestCase {
 
 	protected $_files;
 	protected $_data;
@@ -28,7 +27,7 @@ class Media_Info_ImageSystemTest extends PHPUnit_Framework_TestCase {
 		if (!extension_loaded('imagick')) {
 			$this->markTestSkipped('The `imagick` extension is not available.');
 		}
-		$media = new Media_Info_Image([
+		$media = new Image([
 			'source' => "{$this->_files}/image_png.png",
 			'adapters' => ['Imagick']
 		]);

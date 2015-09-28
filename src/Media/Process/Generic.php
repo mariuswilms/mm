@@ -6,20 +6,22 @@
  *
  * Distributed under the terms of the MIT License.
  * Redistributions of files must retain the above copyright notice.
- *
- * @copyright  2007-2014 David Persson <nperson@gmx.de>
- * @license    http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Mime/Type.php';
-require_once 'Media/Process.php';
+namespace mm\Media\Process;
+
+use mm\Mime\Type;
+use mm\Media\Process;
+use Exception;
+use InvalidArgumentException;
 
 /**
- * `Media_Process_Generic` is the base class for all media processing types. It provides
+ * `Generic` is the base class for all media processing types. It provides
  * methods used by all type classes.
  */
-class Media_Process_Generic {
+class Generic {
+
+	use \mm\Media\NameTrait;
 
 	protected $_adapter;
 
@@ -50,23 +52,16 @@ class Media_Process_Generic {
 				$source = fopen($source, 'r');
 			}
 			if ($adapter) {
-				$class = "Media_Process_Adapter_{$adapter}";
-
-				if (!class_exists($class)) { // Allows for injecting arbitrary classes.
-					require_once dirname(__FILE__) . "/Adapter/{$adapter}.php";
-				}
-
+				$class = "\mm\Media\Process\\Adapter\\{$adapter}";
 				$this->_adapter = new $class($source);
 			}
 		}
 	}
 
 	/**
-	 * Allows for more-or-less direct access to the adapter
-	 * currently in use. Adapters are allowed to react
-	 * differently to the arguments passed. This method may
-	 * be used for cases where abstraction for i.e. a certain
-	 * command is incomplete or doesn't make sense.
+	 * Allows for more-or-less direct access to the adapter currently in use. Adapters are
+	 * allowed to react differently to the arguments passed. This method may be used for cases
+	 * where abstraction for i.e. a certain command is incomplete or doesn't make sense.
 	 *
 	 * @param string|integer $key
 	 * @param mixed $value Optional when `$key` is a boolean switch.
@@ -74,26 +69,6 @@ class Media_Process_Generic {
 	 */
 	public function passthru($key, $value = null) {
 		return $this->_adapter->passthru($key, $value);
-	}
-
-	/**
-	 * Checks if the name of the type (i.e. `'generic'` or `'image'`)
-	 * equals the provided one.
-	 *
-	 * @param string $name Name of the type to compare against.
-	 * @return boolean
-	 */
-	public function is($name) {
-		return $this->name() == $name;
-	}
-
-	/**
-	 * Returns the lowercase name of the type.
-	 *
-	 * @return string I.e. `'generic'` or `'image'`.
-	 */
-	public function name() {
-		return strtolower(str_replace('Media_Process_', null, get_class($this)));
 	}
 
 	/**
@@ -134,13 +109,13 @@ class Media_Process_Generic {
 	public function convert($mimeType) {
 		$this->_adapter->convert($mimeType);
 
-		if ($this->name() != Mime_Type::guessName($mimeType)) {
+		if ($this->name() != Type::guessName($mimeType)) {
 			// Crosses media (i.e. document -> image).
-			$config = Media_Process::config();
+			$config = Process::config();
 
-			if ($config[$this->name()] == $config[Mime_Type::guessName($mimeType)]) {
+			if ($config[$this->name()] == $config[Type::guessName($mimeType)]) {
 				// ...but using the same adapter.
-				$media = Media_Process::factory([
+				$media = Process::factory([
 					'source' => $mimeType,
 					'adapter' => $this->_adapter
 				]);
@@ -149,7 +124,7 @@ class Media_Process_Generic {
 				$handle = fopen('php://temp', 'w+');
 				$this->_adapter->store($handle);
 
-				$media = Media_Process::factory(['source' => $handle]);
+				$media = Process::factory(['source' => $handle]);
 				fclose($handle);
 			}
 			return $media;

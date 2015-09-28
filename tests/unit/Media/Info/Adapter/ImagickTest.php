@@ -6,15 +6,13 @@
  *
  * Distributed under the terms of the MIT License.
  * Redistributions of files must retain the above copyright notice.
- *
- * @copyright  2007-2014 David Persson <nperson@gmx.de>
- * @license    http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Media/Info/Adapter/Imagick.php';
+namespace mm\tests\unit\Media\Info\Adapter;
 
-class Media_Info_Adapter_ImagickTest extends PHPUnit_Framework_TestCase {
+use mm\Media\Info\Adapter\Imagick;
+
+class ImagickTest extends \PHPUnit_Framework_TestCase {
 
 	protected $_files;
 	protected $_data;
@@ -30,7 +28,7 @@ class Media_Info_Adapter_ImagickTest extends PHPUnit_Framework_TestCase {
 
 	public function testAll() {
 		$source = "{$this->_files}/image_png.png";
-		$subject = new Media_Info_Adapter_Imagick($source);
+		$subject = new Imagick($source);
 
 		$result = $subject->all();
 		$this->assertInternalType('array', $result);
@@ -42,7 +40,7 @@ class Media_Info_Adapter_ImagickTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals(54, $result['height']);
 
 		$source = "{$this->_files}/image_jpg.jpg";
-		$subject = new Media_Info_Adapter_Imagick($source);
+		$subject = new Imagick($source);
 
 		$result = $subject->all();
 		$this->assertInternalType('array', $result);
@@ -57,7 +55,7 @@ class Media_Info_Adapter_ImagickTest extends PHPUnit_Framework_TestCase {
 		}
 
 		$source = "{$this->_files}/application_pdf.pdf";
-		$subject = new Media_Info_Adapter_Imagick($source);
+		$subject = new Imagick($source);
 
 		$result = $subject->all();
 		$this->assertInternalType('array', $result);
@@ -68,7 +66,7 @@ class Media_Info_Adapter_ImagickTest extends PHPUnit_Framework_TestCase {
 
 	public function testAllAndGetSymmetry() {
 		$source = "{$this->_files}/image_png.png";
-		$subject = new Media_Info_Adapter_Imagick($source);
+		$subject = new Imagick($source);
 
 		$results = $subject->all();
 

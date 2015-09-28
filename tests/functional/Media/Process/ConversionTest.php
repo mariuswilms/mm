@@ -6,19 +6,18 @@
  *
  * Distributed under the terms of the MIT License.
  * Redistributions of files must retain the above copyright notice.
- *
- * @copyright  2007-2014 David Persson <nperson@gmx.de>
- * @license    http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Media/Process.php';
-require_once 'Media/Process/Document.php';
-require_once 'Media/Process/Video.php';
-require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/mocks/Media/Process/Adapter/GenericMock.php';
-require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/mocks/Media/Process/Adapter/GenericNameMock.php';
+namespace mm\tests\functional\Media\Process;
 
-class Media_Process_ConversionTest extends PHPUnit_Framework_TestCase {
+use mm\Mime\Type;
+use mm\Media\Process;
+use mm\Media\Process\Document;
+use mm\Media\Process\Video;
+use mm\tests\mocks\Media\Process\Adapter\GenericMock;
+use mm\tests\mocks\Media\Process\Adapter\GenericNameMock;
+
+class ConversionTest extends \PHPUnit_Framework_TestCase {
 
 	protected $_files;
 	protected $_data;
@@ -27,43 +26,43 @@ class Media_Process_ConversionTest extends PHPUnit_Framework_TestCase {
 		$this->_files = dirname(dirname(dirname(dirname(__FILE__)))) . '/data';
 		$this->_data = dirname(dirname(dirname(dirname(dirname(__FILE__))))) .'/data';
 
-		Mime_Type::config('magic', [
+		Type::config('magic', [
 			'adapter' => 'Freedesktop',
 			'file' => $this->_data . '/magic.db'
 		]);
-		Mime_Type::config('glob', [
+		Type::config('glob', [
 			'adapter' => 'Freedesktop',
 			'file' => $this->_data . '/glob.db'
 		]);
 	}
 
 	public function testMediaChangeButSameAdapter() {
-		Media_Process::config([
-			'image' => 'GenericMock',
-			'document' => 'GenericMock'
+		Process::config([
+			'image' => new GenericMock(null),
+			'document' => new GenericMock(null)
 		]);
-		$media = new Media_Process_Document([
+		$media = new Document([
 			'source' => "{$this->_files}/application_pdf.pdf",
-			'adapter' => 'GenericMock'
+			'adapter' => new GenericMock(null)
 		]);
 		$result = $media->convert('image/jpg');
-		$this->assertInstanceOf('Media_Process_Image', $result);
+		$this->assertInstanceOf('\mm\Media\Process\Image', $result);
 	}
 
 	public function testMediaChangeDifferentAdapter() {
-		Media_Process::config([
-			'image' => 'GenericMock',
-			'video' => 'GenericNameMock'
+		Process::config([
+			'image' => new GenericMock(null),
+			'video' => new GenericNameMock(null)
 		]);
 		$source = fopen("{$this->_files}/video_theora_notag.ogv", 'r');
 		$storeFrom = fopen("{$this->_files}/image_jpg.jpg", 'r');
 
-		$adapter = new Media_Process_Adapter_GenericNameMock($source);
+		$adapter = new GenericNameMock($source);
 		$adapter->storeCopyFromStream = $storeFrom;
 
-		$media = new Media_Process_Video(compact('adapter'));
+		$media = new Video(compact('adapter'));
 		$result = $media->convert('image/jpg');
-		$this->assertInstanceOf('Media_Process_Image', $result);
+		$this->assertInstanceOf('\mm\Media\Process\Image', $result);
 
 		fclose($source);
 		fclose($storeFrom);

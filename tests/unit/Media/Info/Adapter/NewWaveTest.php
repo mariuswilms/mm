@@ -6,15 +6,13 @@
  *
  * Distributed under the terms of the MIT License.
  * Redistributions of files must retain the above copyright notice.
- *
- * @copyright  2007-2014 David Persson <nperson@gmx.de>
- * @license    http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Media/Info/Adapter/NewWave.php';
+namespace mm\tests\unit\Media\Info\Adapter;
 
-class Media_Info_Adapter_NewWaveTest extends PHPUnit_Framework_TestCase {
+use mm\Media\Info\Adapter\NewWave;
+
+class NewWaveTest extends \PHPUnit_Framework_TestCase {
 
 	protected $_files;
 	protected $_data;
@@ -26,7 +24,7 @@ class Media_Info_Adapter_NewWaveTest extends PHPUnit_Framework_TestCase {
 
 	public function testAll() {
 		$source = "{$this->_files}/audio_wave.wav";
-		$subject = new Media_Info_Adapter_NewWave($source);
+		$subject = new NewWave($source);
 
 		$result = $subject->all();
 		$this->assertInternalType('array', $result);
@@ -36,7 +34,7 @@ class Media_Info_Adapter_NewWaveTest extends PHPUnit_Framework_TestCase {
 
 	public function testAllAndGetSymmetry() {
 		$source = "{$this->_files}/audio_wave.wav";
-		$subject = new Media_Info_Adapter_NewWave($source);
+		$subject = new NewWave($source);
 
 		$results = $subject->all();
 

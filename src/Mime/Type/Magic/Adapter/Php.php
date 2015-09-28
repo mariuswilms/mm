@@ -6,13 +6,9 @@
  *
  * Distributed under the terms of the MIT License.
  * Redistributions of files must retain the above copyright notice.
- *
- * @copyright  2007-2014 David Persson <nperson@gmx.de>
- * @license    http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link       http://github.com/davidpersson/mm
  */
 
-require_once 'Mime/Type/Magic/Adapter.php';
+namespace mm\Mime\Type\Magic\Adapter;
 
 /**
  * Can parse files containing one huge PHP array.
@@ -27,7 +23,7 @@ require_once 'Mime/Type/Magic/Adapter.php';
  * ]; ?>
  * }}}
  */
-class Mime_Type_Magic_Adapter_Php extends Mime_Type_Magic_Adapter {
+class Php extends \mm\Mime\Type\Magic\Adapter {
 
 	public function __construct($config) {
 		foreach (require $config['file'] as $item) {
