@@ -45,11 +45,10 @@ class Imagick extends \mm\Media\Process\Adapter {
 		$this->_object = new ImagickCore();
 		$this->_object->readImageFile($handle);
 
-		// Reset iterator to get just the first image from i.e. multipage PDFs.
+		// For sequences reset iterator to get to first one first.
 		if ($this->_object->getNumberImages() > 1) {
 			$this->_object->setFirstIterator();
 		}
-
 		$mimeType = Type::guessType($handle);
 
 		if (!isset($this->_formatMap[$mimeType])) {
@@ -66,6 +65,9 @@ class Imagick extends \mm\Media\Process\Adapter {
 	}
 
 	public function store($handle) {
+		if ($this->_isAnimated()) {
+			return $this->_object->writeImagesFile($handle);
+		}
 		return $this->_object->writeImageFile($handle);
 	}
 
@@ -200,6 +202,16 @@ class Imagick extends \mm\Media\Process\Adapter {
 	public function quantumRange() {
 		$result = $this->_object->getQuantumRange();
 		return $result['quantumRangeLong'];
+	}
+
+	/**
+	 * Helper method to detect animated images. These most often are GIFs. PDFs
+	 * will never be detected as animated.
+	 *
+	 * @return boolean
+	 */
+	protected function _isAnimated() {
+		return $this->_object->getNumberImages() > 1 && $this->_object->getFormat() !== 'pdf';
 	}
 }
 
