@@ -89,6 +89,16 @@ class Imagick extends \mm\Media\Info\Adapter {
 		}
 		return $colors;
 	}
+
+	/**
+	 * Detects animated images. These most often are GIFs. PDFs
+	 * will never be detected as animated.
+	 *
+	 * @return boolean
+	 */
+	public function isAnimated() {
+		return $this->_object->getNumberImages() > 1 && $this->_object->getFormat() !== 'pdf';
+	}
 }
 
 ?>
