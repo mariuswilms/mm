@@ -14,6 +14,7 @@ use mm\Mime\Type;
 use Exception;
 use OutOfBoundsException;
 use Imagick as ImagickCore;
+use ImagickPixel;
 
 /**
  * This media process adapter allows for interfacing with ImageMagick through
@@ -167,6 +168,23 @@ class Imagick extends \mm\Media\Process\Adapter {
 		$colorized->compositeImage($this->_object, ImagickCore::COMPOSITE_OVER, 0, 0);
 
 		$this->_object = $colorized;
+		return true;
+	}
+
+	public function extent($width, $height, $color) {
+		$color = "rgb({$rgb[0]},{$rgb[1]},{$rgb[2]})";
+
+		$new = new ImagickCore();
+		$new->newImage($width, $height, $color);
+		$new->compositeImage(
+			$this->_object,
+			ImagickCore::COMPOSITE_OVER,
+			// Center on new board.
+			$width - ($this->width() / 2),
+			$height - ($this->height() / 2)
+		);
+
+		$this->_object = $new;
 		return true;
 	}
 

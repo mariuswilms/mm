@@ -140,6 +140,25 @@ class Image extends \mm\Media\Process\Generic {
 		}
 		return $this->_adapter->background([$matches[1], $matches[2], $matches[3]]);
 	}
+
+	/**
+	 * Places an image on given board using $color as background color.
+	 *
+	 * @param integer $width
+	 * @param integer $height
+	 * @param string $color A color string i.e. `'rgb(230,10,22)'`.
+	 * @return boolean
+	 */
+	public function extent($width, $height, $color) {
+		if (!preg_match('/rgb\(([0-9]+),([0-9]+),([0-9]+)\)/i', $color, $matches)) {
+			throw new Exception("Unsupported color string `{$color}`.");
+		}
+		return $this->_adapter->place(
+			$width,
+			$height,
+			[$matches[1], $matches[2], $matches[3]]
+		);
+	}
 }
 
 ?>

@@ -190,6 +190,10 @@ class Gd extends \mm\Media\Process\Adapter {
 		return imageCopy($this->_object, $new, 0, 0, 0, 0, $width, $height);
 	}
 
+	public function extent($width, $height, $color) {
+		throw new Exception("The adapter doesn't support the `extent` action.");
+	}
+
 	public function crop($left, $top, $width, $height) {
 		$left   = (integer) $left;
 		$top    = (integer) $top;
