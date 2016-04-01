@@ -171,18 +171,20 @@ class Imagick extends \mm\Media\Process\Adapter {
 		return true;
 	}
 
-	public function extent($width, $height, $color) {
+	public function extent($width, $height, $rgb) {
 		$color = "rgb({$rgb[0]},{$rgb[1]},{$rgb[2]})";
 
 		$new = new ImagickCore();
 		$new->newImage($width, $height, $color);
+
 		$new->compositeImage(
 			$this->_object,
 			ImagickCore::COMPOSITE_OVER,
 			// Center on new board.
-			$width - ($this->width() / 2),
-			$height - ($this->height() / 2)
+			($width / 2) - ($this->width() / 2),
+			($height / 2) - ($this->height() / 2)
 		);
+		$new->setFormat($this->_object->getFormat());
 
 		$this->_object = $new;
 		return true;

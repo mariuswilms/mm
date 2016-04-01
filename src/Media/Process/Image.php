@@ -153,7 +153,13 @@ class Image extends \mm\Media\Process\Generic {
 		if (!preg_match('/rgb\(([0-9]+),([0-9]+),([0-9]+)\)/i', $color, $matches)) {
 			throw new Exception("Unsupported color string `{$color}`.");
 		}
-		return $this->_adapter->place(
+		if ($width < $this->_adapter->width()) {
+			$width = $this->_adapter->width();
+		}
+		if ($height < $this->_adapter->height()) {
+			$height = $this->_adapter->height();
+		}
+		return $this->_adapter->extent(
 			$width,
 			$height,
 			[$matches[1], $matches[2], $matches[3]]
