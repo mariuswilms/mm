@@ -56,13 +56,8 @@ at the SUPPORT file for more information.
 The retrieval of unique colors in an image and the letterbox trimming
 features have been sponsored by Atelier Disko (http://atelierdisko.de).
 
-Versions & Requirements
------------------------
-Version 2.0.0, PHP >=5.5.0
-Version 1.2.0, PHP >=5.5.0
-Version 1.1.0, PHP >=5.3.0
-Version 1.0.0, PHP >=5.2.1
-
+Requirements
+------------
 The library is known to run fine under linux and darwin. Depending on
 the adapters you are using you may need (this is a selection):
 
