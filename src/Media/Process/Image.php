@@ -22,6 +22,18 @@ class Image extends \mm\Media\Process\Generic {
 	use \mm\Media\Process\SizingTrait;
 
 	/**
+	 * Rotates the image by given amount of degrees. Postive degrees rotate clockwise,
+	 * negative counter clockwise.
+	 *
+	 * @link http://www.daveperrett.com/images/articles/2012-07-28-exif-orientation-handling-is-a-ghetto/EXIF_Orientations.jpg
+	 * @param integer Signed integer of degrees to rotate.
+	 * @return boolean
+	 */
+	public function rotate($degrees) {
+		return $this->_adapter->rotate($degrees);
+	}
+
+	/**
 	 * Removes areas around actual image content, i.e. a letterbox.
 	 *
 	 * @param integer $fuzz Fuzz factor in percent, defaults to 30%.

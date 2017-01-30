@@ -93,6 +93,10 @@ class Imagick extends \mm\Media\Process\Adapter {
 		return (boolean) call_user_func_array([$this->_object, $method], $args);
 	}
 
+	public function rotate($degrees) {
+		return $this->_object->rotateImage('#FFFFFF', $degrees);
+	}
+
 	public function trim($fuzz) {
 		return $this->_object->trimImage($fuzz)
 			&& $this->_object->setImagePage(0, 0, 0, 0);

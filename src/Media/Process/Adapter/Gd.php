@@ -119,6 +119,16 @@ class Gd extends \mm\Media\Process\Adapter {
 		throw new Exception("The adapter has no passthru support.");
 	}
 
+	public function rotate($degrees) {
+		$result = imagerotate($this->_obect, $degrees * -1);
+
+		if (!$this->_isResource($result)) {
+			return false;
+		}
+		$this->_object = $result;
+		return true;
+	}
+
 	public function trim($fuzz) {
 		throw new Exception("The adapter doesn't support the `trim` action.");
 	}
