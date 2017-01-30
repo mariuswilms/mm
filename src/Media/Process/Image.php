@@ -21,6 +21,12 @@ class Image extends \mm\Media\Process\Generic {
 
 	use \mm\Media\Process\SizingTrait;
 
+	/**
+	 * Removes areas around actual image content, i.e. a letterbox.
+	 *
+	 * @param integer $fuzz Fuzz factor in percent, defaults to 30%.
+	 * @return boolean
+	 */
 	public function trim($percent = 30) {
 		$fuzz = $this->_adapter->quantumRange() * $percent / 100;
 		return $this->_adapter->trim($fuzz);
