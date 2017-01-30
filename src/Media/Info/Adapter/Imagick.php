@@ -26,6 +26,7 @@ class Imagick extends \mm\Media\Info\Adapter {
 	protected $_map = [
 		'width' => 'getImageWidth',
 		'height' => 'getImageHeight',
+		'orientation' => 'getImageOrientation',
 		'isAnimated' => 'isAnimated',
 		'colors' => 'colors'
 	];
