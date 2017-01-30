@@ -19,32 +19,54 @@ class ImageBasic extends \mm\Media\Info\Adapter {
 
 	protected $_object;
 
+	protected $_map = [
+		'width' => 'width',
+		'height' => 'width',
+		'channels' => 'channels',
+		'bits' => 'bits'
+	];
+
 	public function __construct($file) {
 		$this->_object = $file;
 	}
 
 	public function all() {
-		$data = getimagesize($this->_object);
+		$results = [];
 
-		$result = [
-			'width' => $data[0],
-			'height' => $data[1]
-		];
-		if (isset($data['channels'])) {
-			$result['channels'] = $data['channels'];
+		foreach (array_keys($this->_map) as $name) {
+			$results[$name] = $this->get($name);
 		}
-		if (isset($data['bits'])) {
-			$result['bits'] = $data['bits'];
-		}
-		return $result;
+		return $results;
 	}
 
-	public function get($name) {
-		$data = $this->all();
-
-		if (isset($data[$name])) {
-			return $data[$name];
+	public function get($name, $args = []) {
+		if (isset($this->_map[$name])) {
+			return call_user_func_array([$this, $this->_map[$name]], $args);
 		}
+	}
+
+	public function channels() {
+		$data = getimagesize($this->_object);
+
+		if (isset($data['channels'])) {
+			return $data['channels'];
+		}
+	}
+
+	public function bits() {
+		$data = getimagesize($this->_object);
+
+		if (isset($data['bits'])) {
+			return $data['bits'];
+		}
+	}
+
+	public function width() {
+		return getimagesize($this->_object)[0];
+	}
+
+	public function height() {
+		return getimagesize($this->_object)[1];
 	}
 }
 

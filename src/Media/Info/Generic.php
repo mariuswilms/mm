@@ -86,9 +86,6 @@ class Generic {
 		);
 		$results = [];
 
-		foreach ($methods as $method) {
-			$results[$method] = $this->{$method}();
-		}
 		foreach ($this->_adapters as $adapter) {
 			$results += $adapter->all();
 		}

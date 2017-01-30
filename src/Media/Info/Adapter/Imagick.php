@@ -25,7 +25,9 @@ class Imagick extends \mm\Media\Info\Adapter {
 
 	protected $_map = [
 		'width' => 'getImageWidth',
-		'height' => 'getImageHeight'
+		'height' => 'getImageHeight',
+		'isAnimated' => 'isAnimated',
+		'colors' => 'colors'
 	];
 
 	public function __construct($file) {
@@ -48,16 +50,12 @@ class Imagick extends \mm\Media\Info\Adapter {
 	}
 
 	public function get($name, $args = []) {
-		if (method_exists($this, $name)) {
-			$object = $this;
-			$method = $name;
-		} elseif (isset($this->_map[$name])) {
-			$object = $this->_object;
-			$method = $this->_map[$name];
-		} else {
-			return;
+		if (isset($this->_map[$name])) {
+			if (method_exists($this, $this->_map[$name])) {
+				return call_user_func_array([$this, $this->_map[$name]], $args);
+			}
+			return call_user_func_array([$object, $this->_map[$name]], $args);
 		}
-		return $args ? call_user_func_array([$object, $method], $args) : $object->{$method}();
 	}
 
 	/**

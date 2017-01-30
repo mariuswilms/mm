@@ -22,28 +22,30 @@ class NewWave extends \mm\Media\Info\Adapter {
 
 	protected $_object;
 
-	protected $_methods = ['samples'];
+	protected $_map = [
+		'samples' => 'samples'
+	];
 
 	public function __construct($file) {
 		$this->_object = $file;
 	}
 
 	public function all() {
-		$result = [];
+		$results = [];
 
-		foreach ($this->_methods as $method) {
-			$result[$method] = $this->{"_{$method}"}();
+		foreach (array_keys($this->_map) as $name) {
+			$results[$name] = $this->get($name);
 		}
-		return $result;
+		return $results;
 	}
 
-	public function get($name) {
-		if (in_array($name, $this->_methods)) {
-			return $this->{"_{$name}"}();
+	public function get($name, $args = []) {
+		if (isset($this->_map[$name])) {
+			return call_user_func_array([$this, $this->_map[$name]], $args);
 		}
 	}
 
-	protected function _samples() {
+	public function samples() {
 		$data = [];
 		$handle = fopen($this->_object, 'r');
 
