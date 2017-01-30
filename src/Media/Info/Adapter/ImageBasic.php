@@ -19,6 +19,8 @@ class ImageBasic extends \mm\Media\Info\Adapter {
 
 	protected $_object;
 
+	protected $_cached = [];
+
 	protected $_map = [
 		'width' => 'width',
 		'height' => 'width',
@@ -46,7 +48,7 @@ class ImageBasic extends \mm\Media\Info\Adapter {
 	}
 
 	public function channels() {
-		$data = getimagesize($this->_object);
+		$data = $this->_getimagesize();
 
 		if (isset($data['channels'])) {
 			return $data['channels'];
@@ -54,7 +56,7 @@ class ImageBasic extends \mm\Media\Info\Adapter {
 	}
 
 	public function bits() {
-		$data = getimagesize($this->_object);
+		$data = $this->_getimagesize();
 
 		if (isset($data['bits'])) {
 			return $data['bits'];
@@ -62,11 +64,18 @@ class ImageBasic extends \mm\Media\Info\Adapter {
 	}
 
 	public function width() {
-		return getimagesize($this->_object)[0];
+		return $this->_getimagesize()[0];
 	}
 
 	public function height() {
-		return getimagesize($this->_object)[1];
+		return $this->_getimagesize()[1];
+	}
+
+	protected function _getimagesize() {
+		if (isset($this->_cached['getimagesize'])) {
+			return $this->_cached['getimagesize'];
+		}
+		return $this->_cached['getimagesize'] = getimagesize($file);
 	}
 }
 
