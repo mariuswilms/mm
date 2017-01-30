@@ -36,7 +36,12 @@ class Exif extends \mm\Media\Info\Adapter {
 		if ($this->_cached) {
 			return $this->_cached;
 		}
-		return $this->_cached = exif_read_data($this->_object);
+		$results = [];
+
+		foreach (exif_read_data($this->_object) as $k => $v) {
+			$results[lcfirst($k)] = $v;
+		}
+		return $this->_cached = $results;
 	}
 }
 
