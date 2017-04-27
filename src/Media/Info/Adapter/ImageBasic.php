@@ -75,7 +75,7 @@ class ImageBasic extends \mm\Media\Info\Adapter {
 		if (isset($this->_cached['getimagesize'])) {
 			return $this->_cached['getimagesize'];
 		}
-		return $this->_cached['getimagesize'] = getimagesize($file);
+		return $this->_cached['getimagesize'] = getimagesize($this->_object);
 	}
 }
 
