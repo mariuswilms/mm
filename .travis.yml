@@ -29,3 +29,6 @@ before_script:
   - ffmpeg -version
   - sox --version
   - php -m
+
+notifications:
+  email: false
