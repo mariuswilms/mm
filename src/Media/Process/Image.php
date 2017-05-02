@@ -88,17 +88,17 @@ class Image extends \mm\Media\Process\Generic {
 	}
 
 	/**
-	 * Transforms image into given colorspace.
+	 * Transforms image into given color space.
 	 *
 	 * @param string $type Colorspace (either `'RGB'`, `'CMYK'` or `'GRAY'`), lower- or mixed case
 	 *        versions are supported for convenience, too.
 	 * @return boolean
 	 */
 	public function colorSpace($type) {
-		if (!preg_match('/^(rgb|cmyk|gray)$/i')) {
+		if (!preg_match('/^(rgb|cmyk|gray)$/i', $type)) {
 			throw new InvalidArgumentException("Invalid color space type `{$type}` given.");
 		}
-		return $this->_adapter->colorSpace(strtoupper($type));
+		return $this->_adapter->space(strtoupper($type));
 	}
 
 	/**
