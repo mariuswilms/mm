@@ -88,6 +88,20 @@ class Image extends \mm\Media\Process\Generic {
 	}
 
 	/**
+	 * Transforms image into given colorspace.
+	 *
+	 * @param string $type Colorspace (either `'RGB'`, `'CMYK'` or `'GRAY'`), lower- or mixed case
+	 *        versions are supported for convenience, too.
+	 * @return boolean
+	 */
+	public function colorSpace($type) {
+		if (!preg_match('/^(rgb|cmyk|gray)$/i')) {
+			throw new InvalidArgumentException("Invalid color space type `{$type}` given.");
+		}
+		return $this->_adapter->colorSpace(strtoupper($type));
+	}
+
+	/**
 	 * Embeds the provided ICC profile into the image. Allows for forcing a certain profile and
 	 * transitioning from one color space to another.
 	 *

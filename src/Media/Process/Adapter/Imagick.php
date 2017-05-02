@@ -121,6 +121,15 @@ class Imagick extends \mm\Media\Process\Adapter {
 		}
 	}
 
+	public function space($type) {
+		$type = constant('imagick::COLORSPACE_' . $type);
+
+		if ($type === null) {
+			return false;
+		}
+		return $this->_object->transformImageColorspace($type);
+	}
+
 	public function profile($type, $data = null) {
 		if (!$data) {
 			$profiles = $this->_object->getImageProfiles('*', false);

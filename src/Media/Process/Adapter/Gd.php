@@ -166,6 +166,10 @@ class Gd extends \mm\Media\Process\Adapter {
 		return true;
 	}
 
+	public function space($type) {
+		throw new Exception("The adapter doesn't support the `space` action.");
+	}
+
 	public function profile($type, $data = null) {
 		throw new Exception("The adapter doesn't support the `profile` action.");
 	}
