@@ -122,10 +122,13 @@ class Imagick extends \mm\Media\Process\Adapter {
 	}
 
 	public function space($type) {
-		$type = constant('imagick::COLORSPACE_' . $type);
-
+		$type = constant('Imagick::COLORSPACE_' . $type);
 		if ($type === null) {
 			return false;
+		}
+
+		if ($type !== 'GRAY') {
+			$this->_object->setType(ImagickCore::IMGTYPE_TRUECOLOR);
 		}
 		return $this->_object->transformImageColorspace($type);
 	}
