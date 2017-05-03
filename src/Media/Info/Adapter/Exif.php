@@ -17,7 +17,7 @@ class Exif extends \mm\Media\Info\Adapter {
 	protected $_cached = [];
 
 	public function __construct($file) {
-		$this->_object = $file;
+		$this->_object = parse_url($file, PHP_URL_PATH);
 	}
 
 	public function all() {
