@@ -55,7 +55,7 @@ class Imagick extends \mm\Media\Info\Adapter {
 			if (method_exists($this, $this->_map[$name])) {
 				return call_user_func_array([$this, $this->_map[$name]], $args);
 			}
-			return call_user_func_array([$object, $this->_map[$name]], $args);
+			return call_user_func_array([$this->_object, $this->_map[$name]], $args);
 		}
 	}
 
