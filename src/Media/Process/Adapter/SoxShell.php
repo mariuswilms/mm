@@ -153,7 +153,7 @@ class SoxShell extends \mm\Media\Process\Adapter {
 	}
 
 	protected function _tempFile() {
-		return realpath(sys_get_temp_dir()) . '/' . uniqid('mm_');
+		return realpath((ini_get('sys_temp_dir') ?: sys_get_temp_dir()) . '/' . uniqid('mm_'));
 	}
 }
 
