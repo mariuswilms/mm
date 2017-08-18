@@ -219,7 +219,20 @@ class Imagick extends \mm\Media\Process\Adapter {
 		$width  = (integer) $width;
 		$height = (integer) $height;
 
-		return $this->_object->resizeImage($width, $height, ImagickCore::FILTER_LANCZOS, 1);
+
+		if (!$this->_isAnimated()) {
+			return $this->_object->resizeImage($width, $height, ImagickCore::FILTER_LANCZOS, 1);
+		}
+
+		$this->_object = $this->_object->coalesceImages();
+		foreach ($this->_object as $frame) {
+			$result = $frame->resizeImage($width, $height, ImagickCore::FILTER_LANCZOS, 1);
+
+			if (!$result) {
+				return false;
+			}
+		}
+		$this->_object = $this->_object->deconstructImages();
 	}
 
 	public function cropAndResize($cropLeft, $cropTop, $cropWidth, $cropHeight, $resizeWidth, $resizeHeight) {
