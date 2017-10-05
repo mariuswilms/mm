@@ -35,7 +35,10 @@ class SoxShell extends \mm\Media\Process\Adapter {
 
 	public function __construct($handle) {
 		$this->_command = strtoupper(substr(PHP_OS, 0, 3)) == 'WIN' ? 'sox.exe' : 'sox';
-		$this->_load($handle);
+
+		if (!$this->_load($handle)) {
+			throw new Exception("Failed to load soX source.");
+		}
 	}
 
 	public function __destruct() {
@@ -50,7 +53,9 @@ class SoxShell extends \mm\Media\Process\Adapter {
 		$this->_object = $handle;
 		$this->_objectTemp = $this->_tempFile();
 
-		file_put_contents($this->_objectTemp, $handle);
+		if (!file_put_contents($this->_objectTemp, $handle)) {
+			return false;
+		}
 
 		$this->_objectType = $this->_type(Type::guessType($handle));
 
