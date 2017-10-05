@@ -10,6 +10,7 @@
 
 namespace mm\Media\Process;
 
+use Exception;
 use InvalidArgumentException;
 
 /**
