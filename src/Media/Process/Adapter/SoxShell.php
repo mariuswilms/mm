@@ -37,7 +37,7 @@ class SoxShell extends \mm\Media\Process\Adapter {
 		$this->_command = strtoupper(substr(PHP_OS, 0, 3)) == 'WIN' ? 'sox.exe' : 'sox';
 
 		if (!$this->_load($handle)) {
-			throw new Exception("Failed to load soX source.");
+			throw new Exception('Failed to load initial sox source.');
 		}
 	}
 
@@ -129,7 +129,9 @@ class SoxShell extends \mm\Media\Process\Adapter {
 
 		unlink($this->_objectTemp);
 
-		$this->_load($buffer);
+		if (!$this->_load($buffer)) {
+			throw new Exception('Failed to reload sox source.');
+		}
 		return true;
 	}
 

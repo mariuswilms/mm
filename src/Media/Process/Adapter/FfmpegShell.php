@@ -44,7 +44,10 @@ class FfmpegShell extends \mm\Media\Process\Adapter {
 
 	public function __construct($handle) {
 		$this->_command = strtoupper(substr(PHP_OS, 0, 3)) == 'WIN' ? 'ffmpeg.exe' : 'ffmpeg';
-		$this->_load($handle);
+
+		if (!$this->_load($handle)) {
+			throw new Exception('Failed to load initial ffmpeg source.');
+		}
 	}
 
 	public function __destruct() {
@@ -59,7 +62,9 @@ class FfmpegShell extends \mm\Media\Process\Adapter {
 		$this->_object = $handle;
 		$this->_objectTemp = $this->_tempFile();
 
-		file_put_contents($this->_objectTemp, $handle);
+		if (!file_put_contents($this->_objectTemp, $handle)) {
+			return false;
+		}
 
 		$this->_objectType = $this->_type(Type::guessType($handle));
 		$this->_targetType = $this->_objectType;
@@ -248,7 +253,9 @@ class FfmpegShell extends \mm\Media\Process\Adapter {
 		$this->_options = [];
 		unlink($this->_objectTemp);
 
-		$this->_load($buffer);
+		if (!$this->_load($buffer)) {
+			throw new Exception('Failed to reload ffmpeg source.');
+		}
 		return true;
 	}
 
