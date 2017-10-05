@@ -122,7 +122,9 @@ class SoxShell extends \mm\Media\Process\Adapter {
 		// Workaround for header based formats which require the output stream to be seekable.
 		$target = fopen($targetTemp, 'r');
 		$buffer = fopen('php://temp', 'w+');
-		stream_copy_to_stream($target, $buffer);
+		if (!stream_copy_to_stream($target, $buffer)) {
+			throw new Exception('Failed to copy stream while processing sox source.');
+		}
 
 		fclose($target);
 		unlink($targetTemp);
