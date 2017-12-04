@@ -33,6 +33,9 @@ class Exif extends \mm\Media\Info\Adapter {
 	}
 
 	protected function _data() {
+		if (!$this->_isSupported()) {
+			return [];
+		}
 		if ($this->_cached) {
 			return $this->_cached;
 		}
@@ -42,6 +45,14 @@ class Exif extends \mm\Media\Info\Adapter {
 			$results[lcfirst($k)] = $v;
 		}
 		return $this->_cached = $results;
+	}
+
+	protected function _isSupported() {
+		return in_array(exif_imagetype($this->_object), [
+			IMAGETYPE_JPEG,
+			IMAGETYPE_TIFF_II,
+			IMAGETYPE_TIFF_MM
+		]);
 	}
 }
 
