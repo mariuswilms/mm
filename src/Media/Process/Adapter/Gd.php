@@ -326,7 +326,7 @@ class Gd extends \mm\Media\Process\Adapter {
 	}
 
 	protected function _isResource($image) {
-		return is_resource($image) && get_resource_type($image) == 'gd';
+		return is_resource($image) && get_resource_type($image) == 'gd' || $image instanceof \GdImage;
 	}
 
 	protected function _isTransparent($image) {
